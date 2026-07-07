@@ -148,6 +148,8 @@
     padding:16px; overflow:hidden;
   }
   .figure-frame img{display:block; width:100%; height:auto; border-radius:4px;}
+  .figure-frame.native{background:var(--panel); padding:24px 20px;}
+  .figure-frame.native svg{display:block; width:100%; height:auto;}
   .figure figcaption{
     margin-top:10px; font-size:13px; color:var(--muted); line-height:1.5;
   }
@@ -449,8 +451,41 @@ pos_F                  -0.8296      0.246     -3.370      0.001      -1.312     
 pos_G                  -1.0574      0.244     -4.338      0.000      -1.535      -0.579
 ========================================================================================</pre>
     <figure class="figure">
-  <div class="figure-frame"><img src="assets/nba-longevity/ols-coefficients.png" alt="Standardised OLS coefficients: knee injuries, games per season, and total injuries carry the largest positive association with career length." loading="lazy"></div>
-  <figcaption><span class="fig-tag">fig. 5</span> Standardised OLS coefficients: knee injuries, games per season, and total injuries carry the largest positive association with career length.</figcaption>
+  <div class="figure-frame native"><svg viewBox="0 0 720 382" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono', monospace">
+<line x1="428.0" y1="16" x2="428.0" y2="366" stroke="#8792a6" stroke-width="1" stroke-dasharray="3,4" opacity="0.6"/>
+<text x="206" y="37.0" text-anchor="end" font-size="12.5" fill="#eae7df">had_knee_injury</text>
+<rect x="428.0" y="20.0" width="180.9" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
+<text x="700" y="37.0" text-anchor="end" font-size="12" fill="#8792a6">+1.112</text>
+<text x="206" y="75.0" text-anchor="end" font-size="12.5" fill="#eae7df">severe_injury</text>
+<rect x="428.0" y="58.0" width="105.1" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
+<text x="700" y="75.0" text-anchor="end" font-size="12" fill="#8792a6">+0.646</text>
+<text x="206" y="113.0" text-anchor="end" font-size="12.5" fill="#eae7df">had_back_injury</text>
+<rect x="428.0" y="96.0" width="95.4" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
+<text x="700" y="113.0" text-anchor="end" font-size="12" fill="#8792a6">+0.586</text>
+<text x="206" y="151.0" text-anchor="end" font-size="12.5" fill="#eae7df">total_injuries</text>
+<rect x="428.0" y="134.0" width="20.0" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
+<text x="700" y="151.0" text-anchor="end" font-size="12" fill="#8792a6">+0.123</text>
+<text x="206" y="189.0" text-anchor="end" font-size="12.5" fill="#eae7df">early_mpg</text>
+<rect x="428.0" y="172.0" width="17.5" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
+<text x="700" y="189.0" text-anchor="end" font-size="12" fill="#8792a6">+0.107</text>
+<text x="206" y="227.0" text-anchor="end" font-size="12.5" fill="#eae7df">early_games_per_szn</text>
+<rect x="428.0" y="210.0" width="15.6" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
+<text x="700" y="227.0" text-anchor="end" font-size="12" fill="#8792a6">+0.096</text>
+<text x="206" y="265.0" text-anchor="end" font-size="12.5" fill="#eae7df">entry_age</text>
+<rect x="416.2" y="248.0" width="11.8" height="26" rx="3" fill="#ff8a7a" opacity="0.88"/>
+<text x="700" y="265.0" text-anchor="end" font-size="12" fill="#8792a6">-0.072</text>
+<text x="206" y="303.0" text-anchor="end" font-size="12.5" fill="#eae7df">pos_F</text>
+<rect x="293.0" y="286.0" width="135.0" height="26" rx="3" fill="#ff8a7a" opacity="0.88"/>
+<text x="700" y="303.0" text-anchor="end" font-size="12" fill="#8792a6">-0.830</text>
+<text x="206" y="341.0" text-anchor="end" font-size="12.5" fill="#eae7df">pos_G</text>
+<rect x="255.9" y="324.0" width="172.1" height="26" rx="3" fill="#ff8a7a" opacity="0.88"/>
+<text x="700" y="341.0" text-anchor="end" font-size="12" fill="#8792a6">-1.057</text>
+</svg></div>
+  <figcaption><span class="fig-tag">fig. 5</span> OLS coefficients (effect on career seasons): knee injuries, severe injury, and back injuries carry the largest positive association &mdash; position (guard/forward vs. center) the largest negative.</figcaption>
+</figure>
+    <figure class="figure">
+  <div class="figure-frame"><img src="assets/nba-longevity/ols-residuals-crop.png" alt="Residual plot: no strong pattern in residuals vs fitted values, though variance narrows for very short predicted careers." loading="lazy"></div>
+  <figcaption><span class="fig-tag">fig. 6</span> Residual plot: no strong pattern in residuals vs fitted values, though variance narrows for very short predicted careers.</figcaption>
 </figure>
     <div class="table-wrap">
 <table class="result-table">
@@ -476,7 +511,7 @@ weighted avg       0.79      0.81      0.78       549
 ROC-AUC: 0.841</pre>
     <figure class="figure wide">
   <div class="figure-frame"><img src="assets/nba-longevity/classification-diagnostics.png" alt="Confusion matrix, ROC curve (AUC = 0.841), and standardised logistic regression coefficients." loading="lazy"></div>
-  <figcaption><span class="fig-tag">fig. 6</span> Confusion matrix, ROC curve (AUC = 0.841), and standardised logistic regression coefficients.</figcaption>
+  <figcaption><span class="fig-tag">fig. 7</span> Confusion matrix, ROC curve (AUC = 0.841), and standardised logistic regression coefficients.</figcaption>
 </figure>
 
     <h3>5.3 Survival Analysis &mdash; Career Duration and Attrition Risk</h3>
@@ -490,13 +525,13 @@ window). The event indicator <code>career_ended = 1</code> marks confirmed retir
     <h4>Kaplan&ndash;Meier: severe injury vs no severe injury</h4>
     <figure class="figure">
   <div class="figure-frame"><img src="assets/nba-longevity/km-severe-injury.png" alt="Players with a severe injury (ACL/Achilles) show no worse survival than uninjured players &mdash; consistent with survivorship bias." loading="lazy"></div>
-  <figcaption><span class="fig-tag">fig. 7</span> Players with a severe injury (ACL/Achilles) show no worse survival than uninjured players &mdash; consistent with survivorship bias.</figcaption>
+  <figcaption><span class="fig-tag">fig. 8</span> Players with a severe injury (ACL/Achilles) show no worse survival than uninjured players &mdash; consistent with survivorship bias.</figcaption>
 </figure>
 
     <h4>Kaplan&ndash;Meier: entry age group</h4>
     <figure class="figure">
   <div class="figure-frame"><img src="assets/nba-longevity/km-entry-age.png" alt="Players entering the league at 18&ndash;19 have markedly better survival than those entering at 22+." loading="lazy"></div>
-  <figcaption><span class="fig-tag">fig. 8</span> Players entering the league at 18&ndash;19 have markedly better survival than those entering at 22+.</figcaption>
+  <figcaption><span class="fig-tag">fig. 9</span> Players entering the league at 18&ndash;19 have markedly better survival than those entering at 22+.</figcaption>
 </figure>
 
     <h4>Cox Proportional Hazards model</h4>
@@ -509,8 +544,52 @@ window). The event indicator <code>career_ended = 1</code> marks confirmed retir
 </div>
     <p class="table-footnote">Concordance = 0.82 &middot; 2,741 observations, 2,200 events observed &middot; log-likelihood ratio test = 1,624.31 on 7 df</p>
     <figure class="figure">
-  <div class="figure-frame"><img src="assets/nba-longevity/cox-hazard-ratios.png" alt="Hazard ratios from the Cox PH model. Values below 1 indicate a protective effect on career length; entry age is the only predictor associated with higher hazard." loading="lazy"></div>
-  <figcaption><span class="fig-tag">fig. 9</span> Hazard ratios from the Cox PH model. Values below 1 indicate a protective effect on career length; entry age is the only predictor associated with higher hazard.</figcaption>
+  <div class="figure-frame native"><svg viewBox="0 0 720 286" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono', monospace">
+<line x1="430.0" y1="18" x2="430.0" y2="268" stroke="#8792a6" stroke-width="1" stroke-dasharray="3,4" opacity="0.6"/>
+<text x="220" y="45.0" text-anchor="end" font-size="12.5" fill="#eae7df">entry_age</text>
+<line x1="468.7" y1="41.0" x2="488.1" y2="41.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
+<line x1="468.7" y1="36.0" x2="468.7" y2="46.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<line x1="488.1" y1="36.0" x2="488.1" y2="46.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<circle cx="476.5" cy="41.0" r="4.5" fill="#d4ff4a"/>
+<text x="640.0" y="45.0" text-anchor="start" font-size="11.5" fill="#8792a6">+0.12</text>
+<text x="220" y="79.0" text-anchor="end" font-size="12.5" fill="#eae7df">early_mpg</text>
+<line x1="406.8" y1="75.0" x2="414.5" y2="75.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
+<line x1="406.8" y1="70.0" x2="406.8" y2="80.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<line x1="414.5" y1="70.0" x2="414.5" y2="80.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<circle cx="410.6" cy="75.0" r="4.5" fill="#d4ff4a"/>
+<text x="640.0" y="79.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.05</text>
+<text x="220" y="113.0" text-anchor="end" font-size="12.5" fill="#eae7df">early_bpm</text>
+<line x1="379.6" y1="109.0" x2="391.3" y2="109.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
+<line x1="379.6" y1="104.0" x2="379.6" y2="114.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<line x1="391.3" y1="104.0" x2="391.3" y2="114.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<circle cx="387.4" cy="109.0" r="4.5" fill="#d4ff4a"/>
+<text x="640.0" y="113.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.11</text>
+<text x="220" y="147.0" text-anchor="end" font-size="12.5" fill="#eae7df">log_injuries</text>
+<line x1="259.6" y1="143.0" x2="302.2" y2="143.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
+<line x1="259.6" y1="138.0" x2="259.6" y2="148.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<line x1="302.2" y1="138.0" x2="302.2" y2="148.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<circle cx="282.8" cy="143.0" r="4.5" fill="#d4ff4a"/>
+<text x="640.0" y="147.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.38</text>
+<text x="220" y="181.0" text-anchor="end" font-size="12.5" fill="#eae7df">severe_injury</text>
+<line x1="368.0" y1="177.0" x2="495.8" y2="177.0" stroke="#8792a6" stroke-width="2" opacity="0.85"/>
+<line x1="368.0" y1="172.0" x2="368.0" y2="182.0" stroke="#8792a6" stroke-width="1.5" opacity="0.7"/>
+<line x1="495.8" y1="172.0" x2="495.8" y2="182.0" stroke="#8792a6" stroke-width="1.5" opacity="0.7"/>
+<circle cx="430.0" cy="177.0" r="4.5" fill="#8792a6"/>
+<text x="640.0" y="181.0" text-anchor="start" font-size="11.5" fill="#8792a6">+0.00</text>
+<text x="220" y="215.0" text-anchor="end" font-size="12.5" fill="#eae7df">had_back_injury</text>
+<line x1="325.4" y1="211.0" x2="414.5" y2="211.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
+<line x1="325.4" y1="206.0" x2="325.4" y2="216.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<line x1="414.5" y1="206.0" x2="414.5" y2="216.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<circle cx="368.0" cy="211.0" r="4.5" fill="#d4ff4a"/>
+<text x="640.0" y="215.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.16</text>
+<text x="220" y="249.0" text-anchor="end" font-size="12.5" fill="#eae7df">had_knee_injury</text>
+<line x1="344.8" y1="245.0" x2="426.1" y2="245.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
+<line x1="344.8" y1="240.0" x2="344.8" y2="250.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<line x1="426.1" y1="240.0" x2="426.1" y2="250.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
+<circle cx="383.5" cy="245.0" r="4.5" fill="#d4ff4a"/>
+<text x="640.0" y="249.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.12</text>
+</svg></div>
+  <figcaption><span class="fig-tag">fig. 10</span> Cox PH coefficients with 95% CI. Bright markers cross zero on neither side (statistically significant); entry age is the only predictor associated with higher retirement hazard.</figcaption>
 </figure>
 
     <h3>5.4 Unsupervised Learning &mdash; K-Means Workload Clustering</h3>
@@ -519,7 +598,7 @@ entry age). The elbow method guides the choice of <em>K</em>. Cluster profiles a
 longevity to assess whether workload archetype is associated with career length.</p>
     <figure class="figure">
   <div class="figure-frame"><img src="assets/nba-longevity/kmeans-elbow.png" alt="Elbow plot of within-cluster inertia vs K, guiding the choice of K = 4." loading="lazy"></div>
-  <figcaption><span class="fig-tag">fig. 10</span> Elbow plot of within-cluster inertia vs K, guiding the choice of K = 4.</figcaption>
+  <figcaption><span class="fig-tag">fig. 11</span> Elbow plot of within-cluster inertia vs K, guiding the choice of K = 4.</figcaption>
 </figure>
     <div class="table-wrap">
 <table class="result-table">
@@ -528,9 +607,27 @@ longevity to assess whether workload archetype is associated with career length.
   <tbody><tr><td>Cluster 0</td><td>13.19</td><td>48.31</td><td>4.39</td><td>26.83</td><td>3.08</td></tr><tr><td>Cluster 1</td><td>31.16</td><td>72.35</td><td>15.27</td><td>22.41</td><td>9.54</td></tr><tr><td>Cluster 2</td><td>10.44</td><td>38.25</td><td>3.50</td><td>23.09</td><td>3.01</td></tr><tr><td>Cluster 3</td><td>19.48</td><td>65.32</td><td>7.21</td><td>22.89</td><td>6.69</td></tr></tbody>
 </table>
 </div>
+    <figure class="figure">
+  <div class="figure-frame native"><svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono', monospace">
+<line x1="30" y1="190" x2="690" y2="190" stroke="#232c3d" stroke-width="1"/>
+<rect x="120.0" y="152.3" width="90" height="37.7" rx="4" fill="#3fd6c4" opacity="0.88"/>
+<text x="165.0" y="142.3" text-anchor="middle" font-size="13" fill="#eae7df">3.08</text>
+<text x="165.0" y="212.0" text-anchor="middle" font-size="12" fill="#8792a6">Cluster 0</text>
+<rect x="250.0" y="73.3" width="90" height="116.7" rx="4" fill="#3fd6c4" opacity="0.88"/>
+<text x="295.0" y="63.3" text-anchor="middle" font-size="13" fill="#eae7df">9.54</text>
+<text x="295.0" y="212.0" text-anchor="middle" font-size="12" fill="#8792a6">Cluster 1</text>
+<rect x="380.0" y="153.2" width="90" height="36.8" rx="4" fill="#3fd6c4" opacity="0.88"/>
+<text x="425.0" y="143.2" text-anchor="middle" font-size="13" fill="#eae7df">3.01</text>
+<text x="425.0" y="212.0" text-anchor="middle" font-size="12" fill="#8792a6">Cluster 2</text>
+<rect x="510.0" y="108.2" width="90" height="81.8" rx="4" fill="#3fd6c4" opacity="0.88"/>
+<text x="555.0" y="98.2" text-anchor="middle" font-size="13" fill="#eae7df">6.69</text>
+<text x="555.0" y="212.0" text-anchor="middle" font-size="12" fill="#8792a6">Cluster 3</text>
+</svg></div>
+  <figcaption><span class="fig-tag">fig. 12</span> Mean career length by cluster. Cluster 1 (“heavy-usage stars”) averages the longest careers; Clusters 0 and 2 (low usage) are shortest-lived.</figcaption>
+</figure>
     <figure class="figure wide">
-  <div class="figure-frame"><img src="assets/nba-longevity/kmeans-cluster-profiles.png" alt="Cluster 1 (“heavy-usage stars”) shows both the highest early workload and the longest average career; Clusters 0 and 2 (low usage) are shortest-lived." loading="lazy"></div>
-  <figcaption><span class="fig-tag">fig. 11</span> Cluster 1 (“heavy-usage stars”) shows both the highest early workload and the longest average career; Clusters 0 and 2 (low usage) are shortest-lived.</figcaption>
+  <div class="figure-frame"><img src="assets/nba-longevity/kmeans-cluster-profiles.png" alt="Full per-cluster breakdown: career-length distribution (left) and early-workload vs. career-length scatter (right) by cluster." loading="lazy"></div>
+  <figcaption><span class="fig-tag">fig. 13</span> Full per-cluster breakdown: career-length distribution (left) and early-workload vs. career-length scatter (right) by cluster.</figcaption>
 </figure>
   </div>
 </section>
