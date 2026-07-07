@@ -338,6 +338,19 @@
     border:1px solid var(--line);
     color:var(--muted);
   }
+  .project-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    font-weight:500;
+    color:var(--data);
+    text-decoration:none;
+    transition:color .2s ease;
+  }
+  .project-link:hover{color:var(--signal);}
   .project-card.empty{
     display:flex;
     flex-direction:column;
@@ -495,6 +508,7 @@
           <span class="chip">K-Means</span>
           <span class="chip">Python</span>
         </div>
+        <a class="project-link" href="https://github.com/benakoka/portfolio/blob/main/projects/nba-career-longevity.ipynb" target="_blank" rel="noopener">View notebook →</a>
       </div>
 
       <div class="project-card empty">
