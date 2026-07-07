@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ben — Statistics &amp; Data Science</title>
 <meta name="description" content="Portfolio of Ben, Statistics & Data Science student at UCSB." />
+<meta name="theme-color" content="#0b0f16" />
+<meta property="og:title" content="Ben — Statistics &amp; Data Science" />
+<meta property="og:description" content="Portfolio of Ben, Statistics & Data Science student at UCSB." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0f16'/%3E%3Ccircle cx='50' cy='50' r='24' fill='%23d4ff4a'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -86,8 +91,41 @@
   .nav-links a{
     text-decoration:none;
     transition:color .2s ease;
+    position:relative;
   }
   .nav-links a:hover{color:var(--paper);}
+  .nav-links a.active{color:var(--paper);}
+  .nav-links a.active::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-20px;
+    height:2px;
+    background:var(--signal);
+  }
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:1px solid var(--line);
+    border-radius:8px;
+    color:var(--paper);
+    width:36px;height:36px;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+  .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{
+    content:"";
+    display:block;
+    width:16px;height:2px;
+    background:var(--paper);
+    position:relative;
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle span::before{position:absolute; top:-5px;}
+  .nav-toggle span::after{position:absolute; top:5px;}
+  .nav-toggle[aria-expanded="true"] span{background:transparent;}
+  .nav-toggle[aria-expanded="true"] span::before{transform:translateY(5px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span::after{transform:translateY(-5px) rotate(-45deg);}
 
   /* ---------- HERO ---------- */
   .hero{
@@ -96,6 +134,17 @@
     grid-template-columns:1.1fr 1fr;
     gap:40px;
     align-items:center;
+    position:relative;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-40px; left:50%;
+    width:900px; height:520px;
+    transform:translateX(-50%);
+    background:radial-gradient(ellipse at center, rgba(63,214,196,0.10), transparent 65%);
+    pointer-events:none;
+    z-index:-1;
   }
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
@@ -148,12 +197,15 @@
     background:var(--signal);
     color:#0b0f16;
   }
-  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px rgba(212,255,74,0.25);
+  }
   .btn-ghost{
     border:1px solid var(--line);
     color:var(--paper);
   }
-  .btn-ghost:hover{border-color:var(--muted);}
+  .btn-ghost:hover{border-color:var(--muted); transform:translateY(-2px);}
 
   /* signature chart */
   .chart-card{
@@ -254,6 +306,7 @@
   .project-card:hover{
     transform:translateY(-4px);
     border-color:var(--data);
+    box-shadow:0 16px 32px rgba(0,0,0,0.28);
   }
   .project-card .status{
     font-family:'JetBrains Mono',monospace;
@@ -328,6 +381,8 @@
     flex-wrap:wrap;
     gap:20px;
   }
+  .contact-card{transition:border-color .25s ease;}
+  .contact-card:hover{border-color:var(--data);}
   .contact-card h2{font-size:1.6rem;}
   .contact-card p{color:var(--muted);margin-top:8px;}
 
@@ -344,7 +399,20 @@
     .about-grid{grid-template-columns:1fr;}
     .projects{grid-template-columns:1fr;}
     .skills-grid{grid-template-columns:1fr 1fr;}
-    .nav-links{display:none;}
+    .nav-toggle{display:flex;}
+    .nav-links{
+      display:none;
+      position:absolute;
+      top:64px; left:0; right:0;
+      flex-direction:column;
+      gap:0;
+      background:rgba(11,15,22,0.97);
+      border-bottom:1px solid var(--line);
+      padding:8px 28px 18px;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links li{padding:12px 0; border-top:1px solid var(--line);}
+    .nav-links a.active::after{display:none;}
     footer{flex-direction:column;gap:8px;}
   }
 
@@ -358,12 +426,15 @@
 <nav>
   <div class="wrap">
     <div class="nav-brand">ben.stats()</div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+      <span></span>
+    </button>
   </div>
 </nav>
 
@@ -585,6 +656,38 @@
     });
   }, {threshold:0.15});
   cards.forEach(c=>io.observe(c));
+})();
+
+// ---- mobile nav toggle ----
+(function(){
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', ()=>{
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', ()=>{
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+
+// ---- active nav link on scroll ----
+(function(){
+  const navA = document.querySelectorAll('.nav-links a');
+  const byId = id => document.querySelector(`.nav-links a[href="#${id}"]`);
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        navA.forEach(a=>a.classList.remove('active'));
+        const link = byId(e.target.id);
+        if(link) link.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
 })();
 </script>
 
