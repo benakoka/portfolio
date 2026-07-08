@@ -192,36 +192,55 @@
   }
   .btn-ghost:hover{border-color:var(--muted); transform:translateY(-2px);}
 
-  /* signature chart */
-  .chart-card{
+  /* signature terminal */
+  .terminal-card{
     background:var(--panel);
     border:1px solid var(--line);
     border-radius:var(--radius);
-    padding:20px 20px 14px;
+    overflow:hidden;
+  }
+  .terminal-bar{
     position:relative;
-  }
-  .chart-card .cap{
     display:flex;
-    justify-content:space-between;
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    color:var(--muted);
-    margin-bottom:8px;
+    align-items:center;
+    gap:8px;
+    padding:13px 16px;
+    background:var(--panel-2);
+    border-bottom:1px solid var(--line);
   }
-  canvas#scatter{
-    width:100%;
-    height:260px;
-    display:block;
-  }
-  .annotation{
+  .t-dot{width:10px; height:10px; border-radius:50%;}
+  .t-dot.t-red{background:#ff5f57;}
+  .t-dot.t-yellow{background:#febc2e;}
+  .t-dot.t-green{background:#28c840;}
+  .terminal-title{
     position:absolute;
+    left:50%;
+    transform:translateX(-50%);
     font-family:'JetBrains Mono',monospace;
     font-size:12px;
-    color:var(--signal);
-    opacity:0;
-    transition:opacity .6s ease;
+    color:var(--muted);
   }
-  .annotation.show{opacity:1;}
+  .terminal-body{
+    padding:24px 22px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+    line-height:1.8;
+    min-height:236px;
+  }
+  .terminal-line{display:flex;}
+  .terminal-line .prompt{color:var(--data); margin-right:9px; flex-shrink:0;}
+  .terminal-line .cmd-text{color:var(--paper);}
+  .terminal-output{color:var(--muted); margin:2px 0 18px;}
+  .term-cursor{
+    display:inline-block;
+    width:7px;
+    height:15px;
+    background:var(--signal);
+    margin-left:2px;
+    animation:term-blink .9s steps(1) infinite;
+    vertical-align:text-bottom;
+  }
+  @keyframes term-blink{50%{opacity:0;}}
 
   /* ---------- SECTION HEADERS ---------- */
   section{
@@ -529,12 +548,14 @@
     </div>
   </div>
 
-  <div class="chart-card">
-    <div class="cap">
-      <span>NBA career length vs. efficiency</span>
-      <span>n = 4,486</span>
+  <div class="terminal-card">
+    <div class="terminal-bar">
+      <span class="t-dot t-red"></span>
+      <span class="t-dot t-yellow"></span>
+      <span class="t-dot t-green"></span>
+      <span class="terminal-title">ben@portfolio — zsh</span>
     </div>
-    <canvas id="scatter" width="460" height="260"></canvas>
+    <div class="terminal-body" id="terminal"></div>
   </div>
 </header>
 
@@ -693,80 +714,72 @@
 </footer>
 
 <script>
-// ---- signature hero animation: scatter + fitted regression line ----
+// ---- signature hero animation: typed whoami-style terminal session ----
 (function(){
-  const canvas = document.getElementById('scatter');
-  const ctx = canvas.getContext('2d');
-  const dpr = window.devicePixelRatio || 1;
-  const W = canvas.clientWidth || 460;
-  const H = 260;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  ctx.scale(dpr, dpr);
-
+  const term = document.getElementById('terminal');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const PROMPT = 'ben@portfolio:~$';
 
-  // synthetic points loosely resembling "games played vs efficiency"
-  const N = 60;
-  const points = [];
-  for(let i=0;i<N;i++){
-    const x = 20 + Math.random()*(W-40);
-    const trend = H - 30 - (x/W)*(H-80);
-    const y = trend + (Math.random()-0.5)*70;
-    points.push({x, y: Math.max(20, Math.min(H-20,y)), r: 0});
+  const lines = [
+    { cmd: 'whoami', out: 'Ben Akoka — Statistics & Data Science, UCSB' },
+    { cmd: 'interests', out: 'Survival analysis, regression, clustering' },
+    { cmd: 'status', out: 'Open to internships & research' }
+  ];
+
+  function el(tag, cls, text){
+    const e = document.createElement(tag);
+    if(cls) e.className = cls;
+    if(text !== undefined) e.textContent = text;
+    return e;
   }
 
-  // regression line endpoints (matches synthetic trend)
-  const lineStart = {x:20, y:H-40};
-  const lineEnd = {x:W-20, y:60};
+  function idlePrompt(){
+    const line = el('div', 'terminal-line');
+    line.appendChild(el('span', 'prompt', PROMPT));
+    line.appendChild(el('span', 'term-cursor'));
+    term.appendChild(line);
+  }
 
-  let frame = 0;
-  const totalFrames = reduceMotion ? 1 : 70;
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-
-    // gridlines
-    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-    ctx.lineWidth = 1;
-    for(let gx=0; gx<=W; gx+=40){
-      ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke();
-    }
-    for(let gy=0; gy<=H; gy+=40){
-      ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke();
-    }
-
-    // points growing in
-    points.forEach((p, i)=>{
-      const delay = i*1.2;
-      const t = Math.max(0, Math.min(1, (frame - delay)/20));
-      const r = 3.2*t;
-      if(r<=0) return;
-      ctx.beginPath();
-      ctx.fillStyle = 'rgba(63,214,196,0.75)';
-      ctx.arc(p.x, p.y, r, 0, Math.PI*2);
-      ctx.fill();
+  if(reduceMotion){
+    lines.forEach(l=>{
+      const line = el('div', 'terminal-line');
+      line.appendChild(el('span', 'prompt', PROMPT));
+      line.appendChild(el('span', 'cmd-text', ' ' + l.cmd));
+      term.appendChild(line);
+      term.appendChild(el('div', 'terminal-output', l.out));
     });
-
-    // regression line draw-in
-    const lineT = Math.max(0, Math.min(1, (frame-30)/30));
-    if(lineT>0){
-      ctx.strokeStyle = '#d4ff4a';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(lineStart.x, lineStart.y);
-      ctx.lineTo(lineStart.x + (lineEnd.x-lineStart.x)*lineT, lineStart.y + (lineEnd.y-lineStart.y)*lineT);
-      ctx.stroke();
-    }
-
-    if(frame < totalFrames){
-      frame++;
-      requestAnimationFrame(draw);
-    } else if(!reduceMotion){
-      // gentle idle float restart occasionally
-    }
+    idlePrompt();
+    return;
   }
-  draw();
+
+  let li = 0;
+  function nextLine(){
+    if(li >= lines.length){ idlePrompt(); return; }
+    const l = lines[li++];
+    const line = el('div', 'terminal-line');
+    const cmdEl = el('span', 'cmd-text', '');
+    const cursorEl = el('span', 'term-cursor');
+    line.appendChild(el('span', 'prompt', PROMPT));
+    line.appendChild(cmdEl);
+    line.appendChild(cursorEl);
+    term.appendChild(line);
+
+    const full = ' ' + l.cmd;
+    let ci = 0;
+    const typer = setInterval(()=>{
+      ci++;
+      cmdEl.textContent = full.slice(0, ci);
+      if(ci >= full.length){
+        clearInterval(typer);
+        cursorEl.remove();
+        setTimeout(()=>{
+          term.appendChild(el('div', 'terminal-output', l.out));
+          setTimeout(nextLine, 550);
+        }, 250);
+      }
+    }, 45);
+  }
+  nextLine();
 })();
 
 // ---- scroll reveal for project cards ----
