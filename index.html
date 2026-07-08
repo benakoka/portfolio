@@ -398,8 +398,8 @@
   /* ---------- SKILLS ---------- */
   .skills-grid{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:26px;
+    grid-template-columns:repeat(4,max-content);
+    justify-content:space-between;
   }
   .skill-col .k{
     font-family:'JetBrains Mono',monospace;
@@ -486,7 +486,7 @@
     .about-text p + p{margin-top:16px;}
     .fact-list{grid-template-columns:1fr;}
     .projects{grid-template-columns:1fr;}
-    .skills-grid{grid-template-columns:1fr 1fr;}
+    .skills-grid{grid-template-columns:1fr 1fr; row-gap:32px; column-gap:40px;}
     .contact-links{grid-template-columns:1fr;}
     .nav-toggle{display:flex;}
     .nav-links{
@@ -629,7 +629,6 @@
           <li>Clustering</li>
           <li>Hypothesis testing</li>
           <li>Data visualization</li>
-          <li>Data storytelling &amp; presentations</li>
         </ul>
       </div>
       <div class="skill-col">
