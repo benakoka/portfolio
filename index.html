@@ -252,6 +252,36 @@
   }
   .about-grid p{color:var(--muted); max-width:56ch;}
   .about-grid p strong{color:var(--paper); font-weight:600;}
+  .about-body{
+    display:flex;
+    gap:24px;
+    align-items:flex-start;
+  }
+  .about-photo{
+    width:132px;
+    height:132px;
+    border-radius:16px;
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line);
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .about-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .about-photo .initial{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:2.6rem;
+    font-weight:600;
+    color:var(--data);
+  }
+  .about-text p + p{margin-top:16px;}
   .fact-list{
     list-style:none;
     margin:0;padding:0;
@@ -271,6 +301,23 @@
     letter-spacing:.04em;
   }
   .fact-list .v{font-size:15px;margin-top:2px;}
+  .linkedin-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    color:var(--paper);
+    text-decoration:none;
+    transition:color .2s ease, transform .2s ease;
+  }
+  .linkedin-link .li-icon{color:var(--data); flex-shrink:0;}
+  .linkedin-link .li-arrow{
+    opacity:0;
+    transform:translate(-4px,4px);
+    transition:opacity .2s ease, transform .2s ease;
+    flex-shrink:0;
+  }
+  .linkedin-link:hover{color:var(--data); transform:translateX(2px);}
+  .linkedin-link:hover .li-arrow{opacity:1; transform:translate(0,0);}
 
   /* ---------- PROJECTS ---------- */
   .projects{
@@ -395,6 +442,7 @@
   @media (max-width: 760px){
     .hero{grid-template-columns:1fr;padding-top:60px;}
     .about-grid{grid-template-columns:1fr;}
+    .about-body{flex-direction:column;}
     .projects{grid-template-columns:1fr;}
     .skills-grid{grid-template-columns:1fr 1fr;}
     .nav-toggle{display:flex;}
@@ -462,13 +510,25 @@
         <span class="tag">01</span>
         <h2>About</h2>
       </div>
-      <p><strong>I'm an undergraduate in Statistics and Data Science at UC Santa Barbara</strong>, spending most of my time somewhere between a Jupyter notebook and a whiteboard full of survival curves. I like problems where the data is messy and the question is real — not just clean textbook cases.</p>
-      <p style="margin-top:16px;">Previously I worked as a Data Analyst &amp; SEO Strategy intern at <strong>Taboola</strong>, and I'm currently exploring master's programs in AI/ML and data science, with a focus on in-person, well-regarded programs.</p>
+      <div class="about-body">
+        <div class="about-photo"><span class="initial">B</span></div>
+        <div class="about-text">
+          <p><strong>I'm an undergraduate in Statistics and Data Science at UC Santa Barbara</strong>, spending most of my time somewhere between a Jupyter notebook and a whiteboard full of survival curves. I like problems where the data is messy and the question is real — not just clean textbook cases.</p>
+          <p>Previously I worked as a Data Analyst &amp; SEO Strategy intern at <strong>Taboola</strong>, and I'm currently exploring master's programs in AI/ML and data science, with a focus on in-person, well-regarded programs.</p>
+        </div>
+      </div>
     </div>
     <ul class="fact-list">
       <li><span class="k">Based in</span><div class="v">Los Angeles, CA</div></li>
       <li><span class="k">Studying</span><div class="v">Statistics &amp; Data Science, UC Santa Barbara</div></li>
-      <li><span class="k">Past internship</span><div class="v">Data Analyst &amp; SEO Strategy, Taboola</div></li>
+      <li>
+        <span class="k">Connect</span>
+        <a class="v linkedin-link" href="https://www.linkedin.com/in/benakoka" target="_blank" rel="noopener noreferrer">
+          <svg class="li-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          <span>linkedin.com/in/benakoka</span>
+          <svg class="li-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+      </li>
     </ul>
   </div>
 </section>
