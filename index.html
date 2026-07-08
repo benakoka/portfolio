@@ -146,21 +146,6 @@
     pointer-events:none;
     z-index:-1;
   }
-  .eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    font-size:13px;
-    color:var(--data);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:18px;
-  }
-  .eyebrow::before{
-    content:"";
-    width:8px;height:8px;border-radius:50%;
-    background:var(--data);
-    box-shadow:0 0 0 4px rgba(63,214,196,0.15);
-  }
   .hero h1{
     font-size:clamp(2.4rem, 5vw, 3.6rem);
     line-height:1.06;
@@ -438,7 +423,7 @@
 
 <nav>
   <div class="wrap">
-    <div class="nav-brand">ben.stats()</div>
+    <div class="nav-brand">Ben Akoka</div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -453,9 +438,8 @@
 
 <header class="hero wrap">
   <div>
-    <div class="eyebrow">PSTAT &amp; DATA SCIENCE — UCSB</div>
-    <h1>I fit models to<br>messy, real&nbsp;<span class="hl">data.</span></h1>
-    <p class="lede">Ben — undergraduate statistician who likes finding the signal in noisy datasets, from career-length curves in the NBA to prior work in SEO analytics at Taboola.</p>
+    <h1>Hi, I'm&nbsp;<span class="hl">Ben.</span></h1>
+    <p class="lede">I'm a Statistics &amp; Data Science student at UC Santa Barbara. I like turning messy datasets into clear answers — from modeling NBA career longevity to SEO analytics work at Taboola.</p>
     <div class="hero-actions">
       <a class="btn btn-primary" href="#projects">See the work →</a>
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
@@ -464,7 +448,7 @@
 
   <div class="chart-card">
     <div class="cap">
-      <span>fig. 1 — fitted_model.py</span>
+      <span>NBA career length vs. efficiency</span>
       <span>n = 4,486</span>
     </div>
     <canvas id="scatter" width="460" height="260"></canvas>
@@ -483,9 +467,8 @@
     </div>
     <ul class="fact-list">
       <li><span class="k">Based in</span><div class="v">Los Angeles, CA</div></li>
-      <li><span class="k">Studying</span><div class="v">Statistics &amp; Data Science, UCSB</div></li>
+      <li><span class="k">Studying</span><div class="v">Statistics &amp; Data Science, UC Santa Barbara</div></li>
       <li><span class="k">Past internship</span><div class="v">Data Analyst &amp; SEO Strategy, Taboola</div></li>
-      <li><span class="k">Currently exploring</span><div class="v">Master's programs in AI/ML &amp; Data Science</div></li>
     </ul>
   </div>
 </section>
