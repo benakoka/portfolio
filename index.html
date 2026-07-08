@@ -255,12 +255,12 @@
   .about-grid p strong{color:var(--paper); font-weight:600;}
   .about-body{
     display:flex;
-    gap:24px;
-    align-items:flex-start;
+    gap:28px;
+    align-items:center;
   }
   .about-photo{
-    width:148px;
-    height:148px;
+    width:210px;
+    aspect-ratio:3/4;
     border-radius:var(--radius);
     background:linear-gradient(160deg, var(--panel), var(--panel-2));
     border:1px solid var(--line);
@@ -437,7 +437,7 @@
   @media (max-width: 760px){
     .hero{grid-template-columns:1fr;padding-top:60px;}
     .about-grid{grid-template-columns:1fr;}
-    .about-body{flex-direction:column;}
+    .about-body{flex-direction:column; align-items:flex-start;}
     .projects{grid-template-columns:1fr;}
     .skills-grid{grid-template-columns:1fr 1fr;}
     .nav-toggle{display:flex;}
