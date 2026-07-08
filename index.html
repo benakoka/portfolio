@@ -249,6 +249,7 @@
     display:grid;
     grid-template-columns:1.3fr 1fr;
     gap:50px;
+    align-items:center;
   }
   .about-grid p{color:var(--muted); max-width:56ch;}
   .about-grid p strong{color:var(--paper); font-weight:600;}
@@ -258,9 +259,9 @@
     align-items:flex-start;
   }
   .about-photo{
-    width:132px;
-    height:132px;
-    border-radius:16px;
+    width:148px;
+    height:148px;
+    border-radius:var(--radius);
     background:linear-gradient(160deg, var(--panel), var(--panel-2));
     border:1px solid var(--line);
     flex-shrink:0;
@@ -274,12 +275,6 @@
     height:100%;
     object-fit:cover;
     display:block;
-  }
-  .about-photo .initial{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:2.6rem;
-    font-weight:600;
-    color:var(--data);
   }
   .about-text p + p{margin-top:16px;}
   .fact-list{
@@ -511,7 +506,7 @@
         <h2>About</h2>
       </div>
       <div class="about-body">
-        <div class="about-photo"><span class="initial">B</span></div>
+        <div class="about-photo"><img src="assets/ben-photo.jpg" alt="Photo of Ben Akoka" loading="lazy" /></div>
         <div class="about-text">
           <p><strong>I'm an undergraduate in Statistics and Data Science at UC Santa Barbara</strong>, spending most of my time somewhere between a Jupyter notebook and a whiteboard full of survival curves. I like problems where the data is messy and the question is real — not just clean textbook cases.</p>
           <p>Previously I worked as a Data Analyst &amp; SEO Strategy intern at <strong>Taboola</strong>, and I'm currently exploring master's programs in AI/ML and data science, with a focus on in-person, well-regarded programs.</p>
