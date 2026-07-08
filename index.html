@@ -27,7 +27,7 @@
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; overflow-x:hidden;}
   body{
     margin:0;
     background:var(--ink);
@@ -141,7 +141,7 @@
     content:"";
     position:absolute;
     top:-40px; left:50%;
-    width:900px; height:520px;
+    width:min(900px, 100vw); height:520px;
     transform:translateX(-50%);
     background:radial-gradient(ellipse at center, rgba(63,214,196,0.10), transparent 65%);
     pointer-events:none;
