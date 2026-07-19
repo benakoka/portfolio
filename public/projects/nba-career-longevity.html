@@ -95,6 +95,7 @@
   .toc{
     display:flex; flex-wrap:wrap; gap:8px;
     padding:18px 28px;
+    border-top:1px solid var(--line);
   }
   .toc a{
     font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted);
@@ -103,9 +104,34 @@
   }
   .toc a:hover{color:var(--paper); border-color:var(--data);}
 
+  /* ---------- SIDE OUTLINE ---------- */
+  .side-toc{
+    position:fixed;
+    top:50%;
+    left:32px;
+    transform:translateY(-50%);
+    z-index:40;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .side-toc a{
+    font-size:12px;
+    color:var(--muted);
+    text-decoration:none;
+    padding-left:14px;
+    border-left:2px solid var(--line);
+    white-space:nowrap;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .side-toc a:hover{color:var(--paper);}
+  .side-toc a.active{color:var(--paper); border-left-color:var(--signal);}
+  @media (max-width:1320px){
+    .side-toc{display:none;}
+  }
+
   /* ---------- SECTIONS / PROSE ---------- */
-  section{padding:56px 0;}
-  #abstract{border-top:1px solid var(--line);}
+  section{padding:56px 0; border-top:1px solid var(--line);}
   .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:28px;}
   .sec-head .tag{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--data);}
   .sec-head h2{font-size:1.5rem; font-weight:600;}
@@ -218,6 +244,16 @@
   <div class="wrap">
     <a class="nav-back" href="/#projects">&larr; Back to portfolio</a>
   </div>
+</nav>
+
+<nav class="side-toc" aria-label="Section outline">
+  <a href="#abstract" class="mono">01 Abstract</a>
+  <a href="#introduction" class="mono">02 Introduction</a>
+  <a href="#methodology" class="mono">03 Methodology</a>
+  <a href="#data" class="mono">04 Data</a>
+  <a href="#results" class="mono">05 Results</a>
+  <a href="#conclusion" class="mono">06 Conclusion</a>
+  <a href="#references" class="mono">07 References</a>
 </nav>
 
 <header class="page-hero wrap">
@@ -681,6 +717,25 @@ long-term potential than raw statistical output.</p>
 <footer>
   <span>&copy; 2026 Ben. Built with data.</span>
 </footer>
+
+<script>
+// ---- side outline: highlight the section currently in view ----
+(function(){
+  var links = document.querySelectorAll('.side-toc a');
+  if(!links.length) return;
+  var byId = function(id){ return document.querySelector('.side-toc a[href="#' + id + '"]'); };
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        links.forEach(function(a){ a.classList.remove('active'); });
+        var link = byId(entry.target.id);
+        if(link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('section[id]').forEach(function(s){ io.observe(s); });
+})();
+</script>
 
 </body>
 </html>
