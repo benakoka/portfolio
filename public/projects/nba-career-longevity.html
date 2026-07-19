@@ -251,7 +251,7 @@
 <header class="page-hero wrap">
   <div class="eyebrow">PSTAT 100 &mdash; Data Science Concepts and Analysis</div>
   <h1>Playing Through Pain<br><span class="hl">Predicting NBA Career Longevity</span></h1>
-  <p class="authors">Benjamin Akoka &amp; Yuval Lewit</p>
+  <p class="authors">Benjamin Akoka, Yuval Lewit</p>
   <p class="lede">Driving question: <em>what factors most predict how long an NBA player sustains a productive career?</em></p>
   <div class="meta-row mono">
     <span>n = 4,486 players</span>
@@ -266,28 +266,27 @@
 <section id="abstract">
   <div class="wrap prose">
     <div class="sec-head"><span class="tag">01</span><h2>Abstract</h2></div>
-    <p>Professional basketball careers are simultaneously shaped by athletic talent, physical workload, and injury
-history &mdash; yet the relative contribution of each factor to career longevity remains poorly understood.
-This project investigates the predictors of NBA career length using three publicly available Kaggle datasets
-compiled from Basketball Reference and official NBA records: per-season player statistics covering 4,486
-players from 1947&ndash;2026, a game-level box score dataset of approximately
-1.67 million individual player records, and an injury log of ~37,600 injury list transaction entries with free-text
-injury descriptions spanning 1951&ndash;2023. Analysis is restricted to the modern NBA era (1980&ndash;2022) to
-ensure data completeness.</p>
-    <p>Four complementary modelling approaches are applied. An Ordinary Least Squares regression models total
-seasons played as a function of early-career workload, injury history, entry age, and position.
-A logistic regression classifier predicts whether a player will achieve a "long career" of ten or more seasons
-using only their first three years of data, achieving a ROC-AUC of 0.84. Kaplan-Meier survival curves and
-a Cox Proportional Hazards model examine how injury type and entry age affect the hazard of career
-termination. Finally, K-Means clustering partitions players into distinct workload profiles and compares
-career longevity across clusters.</p>
-    <p>The results reveal that talent selection and survivorship bias dominate the observable associations.
-High early-career minute load is positively associated with career length, as high-usage players are
-disproportionately talented and retain roster spots longer. Players who sustain severe injuries (ACL,
-Achilles) average longer careers for the same reason: only established stars accumulate enough court time to
-incur these injuries. Players entering the league at 18&ndash;19 &mdash; almost exclusively elite lottery picks &mdash;
-average over three more seasons than those entering at 22&ndash;23. These findings underscore the difficulty of
-isolating causal workload effects from talent.</p>
+    <p>NBA careers are shaped by talent, physical workload, and injury history, but it is not obvious how much
+each of these actually matters for how long a player lasts. This project looks at the predictors of NBA
+career length using three publicly available Kaggle datasets compiled from Basketball Reference and
+official NBA records: per-season player statistics covering 4,486 players from 1947&ndash;2026, a game-level
+box score dataset with about 1.67 million individual player records, and an injury log of roughly 37,600
+injury list transactions with free-text injury descriptions spanning 1951&ndash;2023. We restrict the analysis
+to the modern NBA era (1980&ndash;2022) so that the data is reasonably complete.</p>
+    <p>We apply four modelling approaches. An Ordinary Least Squares regression models total seasons played as a
+function of early-career workload, injury history, entry age, and position. A logistic regression
+classifier predicts whether a player will reach a "long career" of ten or more seasons using only their
+first three years of data, and reaches a ROC-AUC of 0.84. Kaplan-Meier survival curves and a Cox
+Proportional Hazards model examine how injury type and entry age affect the hazard of a career ending.
+Finally, K-Means clustering groups players into distinct workload profiles and compares career longevity
+across clusters.</p>
+    <p>The main takeaway is that talent selection and survivorship bias drive most of what we observe. High
+early-career minute load is positively associated with career length, since high-usage players tend to
+be more talented and hold onto roster spots longer. Players who suffer severe injuries (ACL, Achilles)
+actually average longer careers for the same reason: only established players spend enough time on the
+court to pick up these injuries in the first place. Players who enter the league at 18&ndash;19, almost all of
+whom are elite lottery picks, average over three more seasons than players entering at 22&ndash;23. Together,
+these results show how hard it is to separate a causal workload effect from talent.</p>
   </div>
 </section>
 
@@ -296,18 +295,18 @@ isolating causal workload effects from talent.</p>
   <div class="wrap prose">
     <div class="sec-head"><span class="tag">02</span><h2>Introduction</h2></div>
     <h3>Background and Motivation</h3>
-    <p>An NBA career is among the most physically demanding in professional sport. The average career lasts
-approximately four to five seasons, and only a small number of players sustain productive careers exceeding
-fifteen years. Understanding what differentiates long-career players from short-career ones has practical
-implications for team management (roster construction, load management decisions), player development
-(draft evaluation, minutes allocation for young players), and sports medicine (identifying injury types that
-carry the highest long-term risk).</p>
-    <p>There are two competing narratives that exist in sports media. The first argues that heavy early-career workloads
-&mdash; particularly for players who enter the league as teenagers &mdash; accelerate physical wear and shorten careers.
-The second argues that player quality is the dominant factor: elite players both receive heavy minutes AND
-sustain long careers, making the workload-longevity relationship positive in the raw data even if the true
-causal effect is neutral or negative. Distinguishing these narratives requires careful statistical modelling
-that controls for talent proxies.</p>
+    <p>An NBA career is one of the most physically demanding careers in professional sports. The average career
+lasts around four to five seasons, and only a handful of players manage productive careers past fifteen
+years. Figuring out what separates long-career players from short-career ones has real implications for
+team management (roster construction, load management decisions), player development (draft evaluation,
+minutes allocation for young players), and sports medicine (identifying which injury types carry the
+highest long-term risk).</p>
+    <p>There are two competing narratives in sports media. The first argues that heavy early-career workloads,
+especially for players who enter the league as teenagers, wear the body down and shorten careers. The
+second argues that player quality is the dominant factor: elite players both receive heavy minutes AND
+sustain long careers, so the workload-longevity relationship looks positive in the raw data even if the
+true causal effect is neutral or negative. Telling these two stories apart requires careful statistical
+modelling that controls for talent proxies.</p>
     <p>In terms of motivation, we are both basketball fanatics, and love to play, watch, and talk basketball. When
 brainstorming project ideas we knew immediately that we wanted to revolve it around the sport, but were unsure
 which direction to take it in. We are both Clippers fans, and anyone who knows anything about basketball knows
@@ -332,19 +331,19 @@ results, and learned a great deal throughout this process.</p>
     <div class="formula-block mono">β̂ = (XᵀX)⁻¹XᵀY</div>
     <p>Model fit is assessed via the coefficient of determination <code class="fx">R² = 1 &minus; SS_res / SS_tot</code>
 and root mean squared error <code class="fx">RMSE = √( (1/n) Σ(yᵢ &minus; ŷᵢ)² )</code>.
-Residual plots are used to verify the homoscedasticity and normality assumptions. The F-statistic tests
+Residual plots are used to check the homoscedasticity and normality assumptions. The F-statistic tests
 the joint significance of all predictors. Inference uses a 80/20 train&ndash;test split.</p>
 
     <h3>3.2 Logistic Regression (Classification)</h3>
-    <p>To predict a binary outcome &mdash; long career (<em>Y</em>=1, &ge;10 seasons) vs short career (<em>Y</em>=0) &mdash; we fit a
+    <p>To predict a binary outcome (long career, <em>Y</em>=1, &ge;10 seasons, vs short career, <em>Y</em>=0) we fit a
 logistic regression model:</p>
     <div class="formula-block mono">P(Y=1 | X) = σ(Xβ) = 1 / (1 + e<sup>&minus;Xβ</sup>)</div>
     <p>Parameters β are estimated by maximising the log-likelihood via gradient descent. Features are
-standardised prior to fitting to ensure comparable coefficient magnitudes. Model evaluation uses:</p>
-    <ul><li><strong>Confusion matrix</strong> &mdash; counts of true/false positives and negatives.</li><li><strong>ROC curve and AUC</strong> &mdash; the area under the receiver operating characteristic curve; AUC = 1 is perfect, AUC = 0.5 is no better than random.</li></ul>
+standardised before fitting so the coefficient magnitudes are comparable. Model evaluation uses:</p>
+    <ul><li><strong>Confusion matrix:</strong> counts of true/false positives and negatives.</li><li><strong>ROC curve and AUC:</strong> the area under the receiver operating characteristic curve; AUC = 1 is perfect, AUC = 0.5 is no better than random.</li></ul>
 
     <h3>3.3 Survival Analysis</h3>
-    <p><strong>Kaplan&ndash;Meier Estimator.</strong> The non-parametric survival function is estimated as:</p>
+    <p><strong>Kaplan-Meier Estimator.</strong> The non-parametric survival function is estimated as:</p>
     <div class="formula-block mono">Ŝ(t) = ∏<sub>tᵢ&le;t</sub> ( 1 &minus; dᵢ/nᵢ )</div>
     <p>where <em>dᵢ</em> is the number of career endings (events) at time <em>tᵢ</em> and <em>nᵢ</em> is the number of players still
 active just before <em>tᵢ</em>. Players still active at the end of the observation window (2022) are treated as
@@ -361,11 +360,11 @@ estimated via partial likelihood, which eliminates the nuisance baseline hazard.
     <p>K-Means partitions <em>n</em> players into <em>K</em> clusters by minimising the within-cluster sum of squared
 Euclidean distances:</p>
     <div class="formula-block mono">min<sub>{Cₖ}</sub> Σₖ Σ<sub>x&isin;Cₖ</sub> &Vert;x &minus; μₖ&Vert;²</div>
-    <p>where <em>μₖ</em> is the centroid of cluster <em>Cₖ</em>. Lloyd's algorithm iterates between assigning each point
+    <p>where <em>μₖ</em> is the centroid of cluster <em>Cₖ</em>. Lloyd's algorithm alternates between assigning each point
 to its nearest centroid and recomputing centroids until convergence. Features are standardised to unit
-variance before clustering. The optimal <em>K</em> is selected using the <strong>elbow method</strong>: plotting within-cluster
-inertia against <em>K</em> and choosing the value at which marginal gains diminish. Career longevity is then
-compared across clusters to assess whether workload archetype is associated with career length.</p>
+variance before clustering. The optimal <em>K</em> is chosen with the <strong>elbow method</strong>: we plot within-cluster
+inertia against <em>K</em> and pick the value where the marginal gains start to level off. Career longevity is
+then compared across clusters to see whether workload archetype is associated with career length.</p>
   </div>
 </section>
 
@@ -375,7 +374,7 @@ compared across clusters to assess whether workload archetype is associated with
     <div class="sec-head"><span class="tag">04</span><h2>Data</h2></div>
 
     <h3>4.1 Data Sources and Sample Description</h3>
-    <p>Three publicly available datasets from <a href="https://www.kaggle.com" target="_blank" rel="noopener">Kaggle</a> are used, all compiled from
+    <p>We use three publicly available datasets from <a href="https://www.kaggle.com" target="_blank" rel="noopener">Kaggle</a>, all compiled from
 <a href="https://www.basketball-reference.com" target="_blank" rel="noopener">Basketball Reference</a> and official NBA records:</p>
     <div class="table-wrap">
 <table class="result-table">
@@ -385,22 +384,22 @@ compared across clusters to assess whether workload archetype is associated with
 </table>
 </div>
     <p>The unit of observation in the per-season files is a <strong>player-season</strong> pair. The injury log records each
-individual injury list (IL) placement transaction. Analysis is restricted to the <strong>modern NBA era (1980&ndash;2022)</strong> to
-avoid the sparse pre-IL period identified in the proposal. Players must have appeared in at least
-<strong>20 games</strong> in a season for it to count toward career length, filtering out brief call-ups.</p>
-    <p>The resulting sample is a convenience sample of all NBA players active between 1980 and 2022. Because
-we observe the entire population of active NBA players (not a random draw from it), formal frequentist
-inference should be interpreted as describing effect sizes within this population rather than generalising
-to a broader population.</p>
+individual injury list (IL) placement transaction. We restrict the analysis to the <strong>modern NBA era
+(1980&ndash;2022)</strong> to avoid the sparse pre-IL period identified in the proposal. A season only counts toward
+career length if the player appeared in at least <strong>20 games</strong>, which filters out brief call-ups.</p>
+    <p>The resulting sample is a convenience sample of all NBA players active between 1980 and 2022. Since we
+observe the entire population of active NBA players rather than a random draw from it, formal frequentist
+inference should be read as describing effect sizes within this population rather than generalising to
+some broader population.</p>
 
     <h3>4.2 Cleaning &amp; Feature Engineering</h3>
     <p class="note">Data cleaning, missingness handling, injury-type parsing from free text, and the full feature-engineering
 pipeline (early-career workload, injury aggregation, career-level rollups) are covered step by step in the notebook. &mdash;
-      <a href="https://github.com/benakoka/portfolio/blob/main/projects/nba-career-longevity.ipynb" target="_blank" rel="noopener">see full notebook &rarr;</a></p>
+      <a href="https://github.com/benakoka/portfolio/blob/main/public/projects/nba-career-longevity.ipynb" target="_blank" rel="noopener">see full notebook &rarr;</a></p>
 
     <h3>4.3 Exploratory Data Analysis</h3>
-    <p>The following visualizations characterize the distribution of career lengths, positional and era-based
-differences, injury patterns, and the relationship between early-career workload and longevity.</p>
+    <p>The visualizations below look at the distribution of career lengths, differences across positions and
+eras, injury patterns, and how early-career workload relates to longevity.</p>
 
     <h4>Career length distribution and era comparison</h4>
     <figure class="figure wide">
@@ -432,14 +431,14 @@ differences, injury patterns, and the relationship between early-career workload
 <section id="results">
   <div class="wrap prose">
     <div class="sec-head"><span class="tag">05</span><h2>Results</h2></div>
-    <p>The four modelling approaches are applied sequentially. Each subsection presents model fitting results,
-discusses performance metrics, and interprets findings in the context of the four research questions.</p>
+    <p>We apply the four modelling approaches in order. Each subsection presents the model fitting results,
+goes over performance metrics, and interprets the findings in the context of our four research questions.</p>
 
-    <h3>5.1 Linear Regression &mdash; Predicting Total Career Seasons</h3>
-    <p>OLS regression is used to model total career seasons as a linear function of early-career workload,
+    <h3>5.1 Linear Regression: Predicting Total Career Seasons</h3>
+    <p>We use OLS regression to model total career seasons as a linear function of early-career workload,
 injury history, entry age, and position. The statsmodels summary below provides coefficient estimates,
-standard errors, p-values, and the F-statistic. Features are not standardised here to preserve
-interpretability of coefficients in natural units (seasons per MPG, etc.).</p>
+standard errors, p-values, and the F-statistic. We do not standardise features here so that the
+coefficients stay interpretable in natural units (seasons per MPG, etc.).</p>
     <pre class="output-block">                            OLS Regression Results
 ==============================================================================
 Dep. Variable:         career_seasons   R-squared:                       0.447
@@ -509,10 +508,10 @@ pos_G                  -1.0574      0.244     -4.338      0.000      -1.535     
 </table>
 </div>
 
-    <h3>5.2 Classification &mdash; Predicting Long vs Short Career</h3>
-    <p>A logistic regression classifier is trained on first-three-year features to predict whether a player
-will achieve a long career (&ge;10 seasons). Features are standardised before fitting. The model is
-evaluated on the held-out 20% test set.</p>
+    <h3>5.2 Classification: Predicting Long vs Short Career</h3>
+    <p>We train a logistic regression classifier on first-three-year features to predict whether a player will
+reach a long career (&ge;10 seasons). Features are standardised before fitting, and the model is evaluated
+on the held-out 20% test set.</p>
     <pre class="output-block">              precision    recall  f1-score   support
 
 Short career       0.83      0.95      0.88       425
@@ -528,21 +527,21 @@ ROC-AUC: 0.841</pre>
   <figcaption><span class="fig-tag">fig. 7</span> Confusion matrix, ROC curve (AUC = 0.841), and standardised logistic regression coefficients.</figcaption>
 </figure>
 
-    <h3>5.3 Survival Analysis &mdash; Career Duration and Attrition Risk</h3>
-    <p>Kaplan-Meier curves estimate the survival function (probability of still being active after <em>t</em> seasons)
-for subgroups defined by injury type and entry age. Log-rank tests assess whether group differences are
-statistically significant. The Cox PH model then jointly estimates the effect of all predictors on the
-retirement hazard, controlling for confounders.</p>
-    <p>Players with <code>to &ge; 2022</code> are treated as right-censored (still active at the end of the observation
+    <h3>5.3 Survival Analysis: Career Duration and Attrition Risk</h3>
+    <p>Kaplan-Meier curves estimate the survival function (the probability of still being active after <em>t</em>
+seasons) for subgroups defined by injury type and entry age. Log-rank tests check whether the group
+differences are statistically significant. The Cox PH model then jointly estimates the effect of all
+predictors on the retirement hazard while controlling for confounders.</p>
+    <p>Players with <code>to &gt;= 2022</code> are treated as right-censored (still active at the end of the observation
 window). The event indicator <code>career_ended = 1</code> marks confirmed retirements.</p>
 
-    <h4>Kaplan&ndash;Meier: severe injury vs no severe injury</h4>
+    <h4>Kaplan-Meier: severe injury vs no severe injury</h4>
     <figure class="figure">
   <div class="figure-frame"><img src="assets/nba-longevity/km-severe-injury.png" alt="Players with a severe injury (ACL/Achilles) show no worse survival than uninjured players &mdash; consistent with survivorship bias." loading="lazy"></div>
   <figcaption><span class="fig-tag">fig. 8</span> Players with a severe injury (ACL/Achilles) show no worse survival than uninjured players &mdash; consistent with survivorship bias.</figcaption>
 </figure>
 
-    <h4>Kaplan&ndash;Meier: entry age group</h4>
+    <h4>Kaplan-Meier: entry age group</h4>
     <figure class="figure">
   <div class="figure-frame"><img src="assets/nba-longevity/km-entry-age.png" alt="Players entering the league at 18&ndash;19 have markedly better survival than those entering at 22+." loading="lazy"></div>
   <figcaption><span class="fig-tag">fig. 9</span> Players entering the league at 18&ndash;19 have markedly better survival than those entering at 22+.</figcaption>
@@ -606,10 +605,10 @@ window). The event indicator <code>career_ended = 1</code> marks confirmed retir
   <figcaption><span class="fig-tag">fig. 10</span> Cox PH coefficients with 95% CI. Bright markers cross zero on neither side (statistically significant); entry age is the only predictor associated with higher retirement hazard.</figcaption>
 </figure>
 
-    <h3>5.4 Unsupervised Learning &mdash; K-Means Workload Clustering</h3>
-    <p>K-Means is applied to cluster players by early-career workload profile (MPG, games per season, PPG,
-entry age). The elbow method guides the choice of <em>K</em>. Cluster profiles are then compared on career
-longevity to assess whether workload archetype is associated with career length.</p>
+    <h3>5.4 Unsupervised Learning: K-Means Workload Clustering</h3>
+    <p>We apply K-Means to cluster players by early-career workload profile (MPG, games per season, PPG,
+entry age), using the elbow method to guide the choice of <em>K</em>. We then compare career longevity across
+the cluster profiles to see whether workload archetype is associated with career length.</p>
     <figure class="figure">
   <div class="figure-frame"><img src="assets/nba-longevity/kmeans-elbow.png" alt="Elbow plot of within-cluster inertia vs K, guiding the choice of K = 4." loading="lazy"></div>
   <figcaption><span class="fig-tag">fig. 11</span> Elbow plot of within-cluster inertia vs K, guiding the choice of K = 4.</figcaption>
@@ -652,37 +651,37 @@ longevity to assess whether workload archetype is associated with career length.
     <div class="sec-head"><span class="tag">06</span><h2>Conclusion</h2></div>
 
     <h3>6.1 Summary of Findings</h3>
-    <p>This project applied four complementary statistical methods to investigate predictors of NBA career longevity
-    using modern-era data (1980&ndash;2022). The key findings for each research question are as follows:</p>
+    <p>This project applied four complementary statistical methods to investigate the predictors of NBA career
+    longevity using modern-era data (1980&ndash;2022). Here is what we found for each research question:</p>
 
-    <p><strong>Q1 &mdash; Does high early-career minute load shorten career length?</strong></p>
+    <p><strong>Q1: Does high early-career minute load shorten career length?</strong></p>
     <p>The OLS regression finds that early-career MPG is <em>positively</em> associated with career length
-(&beta; &asymp; +0.11, p &lt; 0.001). This is consistent with a talent-selection interpretation: players who receive
-heavy minutes early are disproportionately talented and maintain roster spots longer. There is no evidence
-in the observed data that heavy early usage mechanically shortens careers on average.</p>
-    <p><strong>Q2 &mdash; Which injury types carry the highest risk of career termination?</strong></p>
+(&beta; &asymp; +0.11, p &lt; 0.001). This fits a talent-selection story: players who get heavy minutes early are
+disproportionately talented and hold onto roster spots longer. Nothing in the observed data suggests
+that heavy early usage mechanically shortens careers on average.</p>
+    <p><strong>Q2: Which injury types carry the highest risk of career termination?</strong></p>
     <p>Counterintuitively, players who sustain ACL, Achilles, and back injuries average <em>longer</em> careers than
-uninjured players &mdash; a survivorship bias effect, since only high-usage star players are on the court long
-enough to incur these injuries. The Cox PH model confirms that severe injuries carry no statistically
-significant additional retirement hazard once talent proxies (BPM, MPG) are controlled for. This does
-not mean these injuries are harmless; it means their career-ending effect is masked by the positive
-selection of who gets injured in the first place.</p>
-    <p><strong>Q3 &mdash; Do 18&ndash;19 year-old entrants have shorter careers than 21&ndash;23 entrants?</strong></p>
-    <p>Players entering the NBA at 18&ndash;19 average approximately 3.3 more seasons than those entering at 22&ndash;23.
-This result is driven by selection: players who enter the league as teenagers are almost exclusively lottery picks of exceptional
-talent. Players entering at 24+ have the shortest careers, reflecting their status as
-undrafted or late-round players with narrow roster windows.</p>
-    <p><strong>Q4 &mdash; Can we predict long-career players from first-three-year data?</strong></p>
-    <p>Yes &mdash; the logistic regression achieves a ROC-AUC of 0.84, indicating strong predictive power. Games
-played per season is the single most predictive feature, followed by BPM and injury history. This
-suggests that early <em>availability</em> (staying healthy and on the floor) is a more reliable signal of
-long-term potential than raw statistical output.</p>
+uninjured players. This is a survivorship bias effect, since only high-usage star players are on the
+court long enough to pick up these injuries. The Cox PH model confirms that severe injuries carry no
+statistically significant additional retirement hazard once talent proxies (BPM, MPG) are controlled
+for. That does not mean these injuries are harmless; it means their career-ending effect is masked by
+the positive selection of who gets injured in the first place.</p>
+    <p><strong>Q3: Do 18&ndash;19 year-old entrants have shorter careers than 21&ndash;23 entrants?</strong></p>
+    <p>No. Players entering the NBA at 18&ndash;19 average roughly 3.3 more seasons than those entering at 22&ndash;23.
+This is driven by selection: players who enter the league as teenagers are almost exclusively lottery
+picks of exceptional talent. Players entering at 24+ have the shortest careers, which reflects their
+status as undrafted or late-round players with narrow roster windows.</p>
+    <p><strong>Q4: Can we predict long-career players from first-three-year data?</strong></p>
+    <p>Yes. The logistic regression reaches a ROC-AUC of 0.84, which indicates strong predictive power. Games
+played per season is the single most predictive feature, followed by BPM and injury history. In other
+words, early <em>availability</em> (staying healthy and on the floor) is a more reliable signal of long-term
+potential than raw statistical output.</p>
 
     <h3>6.2 Limitations</h3>
-    <ul><li><strong>Survivorship bias:</strong> Players who exit the league early have fewer records, biasing injury and workload associations upward for longer-career players.</li><li><strong>Talent confounding:</strong> Both playing time and career length are driven by talent, making it impossible to isolate a causal workload effect with observational regression alone.</li><li><strong>Injury data completeness:</strong> Historical injury list reporting was inconsistent before the formal IL system was fully established; injury counts for pre-1990 players are likely underestimates.</li><li><strong>Right-censoring:</strong> Players still active in 2022 are right-censored; their eventual career lengths are unobserved.</li></ul>
+    <ul><li><strong>Survivorship bias:</strong> Players who exit the league early have fewer records, which biases injury and workload associations upward for longer-career players.</li><li><strong>Talent confounding:</strong> Both playing time and career length are driven by talent, so observational regression alone cannot isolate a causal workload effect.</li><li><strong>Injury data completeness:</strong> Historical injury list reporting was inconsistent before the formal IL system was fully established, so injury counts for pre-1990 players are likely underestimates.</li><li><strong>Right-censoring:</strong> Players still active in 2022 are right-censored, meaning their eventual career lengths are unobserved.</li></ul>
 
     <h3>6.3 Proposed Continuations</h3>
-    <ol><li><strong>Instrumental variable regression</strong> using draft position as an instrument for playing time, to better isolate the causal effect of early-career workload from talent confounding.</li><li><strong>Random survival forests</strong> (a non-parametric survival method) would relax the proportional hazards assumption of the Cox model and potentially capture non-linear interactions between predictors.</li><li><strong>Natural language processing</strong> on injury notes to extract richer injury severity signals (e.g., distinguishing a torn ACL from a partial tear, or single-event injuries from chronic conditions).</li><li><strong>Panel data / mixed-effects models</strong> to account for within-player correlation across seasons and better model the trajectory of performance decline rather than just career-end events.</li><li><strong>Comparison across leagues</strong> (European basketball, G-League) to test whether the findings generalise beyond the NBA selection mechanism.</li></ol>
+    <ol><li><strong>Instrumental variable regression</strong> using draft position as an instrument for playing time, to better separate the causal effect of early-career workload from talent confounding.</li><li><strong>Random survival forests</strong> (a non-parametric survival method) would relax the proportional hazards assumption of the Cox model and could capture non-linear interactions between predictors.</li><li><strong>Natural language processing</strong> on the injury notes to extract richer injury severity signals (for example, distinguishing a torn ACL from a partial tear, or one-off injuries from chronic conditions).</li><li><strong>Panel data / mixed-effects models</strong> to account for within-player correlation across seasons and to model the trajectory of performance decline rather than just career-end events.</li><li><strong>Comparison across leagues</strong> (European basketball, G-League) to test whether the findings hold beyond the NBA's particular selection mechanism.</li></ol>
   </div>
 </section>
 
