@@ -1,8 +1,11 @@
+import BackButton from "@/components/names/BackButton";
+
 export const metadata = { title: "Methodology" };
 
 export default function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-7 py-16">
+      <BackButton />
       <h1 className="text-3xl font-semibold mb-8">Methodology</h1>
 
       <div className="space-y-8 text-sm text-muted leading-relaxed">
