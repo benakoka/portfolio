@@ -178,7 +178,8 @@
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 14px;
   line-height: 1.8;
-  min-height: 236px;
+  height: 292px;
+  overflow: hidden;
 }
 .portfolio-page .terminal-line { display: flex; }
 .portfolio-page .terminal-line .prompt { color: var(--data); margin-right: 9px; flex-shrink: 0; }
@@ -279,10 +280,12 @@
   gap: 22px;
 }
 .portfolio-page .project-card {
+  display: block;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 26px;
+  text-decoration: none;
   transition: transform .25s ease, border-color .25s ease;
   opacity: 0;
   transform: translateY(16px);
@@ -303,6 +306,7 @@
 .portfolio-page .project-card h3 {
   margin-top: 10px;
   font-size: 1.2rem;
+  font-weight: 600;
 }
 .portfolio-page .project-card p {
   color: var(--muted);
@@ -323,19 +327,6 @@
   border: 1px solid var(--line);
   color: var(--muted);
 }
-.portfolio-page .project-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 18px;
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--data);
-  text-decoration: none;
-  transition: color .2s ease;
-}
-.portfolio-page .project-link:hover { color: var(--signal); }
 .portfolio-page .project-card.empty {
   display: flex;
   flex-direction: column;
@@ -379,7 +370,7 @@
   transition: border-color .25s ease;
 }
 .portfolio-page .contact-card:hover { border-color: var(--data); }
-.portfolio-page .contact-card h2 { font-size: 1.6rem; }
+.portfolio-page .contact-card h2 { font-size: 1.6rem; font-weight: 600; }
 .portfolio-page .contact-card p { color: var(--muted); margin-top: 8px; }
 .portfolio-page .contact-links {
   display: grid;

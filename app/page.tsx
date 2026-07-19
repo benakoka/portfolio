@@ -69,7 +69,7 @@ export default function Home() {
           </div>
           <div className="projects">
 
-            <div className="project-card">
+            <a className="project-card" href="/projects/nba-career-longevity.html">
               <span className="status">● Completed</span>
               <h3>NBA Career Longevity</h3>
               <p>Analyzed career length across 4,486 NBA players using injury logs, box scores, and season stats. Modeled survival with Kaplan-Meier curves and Cox regression, compared against OLS and logistic regression, and used K-Means to cluster player archetypes. Built and delivered a presentation with a research partner.</p>
@@ -79,10 +79,9 @@ export default function Home() {
                 <span className="chip">K-Means</span>
                 <span className="chip">Python</span>
               </div>
-              <a className="project-link" href="/projects/nba-career-longevity.html">View project →</a>
-            </div>
+            </a>
 
-            <div className="project-card">
+            <a className="project-card" href="/names">
               <span className="status">● Completed</span>
               <h3>What Does the Internet Think of Your Name?</h3>
               <p>An interactive tool that turns any first name into a data-driven profile: living-age distribution weighted by SSA actuarial survival tables, a full 1880–present popularity arc with trend-archetype classification, cosine-similarity &quot;name neighbors,&quot; and a US geographic over-index map. Built from real SSA national and state baby-name data.</p>
@@ -92,8 +91,7 @@ export default function Home() {
                 <span className="chip">SQLite</span>
                 <span className="chip">Actuarial Analysis</span>
               </div>
-              <a className="project-link" href="/names">View project →</a>
-            </div>
+            </a>
 
             <div className="project-card empty">
               <span className="status">○ In progress</span>
