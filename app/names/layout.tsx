@@ -23,7 +23,7 @@ export default function NamesLayout({
       <nav className="sticky top-0 z-50 backdrop-blur-md bg-ink/75 border-b border-line">
         <div className="max-w-5xl mx-auto px-5 sm:px-7 h-16 flex items-center justify-between gap-3">
           <Link
-            href="/"
+            href="/#projects"
             className="font-mono text-xs sm:text-sm text-data whitespace-nowrap shrink-0 hover:text-paper transition-colors"
           >
             ← Back to portfolio
