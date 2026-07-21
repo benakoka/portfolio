@@ -12,14 +12,15 @@ export default function AboutPage() {
         <section>
           <h2 className="text-paper text-lg font-semibold mb-2">Data sources</h2>
           <p>
-            Everything here is built from three SSA datasets: the national
-            baby names file (name, sex, and count by year, back to 1880),
-            the state-level baby names file (1910 onward), and the SSA
-            period life table, which gives survival probabilities by
-            single year of age and sex. One thing worth knowing &mdash; SSA
-            itself drops any name given to fewer than 5 babies in a year,
-            so a genuinely rare name will show up as &ldquo;limited
-            data&rdquo; instead of a full profile.
+            The numbers on this site come from three SSA datasets. There&apos;s
+            the national baby names file (name, sex, and count going back
+            to 1880), the state-level version of that same file (1910
+            onward), and the SSA&apos;s period life table, which has
+            survival probabilities broken out by age and sex. Worth
+            knowing: SSA already excludes any name given to fewer than 5
+            babies in a year. So if a name is genuinely rare, you&apos;ll
+            just see a &ldquo;limited data&rdquo; note instead of a real
+            profile.
           </p>
         </section>
 
@@ -32,12 +33,12 @@ export default function AboutPage() {
             distribution today isn&apos;t the same as it was when the name
             was popular. What we actually do is take every birth-year
             cohort and weight it by that cohort&apos;s survival probability
-            to today, pulling the numbers from the SSA life table&apos;s
-            number-of-lives column (l<sub>x</sub>), split by sex. Peaked in
-            1950? That cohort has had 75 years to age and thin out. Peaked
-            in 2015? Barely any time at all. So the median and 15th/85th
-            percentile ages you see are survival-weighted &mdash; not just
-            raw birth counts from however many decades ago.
+            to today, using the SSA life table&apos;s number-of-lives
+            column (l<sub>x</sub>), split by sex. Peaked in 1950? That
+            cohort has had 75 years to age and thin out. Peaked in 2015?
+            Barely any time at all. The median and 15th/85th percentile
+            ages you see come from that survival-weighted distribution, not
+            just raw birth counts from however many decades back.
           </p>
         </section>
 
@@ -46,15 +47,16 @@ export default function AboutPage() {
             Popularity arc &amp; trend archetype
           </h2>
           <p>
-            We measure popularity as a share of all births in a given year,
-            not raw counts &mdash; otherwise you&apos;d be comparing eras
-            with wildly different birth volumes and the whole thing would
-            fall apart. The archetype badge takes a bit more work: we run
-            k-means clustering on a few shape features of each name&apos;s
-            curve (how recent the peak is, how long it stayed active, how
-            much of that peak strength survives today, whether it dipped
-            and then came back), then match each resulting cluster to
-            whichever of six hand-defined archetypes fits best.
+            We measure popularity as a share of all births in a given year
+            rather than raw counts. Otherwise you&apos;d be comparing eras
+            with wildly different birth volumes, and the comparison
+            wouldn&apos;t mean much. The archetype badge takes more work.
+            We run k-means clustering on a handful of shape features from
+            each name&apos;s curve: how recent the peak is, how long it
+            stayed active, how much of that peak strength survives today,
+            and whether it dipped and then came back. Each resulting
+            cluster gets matched to whichever of six hand-defined
+            archetypes fits best.
           </p>
         </section>
 
@@ -63,12 +65,13 @@ export default function AboutPage() {
             Name neighbors
           </h2>
           <p>
-            These come from cosine similarity between full-resolution
-            yearly popularity curves &mdash; names whose rise and fall
-            tracked each other closely over the decades. We filter out
-            simple spelling variants on purpose, otherwise half your
-            &ldquo;neighbors&rdquo; would just be other spellings of your
-            own name, which isn&apos;t very interesting.
+            Name neighbors come from cosine similarity between
+            full-resolution yearly popularity curves. In plain terms,
+            names whose rise and fall tracked each other closely over the
+            decades. We filter out simple spelling variants on purpose.
+            Otherwise half your &ldquo;neighbors&rdquo; would just be other
+            spellings of your own name, which isn&apos;t much of an
+            insight.
           </p>
         </section>
 
