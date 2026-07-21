@@ -166,7 +166,7 @@ export default function Home() {
         <div className="wrap">
           <div className="contact-card">
             <div>
-              <h2>Let&apos;s connect!</h2>
+              <h2>Let&apos;s connect.</h2>
               <p>Open to internships, research collaborations, and graduate program conversations.</p>
             </div>
             <div className="contact-links">
