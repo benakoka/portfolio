@@ -22,14 +22,17 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://benakokaportfolio.vercel.app"),
+  metadataBase: new URL("https://benakoka.com"),
   title: "Ben Akoka — Statistics & Data Science",
   description: "Portfolio of Ben Akoka, Statistics & Data Science student at UCSB.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Ben Akoka — Statistics & Data Science",
     description: "Portfolio of Ben Akoka, Statistics & Data Science student at UCSB.",
     type: "website",
-    url: "https://benakokaportfolio.vercel.app/",
+    url: "https://benakoka.com/",
     images: [
       {
         url: "/assets/og-image.png",

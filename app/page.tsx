@@ -1,9 +1,28 @@
 import "./portfolio.css";
 import PortfolioInteractivity from "@/components/PortfolioInteractivity";
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Ben Akoka",
+  url: "https://benakoka.com",
+  image: "https://benakoka.com/assets/ben-photo.jpg",
+  jobTitle: "Statistics & Data Science Student",
+  email: "mailto:benakoka1@gmail.com",
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "University of California, Santa Barbara",
+  },
+  sameAs: ["https://www.linkedin.com/in/benakoka"],
+};
+
 export default function Home() {
   return (
     <div className="portfolio-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <nav>
         <div className="wrap">
           <div className="nav-brand">Ben Akoka</div>
