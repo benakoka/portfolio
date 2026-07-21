@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -60,7 +61,10 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <body className="min-h-full bg-ink text-paper antialiased">{children}</body>
+      <body className="min-h-full bg-ink text-paper antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
