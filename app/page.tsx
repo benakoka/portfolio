@@ -178,11 +178,11 @@ export default function Home() {
                 </div>
                 <svg className="c-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path d="M7 17L17 7M7 7h10v10" /></svg>
               </a>
-              <a className="contact-link" href="mailto:bakoka@ucsb.edu">
-                <svg className="c-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>
+              <a className="contact-link" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                <svg className="c-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M9 15h6M9 11h6M9 19h3" /></svg>
                 <div className="c-body">
-                  <span className="k">UCSB</span>
-                  <span className="v">bakoka@ucsb.edu</span>
+                  <span className="k">Resume</span>
+                  <span className="v">View / download PDF</span>
                 </div>
                 <svg className="c-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path d="M7 17L17 7M7 7h10v10" /></svg>
               </a>
