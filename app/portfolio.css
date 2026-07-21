@@ -253,6 +253,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
 }
+.portfolio-page .about-text p + p {
+  margin-top: 14px;
+}
 .portfolio-page .fact-list {
   list-style: none;
   margin: 0; padding: 0;
@@ -425,7 +428,7 @@
 @media (max-width: 760px) {
   .portfolio-page .hero { grid-template-columns: 1fr; padding-top: 60px; }
   .portfolio-page .about-body { flex-direction: column; align-items: center; gap: 20px; }
-  .portfolio-page .about-text { grid-template-columns: 1fr; gap: 0; }
+  .portfolio-page .about-text { grid-template-columns: 1fr; gap: 16px; }
   .portfolio-page .about-text p + p { margin-top: 16px; }
   .portfolio-page .fact-list { grid-template-columns: 1fr; }
   .portfolio-page .projects { grid-template-columns: 1fr; }

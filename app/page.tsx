@@ -49,8 +49,14 @@ export default function Home() {
           <div className="about-body">
             <div className="about-photo"><img src="/assets/ben-photo.jpg" alt="Photo of Ben Akoka" loading="lazy" /></div>
             <div className="about-text">
-              <p><strong>I&apos;m an undergraduate studying Statistics and Data Science at UC Santa Barbara</strong>, where I&apos;m fascinated by turning messy, real-world data into meaningful insights. My interests span machine learning, artificial intelligence, and statistical modeling, and I enjoy solving problems that sit at the intersection of data, technology, and decision-making. Whether I&apos;m building models in Python or exploring new research ideas, I&apos;m always looking for opportunities to learn and create.</p>
-              <p>Previously, I worked as a Data Analytics &amp; SEO Strategy Intern at <strong>Taboola</strong>, where I analyzed search performance, competitor trends, and large-scale web data to help guide strategic decisions. I&apos;m currently an <strong>AI Research Assistant</strong> at UCSB&apos;s Center for AI &amp; Society, exploring applications of AI through research while continuing to expand my technical skills. Outside of academics, I work as a <strong>campus tour guide</strong>, helping prospective students experience everything UCSB has to offer.</p>
+              <div>
+                <p><strong>I&apos;m an undergraduate studying Statistics and Data Science at UC Santa Barbara</strong>, where I&apos;m fascinated by turning messy, real-world data into meaningful insights. My interests span machine learning, artificial intelligence, and statistical modeling, and I enjoy solving problems that sit at the intersection of data, technology, and decision-making.</p>
+                <p>Whether I&apos;m building models in Python or exploring new research ideas, I&apos;m always looking for opportunities to learn and create.</p>
+              </div>
+              <div>
+                <p>Previously, I worked as a Data Analytics &amp; SEO Strategy Intern at <strong>Taboola</strong>, where I analyzed search performance, competitor trends, and large-scale web data to help guide strategic decisions. I&apos;m currently an <strong>AI Research Assistant</strong> at UCSB&apos;s Center for AI &amp; Society, exploring applications of AI through research while continuing to expand my technical skills.</p>
+                <p>Outside of academics, I work as a <strong>campus tour guide</strong>, helping prospective students experience everything UCSB has to offer.</p>
+              </div>
             </div>
           </div>
           <ul className="fact-list">
