@@ -126,6 +126,9 @@ export default function PortfolioInteractivity() {
             navA.forEach((a) => a.classList.remove("active"));
             const link = byId(e.target.id);
             link?.classList.add("active");
+            if (window.location.hash !== `#${e.target.id}`) {
+              window.history.replaceState(null, "", `#${e.target.id}`);
+            }
           }
         });
       },
