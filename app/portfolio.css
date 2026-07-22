@@ -199,7 +199,7 @@
 /* ---------- SECTION HEADERS ---------- */
 .portfolio-page section {
   padding: 70px 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid #cdd4dc;
 }
 .portfolio-page .sec-head {
   display: flex;
