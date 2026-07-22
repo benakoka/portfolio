@@ -15,7 +15,7 @@
   top: 0;
   z-index: 50;
   backdrop-filter: blur(10px);
-  background: rgba(243,245,248,0.75);
+  background: rgba(230,235,240,0.75);
   border-bottom: 1px solid var(--line);
 }
 .portfolio-page nav .wrap {
@@ -441,7 +441,7 @@
     top: 64px; left: 0; right: 0;
     flex-direction: column;
     gap: 0;
-    background: rgba(243,245,248,0.97);
+    background: rgba(230,235,240,0.97);
     border-bottom: 1px solid var(--line);
     padding: 8px 28px 18px;
   }
