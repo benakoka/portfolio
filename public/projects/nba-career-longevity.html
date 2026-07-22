@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Playing Through Pain — NBA Career Longevity | Ben</title>
 <meta name="description" content="Case study: predicting NBA career longevity using OLS regression, logistic regression, survival analysis, and K-Means clustering." />
-<meta name="theme-color" content="#0b0f16" />
+<meta name="theme-color" content="#e6ebf0" />
 <meta property="og:title" content="Playing Through Pain — Predicting NBA Career Longevity" />
 <meta property="og:description" content="Case study: predicting NBA career longevity using OLS regression, logistic regression, survival analysis, and K-Means clustering." />
 <meta property="og:type" content="article" />
@@ -15,14 +15,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0b0f16;
-    --panel:#121826;
-    --panel-2:#161e2e;
-    --paper:#eae7df;
-    --muted:#8792a6;
-    --signal:#d4ff4a;
-    --data:#3fd6c4;
-    --line:#232c3d;
+    --ink:#e6ebf0;
+    --panel:#ffffff;
+    --panel-2:#eef1f5;
+    --paper:#161a23;
+    --muted:#64707d;
+    --signal:#83b3ca;
+    --data:#3d7a9e;
+    --line:#dde2e8;
     --radius:14px;
   }
 
@@ -43,7 +43,7 @@
   }
   .mono{font-family:'JetBrains Mono',monospace;}
   a{color:inherit;}
-  ::selection{background:var(--signal);color:#0b0f16;}
+  ::selection{background:var(--signal);color:#161a23;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--signal); outline-offset:3px;}
 
   .wrap{max-width:900px; margin:0 auto; padding:0 28px;}
@@ -52,7 +52,7 @@
   nav.site-nav{
     position:sticky; top:0; z-index:50;
     backdrop-filter:blur(10px);
-    background:rgba(11,15,22,0.75);
+    background:rgba(230,235,240,0.75);
     border-bottom:1px solid var(--line);
   }
   nav.site-nav .wrap{
@@ -70,7 +70,7 @@
   }
   .eyebrow::before{
     content:""; width:8px;height:8px;border-radius:50%;
-    background:var(--data); box-shadow:0 0 0 4px rgba(63,214,196,0.15);
+    background:var(--data); box-shadow:0 0 0 4px rgba(61,122,158,0.15);
   }
   .page-hero h1{font-size:clamp(2rem, 4.2vw, 2.9rem); line-height:1.12; font-weight:600;}
   .page-hero h1 .hl{color:var(--paper); display:block; margin-top:6px; font-size:0.62em; font-weight:500; color:var(--muted);}
@@ -105,7 +105,7 @@
     border:1px solid var(--line);
     border-radius:var(--radius);
     padding:20px 20px 20px 18px;
-    box-shadow:0 12px 28px rgba(0,0,0,0.32);
+    box-shadow:0 12px 28px rgba(22,26,35,0.14);
   }
   .side-toc a{
     font-size:12px;
@@ -123,7 +123,7 @@
   }
 
   /* ---------- SECTIONS / PROSE ---------- */
-  section{padding:56px 0; border-top:1px solid var(--line);}
+  section{padding:56px 0; border-top:1px solid #cdd4dc;}
   .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:28px;}
   .sec-head .tag{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--data);}
   .sec-head h2{font-size:1.5rem; font-weight:600;}
@@ -161,7 +161,7 @@
   /* ---------- FIGURES ---------- */
   .figure{margin:28px 0;}
   .figure-frame{
-    background:var(--paper); border-radius:var(--radius); border:1px solid var(--line);
+    background:var(--panel); border-radius:var(--radius); border:1px solid var(--line);
     padding:16px; overflow:hidden;
   }
   .figure-frame img{display:block; width:100%; height:auto; border-radius:4px;}
@@ -201,7 +201,7 @@
     text-transform:uppercase; letter-spacing:.03em; font-weight:500;
     border-bottom:1px solid var(--muted);
   }
-  table.result-table tbody tr:hover{background:rgba(63,214,196,0.05);}
+  table.result-table tbody tr:hover{background:rgba(61,122,158,0.05);}
   table.result-table td{color:var(--muted);}
   table.result-table td:first-child, table.result-table th:first-child{color:var(--paper);}
   .table-footnote{
@@ -465,34 +465,34 @@ pos_G                  -1.0574      0.244     -4.338      0.000      -1.535     
 ========================================================================================</pre>
     <figure class="figure">
   <div class="figure-frame native"><svg viewBox="0 0 720 382" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono', monospace">
-<line x1="428.0" y1="16" x2="428.0" y2="366" stroke="#8792a6" stroke-width="1" stroke-dasharray="3,4" opacity="0.6"/>
-<text x="206" y="37.0" text-anchor="end" font-size="12.5" fill="#eae7df">had_knee_injury</text>
-<rect x="428.0" y="20.0" width="180.9" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
-<text x="700" y="37.0" text-anchor="end" font-size="12" fill="#8792a6">+1.112</text>
-<text x="206" y="75.0" text-anchor="end" font-size="12.5" fill="#eae7df">severe_injury</text>
-<rect x="428.0" y="58.0" width="105.1" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
-<text x="700" y="75.0" text-anchor="end" font-size="12" fill="#8792a6">+0.646</text>
-<text x="206" y="113.0" text-anchor="end" font-size="12.5" fill="#eae7df">had_back_injury</text>
-<rect x="428.0" y="96.0" width="95.4" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
-<text x="700" y="113.0" text-anchor="end" font-size="12" fill="#8792a6">+0.586</text>
-<text x="206" y="151.0" text-anchor="end" font-size="12.5" fill="#eae7df">total_injuries</text>
-<rect x="428.0" y="134.0" width="20.0" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
-<text x="700" y="151.0" text-anchor="end" font-size="12" fill="#8792a6">+0.123</text>
-<text x="206" y="189.0" text-anchor="end" font-size="12.5" fill="#eae7df">early_mpg</text>
-<rect x="428.0" y="172.0" width="17.5" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
-<text x="700" y="189.0" text-anchor="end" font-size="12" fill="#8792a6">+0.107</text>
-<text x="206" y="227.0" text-anchor="end" font-size="12.5" fill="#eae7df">early_games_per_szn</text>
-<rect x="428.0" y="210.0" width="15.6" height="26" rx="3" fill="#3fd6c4" opacity="0.88"/>
-<text x="700" y="227.0" text-anchor="end" font-size="12" fill="#8792a6">+0.096</text>
-<text x="206" y="265.0" text-anchor="end" font-size="12.5" fill="#eae7df">entry_age</text>
+<line x1="428.0" y1="16" x2="428.0" y2="366" stroke="#64707d" stroke-width="1" stroke-dasharray="3,4" opacity="0.6"/>
+<text x="206" y="37.0" text-anchor="end" font-size="12.5" fill="#161a23">had_knee_injury</text>
+<rect x="428.0" y="20.0" width="180.9" height="26" rx="3" fill="#3d7a9e" opacity="0.88"/>
+<text x="700" y="37.0" text-anchor="end" font-size="12" fill="#64707d">+1.112</text>
+<text x="206" y="75.0" text-anchor="end" font-size="12.5" fill="#161a23">severe_injury</text>
+<rect x="428.0" y="58.0" width="105.1" height="26" rx="3" fill="#3d7a9e" opacity="0.88"/>
+<text x="700" y="75.0" text-anchor="end" font-size="12" fill="#64707d">+0.646</text>
+<text x="206" y="113.0" text-anchor="end" font-size="12.5" fill="#161a23">had_back_injury</text>
+<rect x="428.0" y="96.0" width="95.4" height="26" rx="3" fill="#3d7a9e" opacity="0.88"/>
+<text x="700" y="113.0" text-anchor="end" font-size="12" fill="#64707d">+0.586</text>
+<text x="206" y="151.0" text-anchor="end" font-size="12.5" fill="#161a23">total_injuries</text>
+<rect x="428.0" y="134.0" width="20.0" height="26" rx="3" fill="#3d7a9e" opacity="0.88"/>
+<text x="700" y="151.0" text-anchor="end" font-size="12" fill="#64707d">+0.123</text>
+<text x="206" y="189.0" text-anchor="end" font-size="12.5" fill="#161a23">early_mpg</text>
+<rect x="428.0" y="172.0" width="17.5" height="26" rx="3" fill="#3d7a9e" opacity="0.88"/>
+<text x="700" y="189.0" text-anchor="end" font-size="12" fill="#64707d">+0.107</text>
+<text x="206" y="227.0" text-anchor="end" font-size="12.5" fill="#161a23">early_games_per_szn</text>
+<rect x="428.0" y="210.0" width="15.6" height="26" rx="3" fill="#3d7a9e" opacity="0.88"/>
+<text x="700" y="227.0" text-anchor="end" font-size="12" fill="#64707d">+0.096</text>
+<text x="206" y="265.0" text-anchor="end" font-size="12.5" fill="#161a23">entry_age</text>
 <rect x="416.2" y="248.0" width="11.8" height="26" rx="3" fill="#ff8a7a" opacity="0.88"/>
-<text x="700" y="265.0" text-anchor="end" font-size="12" fill="#8792a6">-0.072</text>
-<text x="206" y="303.0" text-anchor="end" font-size="12.5" fill="#eae7df">pos_F</text>
+<text x="700" y="265.0" text-anchor="end" font-size="12" fill="#64707d">-0.072</text>
+<text x="206" y="303.0" text-anchor="end" font-size="12.5" fill="#161a23">pos_F</text>
 <rect x="293.0" y="286.0" width="135.0" height="26" rx="3" fill="#ff8a7a" opacity="0.88"/>
-<text x="700" y="303.0" text-anchor="end" font-size="12" fill="#8792a6">-0.830</text>
-<text x="206" y="341.0" text-anchor="end" font-size="12.5" fill="#eae7df">pos_G</text>
+<text x="700" y="303.0" text-anchor="end" font-size="12" fill="#64707d">-0.830</text>
+<text x="206" y="341.0" text-anchor="end" font-size="12.5" fill="#161a23">pos_G</text>
 <rect x="255.9" y="324.0" width="172.1" height="26" rx="3" fill="#ff8a7a" opacity="0.88"/>
-<text x="700" y="341.0" text-anchor="end" font-size="12" fill="#8792a6">-1.057</text>
+<text x="700" y="341.0" text-anchor="end" font-size="12" fill="#64707d">-1.057</text>
 </svg></div>
   <figcaption><span class="fig-tag">fig. 5</span> OLS coefficients (effect on career seasons): knee injuries, severe injury, and back injuries carry the largest positive association &mdash; position (guard/forward vs. center) the largest negative.</figcaption>
 </figure>
@@ -558,49 +558,49 @@ window). The event indicator <code>career_ended = 1</code> marks confirmed retir
     <p class="table-footnote">Concordance = 0.82 &middot; 2,741 observations, 2,200 events observed &middot; log-likelihood ratio test = 1,624.31 on 7 df</p>
     <figure class="figure">
   <div class="figure-frame native"><svg viewBox="0 0 720 286" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono', monospace">
-<line x1="430.0" y1="18" x2="430.0" y2="268" stroke="#8792a6" stroke-width="1" stroke-dasharray="3,4" opacity="0.6"/>
-<text x="220" y="45.0" text-anchor="end" font-size="12.5" fill="#eae7df">entry_age</text>
-<line x1="468.7" y1="41.0" x2="488.1" y2="41.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
-<line x1="468.7" y1="36.0" x2="468.7" y2="46.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<line x1="488.1" y1="36.0" x2="488.1" y2="46.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<circle cx="476.5" cy="41.0" r="4.5" fill="#d4ff4a"/>
-<text x="640.0" y="45.0" text-anchor="start" font-size="11.5" fill="#8792a6">+0.12</text>
-<text x="220" y="79.0" text-anchor="end" font-size="12.5" fill="#eae7df">early_mpg</text>
-<line x1="406.8" y1="75.0" x2="414.5" y2="75.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
-<line x1="406.8" y1="70.0" x2="406.8" y2="80.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<line x1="414.5" y1="70.0" x2="414.5" y2="80.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<circle cx="410.6" cy="75.0" r="4.5" fill="#d4ff4a"/>
-<text x="640.0" y="79.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.05</text>
-<text x="220" y="113.0" text-anchor="end" font-size="12.5" fill="#eae7df">early_bpm</text>
-<line x1="379.6" y1="109.0" x2="391.3" y2="109.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
-<line x1="379.6" y1="104.0" x2="379.6" y2="114.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<line x1="391.3" y1="104.0" x2="391.3" y2="114.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<circle cx="387.4" cy="109.0" r="4.5" fill="#d4ff4a"/>
-<text x="640.0" y="113.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.11</text>
-<text x="220" y="147.0" text-anchor="end" font-size="12.5" fill="#eae7df">log_injuries</text>
-<line x1="259.6" y1="143.0" x2="302.2" y2="143.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
-<line x1="259.6" y1="138.0" x2="259.6" y2="148.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<line x1="302.2" y1="138.0" x2="302.2" y2="148.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<circle cx="282.8" cy="143.0" r="4.5" fill="#d4ff4a"/>
-<text x="640.0" y="147.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.38</text>
-<text x="220" y="181.0" text-anchor="end" font-size="12.5" fill="#eae7df">severe_injury</text>
-<line x1="368.0" y1="177.0" x2="495.8" y2="177.0" stroke="#8792a6" stroke-width="2" opacity="0.85"/>
-<line x1="368.0" y1="172.0" x2="368.0" y2="182.0" stroke="#8792a6" stroke-width="1.5" opacity="0.7"/>
-<line x1="495.8" y1="172.0" x2="495.8" y2="182.0" stroke="#8792a6" stroke-width="1.5" opacity="0.7"/>
-<circle cx="430.0" cy="177.0" r="4.5" fill="#8792a6"/>
-<text x="640.0" y="181.0" text-anchor="start" font-size="11.5" fill="#8792a6">+0.00</text>
-<text x="220" y="215.0" text-anchor="end" font-size="12.5" fill="#eae7df">had_back_injury</text>
-<line x1="325.4" y1="211.0" x2="414.5" y2="211.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
-<line x1="325.4" y1="206.0" x2="325.4" y2="216.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<line x1="414.5" y1="206.0" x2="414.5" y2="216.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<circle cx="368.0" cy="211.0" r="4.5" fill="#d4ff4a"/>
-<text x="640.0" y="215.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.16</text>
-<text x="220" y="249.0" text-anchor="end" font-size="12.5" fill="#eae7df">had_knee_injury</text>
-<line x1="344.8" y1="245.0" x2="426.1" y2="245.0" stroke="#d4ff4a" stroke-width="2" opacity="0.85"/>
-<line x1="344.8" y1="240.0" x2="344.8" y2="250.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<line x1="426.1" y1="240.0" x2="426.1" y2="250.0" stroke="#d4ff4a" stroke-width="1.5" opacity="0.7"/>
-<circle cx="383.5" cy="245.0" r="4.5" fill="#d4ff4a"/>
-<text x="640.0" y="249.0" text-anchor="start" font-size="11.5" fill="#8792a6">-0.12</text>
+<line x1="430.0" y1="18" x2="430.0" y2="268" stroke="#64707d" stroke-width="1" stroke-dasharray="3,4" opacity="0.6"/>
+<text x="220" y="45.0" text-anchor="end" font-size="12.5" fill="#161a23">entry_age</text>
+<line x1="468.7" y1="41.0" x2="488.1" y2="41.0" stroke="#83b3ca" stroke-width="2" opacity="0.85"/>
+<line x1="468.7" y1="36.0" x2="468.7" y2="46.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<line x1="488.1" y1="36.0" x2="488.1" y2="46.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<circle cx="476.5" cy="41.0" r="4.5" fill="#83b3ca"/>
+<text x="640.0" y="45.0" text-anchor="start" font-size="11.5" fill="#64707d">+0.12</text>
+<text x="220" y="79.0" text-anchor="end" font-size="12.5" fill="#161a23">early_mpg</text>
+<line x1="406.8" y1="75.0" x2="414.5" y2="75.0" stroke="#83b3ca" stroke-width="2" opacity="0.85"/>
+<line x1="406.8" y1="70.0" x2="406.8" y2="80.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<line x1="414.5" y1="70.0" x2="414.5" y2="80.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<circle cx="410.6" cy="75.0" r="4.5" fill="#83b3ca"/>
+<text x="640.0" y="79.0" text-anchor="start" font-size="11.5" fill="#64707d">-0.05</text>
+<text x="220" y="113.0" text-anchor="end" font-size="12.5" fill="#161a23">early_bpm</text>
+<line x1="379.6" y1="109.0" x2="391.3" y2="109.0" stroke="#83b3ca" stroke-width="2" opacity="0.85"/>
+<line x1="379.6" y1="104.0" x2="379.6" y2="114.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<line x1="391.3" y1="104.0" x2="391.3" y2="114.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<circle cx="387.4" cy="109.0" r="4.5" fill="#83b3ca"/>
+<text x="640.0" y="113.0" text-anchor="start" font-size="11.5" fill="#64707d">-0.11</text>
+<text x="220" y="147.0" text-anchor="end" font-size="12.5" fill="#161a23">log_injuries</text>
+<line x1="259.6" y1="143.0" x2="302.2" y2="143.0" stroke="#83b3ca" stroke-width="2" opacity="0.85"/>
+<line x1="259.6" y1="138.0" x2="259.6" y2="148.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<line x1="302.2" y1="138.0" x2="302.2" y2="148.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<circle cx="282.8" cy="143.0" r="4.5" fill="#83b3ca"/>
+<text x="640.0" y="147.0" text-anchor="start" font-size="11.5" fill="#64707d">-0.38</text>
+<text x="220" y="181.0" text-anchor="end" font-size="12.5" fill="#161a23">severe_injury</text>
+<line x1="368.0" y1="177.0" x2="495.8" y2="177.0" stroke="#64707d" stroke-width="2" opacity="0.85"/>
+<line x1="368.0" y1="172.0" x2="368.0" y2="182.0" stroke="#64707d" stroke-width="1.5" opacity="0.7"/>
+<line x1="495.8" y1="172.0" x2="495.8" y2="182.0" stroke="#64707d" stroke-width="1.5" opacity="0.7"/>
+<circle cx="430.0" cy="177.0" r="4.5" fill="#64707d"/>
+<text x="640.0" y="181.0" text-anchor="start" font-size="11.5" fill="#64707d">+0.00</text>
+<text x="220" y="215.0" text-anchor="end" font-size="12.5" fill="#161a23">had_back_injury</text>
+<line x1="325.4" y1="211.0" x2="414.5" y2="211.0" stroke="#83b3ca" stroke-width="2" opacity="0.85"/>
+<line x1="325.4" y1="206.0" x2="325.4" y2="216.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<line x1="414.5" y1="206.0" x2="414.5" y2="216.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<circle cx="368.0" cy="211.0" r="4.5" fill="#83b3ca"/>
+<text x="640.0" y="215.0" text-anchor="start" font-size="11.5" fill="#64707d">-0.16</text>
+<text x="220" y="249.0" text-anchor="end" font-size="12.5" fill="#161a23">had_knee_injury</text>
+<line x1="344.8" y1="245.0" x2="426.1" y2="245.0" stroke="#83b3ca" stroke-width="2" opacity="0.85"/>
+<line x1="344.8" y1="240.0" x2="344.8" y2="250.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<line x1="426.1" y1="240.0" x2="426.1" y2="250.0" stroke="#83b3ca" stroke-width="1.5" opacity="0.7"/>
+<circle cx="383.5" cy="245.0" r="4.5" fill="#83b3ca"/>
+<text x="640.0" y="249.0" text-anchor="start" font-size="11.5" fill="#64707d">-0.12</text>
 </svg></div>
   <figcaption><span class="fig-tag">fig. 10</span> Cox PH coefficients with 95% CI. Bright markers cross zero on neither side (statistically significant); entry age is the only predictor associated with higher retirement hazard.</figcaption>
 </figure>
@@ -622,19 +622,19 @@ the cluster profiles to see whether workload archetype is associated with career
 </div>
     <figure class="figure">
   <div class="figure-frame native"><svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono', monospace">
-<line x1="30" y1="190" x2="690" y2="190" stroke="#232c3d" stroke-width="1"/>
-<rect x="120.0" y="152.3" width="90" height="37.7" rx="4" fill="#3fd6c4" opacity="0.88"/>
-<text x="165.0" y="142.3" text-anchor="middle" font-size="13" fill="#eae7df">3.08</text>
-<text x="165.0" y="212.0" text-anchor="middle" font-size="12" fill="#8792a6">Cluster 0</text>
-<rect x="250.0" y="73.3" width="90" height="116.7" rx="4" fill="#3fd6c4" opacity="0.88"/>
-<text x="295.0" y="63.3" text-anchor="middle" font-size="13" fill="#eae7df">9.54</text>
-<text x="295.0" y="212.0" text-anchor="middle" font-size="12" fill="#8792a6">Cluster 1</text>
-<rect x="380.0" y="153.2" width="90" height="36.8" rx="4" fill="#3fd6c4" opacity="0.88"/>
-<text x="425.0" y="143.2" text-anchor="middle" font-size="13" fill="#eae7df">3.01</text>
-<text x="425.0" y="212.0" text-anchor="middle" font-size="12" fill="#8792a6">Cluster 2</text>
-<rect x="510.0" y="108.2" width="90" height="81.8" rx="4" fill="#3fd6c4" opacity="0.88"/>
-<text x="555.0" y="98.2" text-anchor="middle" font-size="13" fill="#eae7df">6.69</text>
-<text x="555.0" y="212.0" text-anchor="middle" font-size="12" fill="#8792a6">Cluster 3</text>
+<line x1="30" y1="190" x2="690" y2="190" stroke="#dde2e8" stroke-width="1"/>
+<rect x="120.0" y="152.3" width="90" height="37.7" rx="4" fill="#3d7a9e" opacity="0.88"/>
+<text x="165.0" y="142.3" text-anchor="middle" font-size="13" fill="#161a23">3.08</text>
+<text x="165.0" y="212.0" text-anchor="middle" font-size="12" fill="#64707d">Cluster 0</text>
+<rect x="250.0" y="73.3" width="90" height="116.7" rx="4" fill="#3d7a9e" opacity="0.88"/>
+<text x="295.0" y="63.3" text-anchor="middle" font-size="13" fill="#161a23">9.54</text>
+<text x="295.0" y="212.0" text-anchor="middle" font-size="12" fill="#64707d">Cluster 1</text>
+<rect x="380.0" y="153.2" width="90" height="36.8" rx="4" fill="#3d7a9e" opacity="0.88"/>
+<text x="425.0" y="143.2" text-anchor="middle" font-size="13" fill="#161a23">3.01</text>
+<text x="425.0" y="212.0" text-anchor="middle" font-size="12" fill="#64707d">Cluster 2</text>
+<rect x="510.0" y="108.2" width="90" height="81.8" rx="4" fill="#3d7a9e" opacity="0.88"/>
+<text x="555.0" y="98.2" text-anchor="middle" font-size="13" fill="#161a23">6.69</text>
+<text x="555.0" y="212.0" text-anchor="middle" font-size="12" fill="#64707d">Cluster 3</text>
 </svg></div>
   <figcaption><span class="fig-tag">fig. 12</span> Mean career length by cluster. Cluster 1 (“heavy-usage stars”) averages the longest careers; Clusters 0 and 2 (low usage) are shortest-lived.</figcaption>
 </figure>

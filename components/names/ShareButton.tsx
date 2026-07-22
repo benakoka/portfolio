@@ -25,7 +25,7 @@ export default function ShareButton({ name }: { name: string }) {
     <div className="flex gap-3">
       <button
         onClick={handleShare}
-        className="px-5 py-2.5 rounded-lg bg-signal text-ink font-semibold text-sm hover:-translate-y-0.5 transition-transform"
+        className="px-5 py-2.5 rounded-lg bg-signal text-paper font-semibold text-sm hover:-translate-y-0.5 transition-transform"
       >
         {copied ? "Link copied!" : "Share this profile"}
       </button>
