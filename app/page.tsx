@@ -6,7 +6,6 @@ const personJsonLd = {
   "@type": "Person",
   name: "Ben Akoka",
   url: "https://benakoka.com",
-  image: "https://benakoka.com/assets/ben-photo.jpg",
   jobTitle: "Data Analyst & Researcher",
   email: "mailto:benakoka1@gmail.com",
   alumniOf: {
