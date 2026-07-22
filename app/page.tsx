@@ -227,7 +227,7 @@ export default function Home() {
 
       <footer className="wrap">
         <span>© 2026 Ben Akoka. Built with data.</span>
-        <span className="font-mono">v2.2.0</span>
+        <span className="font-mono">v3.1.1</span>
       </footer>
 
       <PortfolioInteractivity />
