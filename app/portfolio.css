@@ -140,7 +140,7 @@
   box-shadow: 0 8px 24px rgba(131,179,202,0.35);
 }
 .portfolio-page .btn-ghost {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(22,26,35,0.24);
   color: var(--paper);
 }
 .portfolio-page .btn-ghost:hover { border-color: var(--muted); transform: translateY(-2px); }

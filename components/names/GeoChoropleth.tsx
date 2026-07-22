@@ -5,7 +5,7 @@ import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import type { FeatureCollection, Geometry } from "geojson";
-import { FIPS_TO_USPS, STATE_NAMES, indexToColor } from "@/lib/names/geo";
+import { FIPS_TO_USPS, STATE_NAMES, indexToColor, GEO_SCALE } from "@/lib/names/geo";
 import type { GeoStateRow, GeoRegionRow } from "@/lib/names/types";
 
 const WIDTH = 960;
@@ -81,6 +81,17 @@ export default function GeoChoropleth({
           "Geographic over-index by state, relative to the national baseline."
         )}
       </p>
+
+      <div className="flex items-center gap-3 mb-4 text-xs text-muted font-mono">
+        <span>Under-indexed</span>
+        <div
+          className="h-2 flex-1 rounded-full"
+          style={{
+            background: `linear-gradient(90deg, rgb(${GEO_SCALE.cold.join(",")}), rgb(${GEO_SCALE.neutral.join(",")}), rgb(${GEO_SCALE.hot.join(",")}))`,
+          }}
+        />
+        <span>Over-indexed</span>
+      </div>
 
       <div className="relative">
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="w-full h-auto">
