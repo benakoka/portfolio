@@ -7,7 +7,7 @@ const personJsonLd = {
   name: "Ben Akoka",
   url: "https://benakoka.com",
   image: "https://benakoka.com/assets/ben-photo.jpg",
-  jobTitle: "Statistics & Data Science Student",
+  jobTitle: "Data Analyst & Researcher",
   email: "mailto:benakoka1@gmail.com",
   alumniOf: {
     "@type": "CollegeOrUniversity",
