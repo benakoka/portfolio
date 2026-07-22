@@ -27,26 +27,26 @@ export const STATE_NAMES: Record<string, string> = {
   WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
 };
 
-/** index (over/under-index vs national baseline) -> a color on the panel -> signal ramp. */
+/** index (over/under-index vs national baseline) -> diverging cold (under-indexed) / hot (over-indexed) scale. */
+export const GEO_SCALE = {
+  min: 0.4,
+  center: 1,
+  max: 2.2,
+  cold: [30, 90, 140] as [number, number, number],
+  neutral: [240, 242, 246] as [number, number, number],
+  hot: [186, 62, 28] as [number, number, number],
+  noData: "#c7cbd2",
+};
+
 export function indexToColor(index: number | undefined): string {
-  if (index === undefined || Number.isNaN(index)) return "var(--line)";
-  const t = Math.max(0, Math.min(1, (index - 0.4) / (2.2 - 0.4)));
-  // interpolate panel-2 (#161e2e) -> data teal (#3fd6c4) -> signal lime (#d4ff4a)
-  const stops: [number, [number, number, number]][] = [
-    [0, [22, 30, 46]],
-    [0.55, [63, 214, 196]],
-    [1, [212, 255, 74]],
-  ];
-  let lo = stops[0], hi = stops[stops.length - 1];
-  for (let i = 0; i < stops.length - 1; i++) {
-    if (t >= stops[i][0] && t <= stops[i + 1][0]) {
-      lo = stops[i];
-      hi = stops[i + 1];
-      break;
-    }
-  }
-  const span = hi[0] - lo[0] || 1;
-  const localT = (t - lo[0]) / span;
-  const rgb = lo[1].map((c, i) => Math.round(c + (hi[1][i] - c) * localT));
+  if (index === undefined || Number.isNaN(index)) return GEO_SCALE.noData;
+  const { min, center, max, cold, neutral, hot } = GEO_SCALE;
+
+  const [lo, hi, t] =
+    index <= center
+      ? [cold, neutral, Math.max(0, Math.min(1, (index - min) / (center - min)))]
+      : [neutral, hot, Math.max(0, Math.min(1, (index - center) / (max - center)))];
+
+  const rgb = lo.map((c, i) => Math.round(c + (hi[i] - c) * t));
   return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 }
