@@ -23,13 +23,13 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://benakoka.com"),
-  title: "Ben Akoka — Statistics & Data Science",
+  title: "Ben Akoka | Data Analyst & Researcher",
   description: "Portfolio of Ben Akoka, Statistics & Data Science student at UCSB.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Ben Akoka — Statistics & Data Science",
+    title: "Ben Akoka | Data Analyst & Researcher",
     description: "Portfolio of Ben Akoka, Statistics & Data Science student at UCSB.",
     type: "website",
     url: "https://benakoka.com/",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ben Akoka — Statistics & Data Science",
+    title: "Ben Akoka | Data Analyst & Researcher",
     description: "Portfolio of Ben Akoka, Statistics & Data Science student at UCSB.",
     images: ["/assets/og-image.png"],
   },
