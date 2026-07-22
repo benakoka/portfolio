@@ -15,7 +15,7 @@
   top: 0;
   z-index: 50;
   backdrop-filter: blur(10px);
-  background: rgba(11,15,22,0.75);
+  background: rgba(243,245,248,0.75);
   border-bottom: 1px solid var(--line);
 }
 .portfolio-page nav .wrap {
@@ -95,7 +95,7 @@
   top: -40px; left: 50%;
   width: min(900px, 100vw); height: 520px;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, rgba(63,214,196,0.10), transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(61,122,158,0.10), transparent 65%);
   pointer-events: none;
   z-index: -1;
 }
@@ -105,7 +105,7 @@
   font-weight: 600;
 }
 .portfolio-page .hero h1 .hl {
-  background: linear-gradient(180deg, transparent 62%, rgba(212,255,74,0.4) 62%);
+  background: linear-gradient(180deg, transparent 62%, rgba(131,179,202,0.45) 62%);
 }
 .portfolio-page .hero p.lede {
   margin-top: 22px;
@@ -133,11 +133,11 @@
 }
 .portfolio-page .btn-primary {
   background: var(--signal);
-  color: #0b0f16;
+  color: var(--paper);
 }
 .portfolio-page .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(212,255,74,0.25);
+  box-shadow: 0 8px 24px rgba(131,179,202,0.35);
 }
 .portfolio-page .btn-ghost {
   border: 1px solid var(--line);
@@ -297,7 +297,7 @@
 .portfolio-page .project-card:hover {
   transform: translateY(-4px);
   border-color: var(--data);
-  box-shadow: 0 16px 32px rgba(0,0,0,0.28);
+  box-shadow: 0 16px 32px rgba(22,26,35,0.12);
 }
 .portfolio-page .project-card .status {
   font-family: var(--font-jetbrains-mono), monospace;
@@ -441,7 +441,7 @@
     top: 64px; left: 0; right: 0;
     flex-direction: column;
     gap: 0;
-    background: rgba(11,15,22,0.97);
+    background: rgba(243,245,248,0.97);
     border-bottom: 1px solid var(--line);
     padding: 8px 28px 18px;
   }

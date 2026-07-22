@@ -35,7 +35,7 @@ export default function NamesHome() {
           className="absolute -top-10 left-1/2 -translate-x-1/2 w-[min(900px,100vw)] h-[420px] pointer-events-none -z-10"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(63,214,196,0.10), transparent 65%)",
+              "radial-gradient(ellipse at center, rgba(61,122,158,0.10), transparent 65%)",
           }}
         />
         <h1 className="text-4xl sm:text-5xl font-semibold leading-tight max-w-2xl">
@@ -43,7 +43,7 @@ export default function NamesHome() {
           <span
             style={{
               backgroundImage:
-                "linear-gradient(180deg, transparent 62%, rgba(212,255,74,0.4) 62%)",
+                "linear-gradient(180deg, transparent 62%, rgba(131,179,202,0.45) 62%)",
             }}
           >
             your name?

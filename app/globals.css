@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #0b0f16;
-  --panel: #121826;
-  --panel-2: #161e2e;
-  --paper: #eae7df;
-  --muted: #8792a6;
-  --signal: #d4ff4a;
-  --data: #3fd6c4;
-  --line: #232c3d;
+  --ink: #f3f5f8;
+  --panel: #ffffff;
+  --panel-2: #eef1f5;
+  --paper: #161a23;
+  --muted: #64707d;
+  --signal: #83b3ca;
+  --data: #3d7a9e;
+  --line: #dde2e8;
   --radius: 14px;
 }
 
@@ -48,7 +48,7 @@ h1, h2, h3 {
 
 ::selection {
   background: var(--signal);
-  color: #0b0f16;
+  color: var(--paper);
 }
 
 a:focus-visible, button:focus-visible {
