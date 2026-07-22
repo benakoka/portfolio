@@ -28,6 +28,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: true,
+    },
+  },
   openGraph: {
     title: "Ben Akoka | Data Analyst & Researcher",
     description: "Portfolio of Ben Akoka, a Statistics & Data Science student at UC Santa Barbara focused on analytics, machine learning, and data science.",
