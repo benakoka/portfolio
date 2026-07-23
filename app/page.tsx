@@ -94,7 +94,7 @@ export default function Home() {
           <div className="projects">
 
             <a className="project-card" href="/projects/nba-career-longevity.html">
-              <span className="status">● Completed</span>
+              <span className="status">● Completed - Case Study</span>
               <h3>NBA Career Longevity</h3>
               <p>Analyzed career length across 4,486 NBA players using injury logs, box scores, and season stats. Modeled survival with Kaplan-Meier curves and Cox regression, compared against OLS and logistic regression, and used K-Means to cluster player archetypes. Built and delivered a presentation with a research partner.</p>
               <div className="chips">
@@ -106,7 +106,7 @@ export default function Home() {
             </a>
 
             <a className="project-card" href="/names">
-              <span className="status">● Completed</span>
+              <span className="status">● Completed - Interactive Web App</span>
               <h3>What Does the Internet Think of Your Name?</h3>
               <p>An interactive tool that turns any first name into a data-driven profile: living-age distribution weighted by SSA actuarial survival tables, a full 1880–present popularity arc with trend-archetype classification, cosine-similarity &quot;name neighbors,&quot; and a US geographic over-index map. Built from real SSA national and state baby-name data.</p>
               <div className="chips">
