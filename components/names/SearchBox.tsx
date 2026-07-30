@@ -28,14 +28,9 @@ export default function SearchBox({
   const [activeIdx, setActiveIdx] = useState(-1);
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  const skipInitialSearch = useRef(initialValue.length > 0);
 
   useEffect(() => {
-    if (skipInitialSearch.current) {
-      skipInitialSearch.current = false;
-      return;
-    }
-    if (!query.trim()) {
+    if (query === initialValue || !query.trim()) {
       setHits([]);
       setOpen(false);
       return;
@@ -59,7 +54,7 @@ export default function SearchBox({
       clearTimeout(t);
       controller.abort();
     };
-  }, [query]);
+  }, [query, initialValue]);
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
