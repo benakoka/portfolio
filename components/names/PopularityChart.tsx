@@ -9,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceDot,
+  ReferenceLine,
 } from "recharts";
 import type { NameRow, PopularityPoint, ForecastPoint } from "@/lib/names/types";
 import TrendBadge from "./TrendBadge";
@@ -53,6 +54,7 @@ export default function PopularityChart({
   const peakPoint = historical.find((d) => d.year === name.peak_year);
   const pctChange = name.pct_change_from_peak != null ? Math.round(name.pct_change_from_peak * 100) : null;
   const horizonYears = forecast.length;
+  const boundaryYear = horizonYears > 0 ? historical[historical.length - 1]?.year : null;
 
   return (
     <div className="rounded-card border border-line bg-panel p-6">
@@ -150,15 +152,29 @@ export default function PopularityChart({
                 strokeWidth={1}
               />
             )}
+            {boundaryYear != null && (
+              <ReferenceLine
+                x={boundaryYear}
+                stroke="var(--muted)"
+                strokeDasharray="2 3"
+                label={{
+                  value: "Projected →",
+                  position: "insideTopRight",
+                  fill: "var(--data)",
+                  fontSize: 11,
+                  fontWeight: 600,
+                }}
+              />
+            )}
           </ComposedChart>
         </ResponsiveContainer>
       </div>
 
       {horizonYears > 0 && (
         <p className="mt-3 text-xs text-muted">
-          Dashed line: a {horizonYears}-year statistical projection (Holt
-          damped-trend exponential smoothing, fit to recent years), with a
-          shaded 95% interval.
+          <strong style={{ color: "var(--data)" }}>Projected:</strong> the
+          dashed {horizonYears}-year forecast (Holt damped-trend exponential
+          smoothing, fit to recent years), with a shaded 95% interval.
         </p>
       )}
     </div>

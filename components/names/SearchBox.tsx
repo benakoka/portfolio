@@ -12,20 +12,29 @@ export default function SearchBox({
   autoFocus = false,
   onSelect,
   placeholder = "Type a first name…",
+  initialValue = "",
+  accentColor,
 }: {
   autoFocus?: boolean;
   onSelect?: (name: string) => void;
   placeholder?: string;
+  initialValue?: string;
+  accentColor?: string;
 }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialValue);
   const [hits, setHits] = useState<Hit[]>([]);
   const [fuzzy, setFuzzy] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeIdx, setActiveIdx] = useState(-1);
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
+  const skipInitialSearch = useRef(initialValue.length > 0);
 
   useEffect(() => {
+    if (skipInitialSearch.current) {
+      skipInitialSearch.current = false;
+      return;
+    }
     if (!query.trim()) {
       setHits([]);
       setOpen(false);
@@ -102,9 +111,13 @@ export default function SearchBox({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            onFocus={() => hits.length > 0 && setOpen(true)}
+            onFocus={(e) => {
+              if (hits.length > 0) setOpen(true);
+              e.target.select();
+            }}
             placeholder={placeholder}
             className="flex-1 min-w-0 bg-transparent outline-none text-paper placeholder:text-muted font-mono text-base"
+            style={accentColor ? { color: accentColor } : undefined}
             aria-label="Search for a name"
             autoComplete="off"
             spellCheck={false}

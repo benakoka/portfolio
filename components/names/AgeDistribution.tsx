@@ -45,7 +45,7 @@ export default function AgeDistribution({
         <strong className="text-paper">{name.p85_age}</strong> years old.
       </p>
 
-      <div className="h-48">
+      <div className="h-56">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 4, right: 4, bottom: 4, left: 0 }}>
             <XAxis
