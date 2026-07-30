@@ -8,7 +8,15 @@ interface Hit {
   total_count: number;
 }
 
-export default function SearchBox({ autoFocus = false }: { autoFocus?: boolean }) {
+export default function SearchBox({
+  autoFocus = false,
+  onSelect,
+  placeholder = "Type a first name…",
+}: {
+  autoFocus?: boolean;
+  onSelect?: (name: string) => void;
+  placeholder?: string;
+}) {
   const [query, setQuery] = useState("");
   const [hits, setHits] = useState<Hit[]>([]);
   const [fuzzy, setFuzzy] = useState(false);
@@ -57,6 +65,10 @@ export default function SearchBox({ autoFocus = false }: { autoFocus?: boolean }
   function go(name: string) {
     setOpen(false);
     setQuery("");
+    if (onSelect) {
+      onSelect(name);
+      return;
+    }
     router.push(`/names/name/${encodeURIComponent(name.toLowerCase())}`);
   }
 
@@ -91,7 +103,7 @@ export default function SearchBox({ autoFocus = false }: { autoFocus?: boolean }
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
             onFocus={() => hits.length > 0 && setOpen(true)}
-            placeholder="Type a first name…"
+            placeholder={placeholder}
             className="flex-1 min-w-0 bg-transparent outline-none text-paper placeholder:text-muted font-mono text-base"
             aria-label="Search for a name"
             autoComplete="off"

@@ -8,7 +8,11 @@ import type {
   GeoStateRow,
   GeoRegionRow,
   NameProfile,
+  RarityInfo,
 } from "./types";
+import { forecastPopularity } from "./forecast";
+
+const FORECAST_HORIZON_YEARS = 10;
 
 let db: Database.Database | null = null;
 
@@ -26,6 +30,33 @@ export function getNameRow(name: string): NameRow | undefined {
     .prepare("SELECT * FROM names WHERE name_lower = ?")
     .get(name.toLowerCase().trim()) as NameRow | undefined;
   return row;
+}
+
+let totalNamesCache: number | null = null;
+
+function getTotalNames(): number {
+  if (totalNamesCache == null) {
+    totalNamesCache = (getDb().prepare("SELECT COUNT(*) AS c FROM names").get() as { c: number }).c;
+  }
+  return totalNamesCache;
+}
+
+let maxYearCache: number | null = null;
+
+function getMaxYear(): number {
+  if (maxYearCache == null) {
+    maxYearCache = (getDb().prepare("SELECT MAX(year) AS y FROM popularity_curve").get() as { y: number }).y;
+  }
+  return maxYearCache;
+}
+
+function getRarity(totalCount: number): RarityInfo {
+  const totalNames = getTotalNames();
+  const moreCommon = (
+    getDb().prepare("SELECT COUNT(*) AS c FROM names WHERE total_count > ?").get(totalCount) as { c: number }
+  ).c;
+  const rank = moreCommon + 1;
+  return { rank, totalNames, percentile: 1 - (rank - 1) / totalNames };
 }
 
 export function getProfile(name: string): NameProfile | null {
@@ -77,7 +108,10 @@ export function getProfile(name: string): NameProfile | null {
     : [];
   const geoRegions: GeoRegionRow[] = geoRegionsRaw.map((r) => ({ region: r.region, index: r.index_x1000 / 1000 }));
 
-  return { name: row, curve, agePmf, neighbors, geoStates, geoRegions };
+  const forecast = forecastPopularity(curve, FORECAST_HORIZON_YEARS, getMaxYear());
+  const rarity = getRarity(row.total_count);
+
+  return { name: row, curve, agePmf, neighbors, geoStates, geoRegions, forecast, rarity };
 }
 
 export interface SearchHit {

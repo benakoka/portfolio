@@ -35,6 +35,11 @@ export default function NamesLayout({
               </Link>
             </li>
             <li>
+              <Link href="/names/compare" className="hover:text-paper transition-colors">
+                Compare
+              </Link>
+            </li>
+            <li>
               <Link href="/names/about" className="hover:text-paper transition-colors">
                 Methodology
               </Link>
@@ -45,7 +50,7 @@ export default function NamesLayout({
       <main className="flex-1">{children}</main>
       <footer className="max-w-5xl mx-auto w-full px-7 py-8 flex justify-between text-xs text-muted">
         <span>Built from SSA public data.</span>
-        <span className="font-mono">v1.5</span>
+        <span className="font-mono">v1.6</span>
       </footer>
     </div>
   );
