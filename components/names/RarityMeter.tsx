@@ -19,7 +19,7 @@ export default function RarityMeter({
   return (
     <div className="rounded-card border border-line bg-panel p-6">
       <h3 className="text-lg font-semibold mb-1">Rarity</h3>
-      <p className="text-sm text-muted mb-4">
+      <p className="text-sm text-muted mb-4 min-h-[2.5rem]">
         <strong className="text-paper">{name.name}</strong> ranks{" "}
         <strong className="text-paper">
           #{rarity.rank.toLocaleString()}
@@ -55,7 +55,7 @@ export default function RarityMeter({
           </ResponsiveContainer>
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
             <span className="text-xl font-semibold text-paper leading-none">{morePctThan}%</span>
-            <span className="text-[9px] text-muted leading-tight">more common</span>
+            <span className="text-[10px] text-muted leading-tight">more common</span>
           </div>
         </div>
 

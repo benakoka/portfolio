@@ -22,6 +22,45 @@ interface ChartRow {
   isForecast?: boolean;
 }
 
+interface TooltipEntry {
+  dataKey?: string;
+  value?: number;
+}
+
+function ArcTooltip({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean;
+  payload?: TooltipEntry[];
+  label?: number;
+}) {
+  if (!active || !payload || payload.length === 0) return null;
+  const entry =
+    payload.find((p) => p.dataKey === "perMillion" && p.value != null) ??
+    payload.find((p) => p.dataKey === "forecastMid" && p.value != null);
+  if (!entry) return null;
+  const isForecast = entry.dataKey === "forecastMid";
+
+  return (
+    <div
+      style={{
+        background: "var(--panel-2)",
+        border: "1px solid var(--line)",
+        borderRadius: 8,
+        fontSize: 12,
+        padding: "8px 12px",
+      }}
+    >
+      <div style={{ color: "var(--paper)", marginBottom: 2 }}>{label}</div>
+      <div style={{ color: "var(--muted)" }}>
+        {entry.value} per million{isForecast ? " (projected)" : " births"}
+      </div>
+    </div>
+  );
+}
+
 export default function PopularityChart({
   name,
   curve,
@@ -95,21 +134,7 @@ export default function PopularityChart({
               width={44}
               tickFormatter={(v) => (v >= 1000 ? `${v / 1000}k` : `${v}`)}
             />
-            <Tooltip
-              contentStyle={{
-                background: "var(--panel-2)",
-                border: "1px solid var(--line)",
-                borderRadius: 8,
-                fontSize: 12,
-              }}
-              labelStyle={{ color: "var(--paper)" }}
-              formatter={(value, key, item) => {
-                if (key === "forecastMid" && item?.payload?.isForecast) {
-                  return [`${value} per million (projected)`, "rate"];
-                }
-                return [`${value} per million births`, "rate"];
-              }}
-            />
+            <Tooltip content={<ArcTooltip />} />
             <Area
               type="monotone"
               dataKey="perMillion"
