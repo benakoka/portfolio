@@ -1,31 +1,99 @@
 "use client";
 
 import {
-  AreaChart,
+  ComposedChart,
   Area,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
   ResponsiveContainer,
   ReferenceDot,
+  ReferenceLine,
 } from "recharts";
-import type { NameRow, PopularityPoint } from "@/lib/names/types";
+import type { NameRow, PopularityPoint, ForecastPoint } from "@/lib/names/types";
 import TrendBadge from "./TrendBadge";
+
+interface ChartRow {
+  year: number;
+  perMillion?: number;
+  forecastMid?: number;
+  forecastRange?: [number, number];
+  isForecast?: boolean;
+}
+
+interface TooltipEntry {
+  dataKey?: string;
+  value?: number;
+}
+
+function ArcTooltip({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean;
+  payload?: TooltipEntry[];
+  label?: number;
+}) {
+  if (!active || !payload || payload.length === 0) return null;
+  const entry =
+    payload.find((p) => p.dataKey === "perMillion" && p.value != null) ??
+    payload.find((p) => p.dataKey === "forecastMid" && p.value != null);
+  if (!entry) return null;
+  const isForecast = entry.dataKey === "forecastMid";
+
+  return (
+    <div
+      style={{
+        background: "var(--panel-2)",
+        border: "1px solid var(--line)",
+        borderRadius: 8,
+        fontSize: 12,
+        padding: "8px 12px",
+      }}
+    >
+      <div style={{ color: "var(--paper)", marginBottom: 2 }}>{label}</div>
+      <div style={{ color: "var(--muted)" }}>
+        {entry.value} per million{isForecast ? " (projected)" : " births"}
+      </div>
+    </div>
+  );
+}
 
 export default function PopularityChart({
   name,
   curve,
+  forecast,
 }: {
   name: NameRow;
   curve: PopularityPoint[];
+  forecast: ForecastPoint[];
 }) {
-  const data = curve.map((p) => ({
+  const historical: ChartRow[] = curve.map((p, i) => {
+    const perMillion = Math.round(p.share * 1_000_000);
+    const isBoundary = i === curve.length - 1 && forecast.length > 0;
+    return {
+      year: p.year,
+      perMillion,
+      forecastMid: isBoundary ? perMillion : undefined,
+      forecastRange: isBoundary ? [perMillion, perMillion] : undefined,
+    };
+  });
+
+  const projected: ChartRow[] = forecast.map((p) => ({
     year: p.year,
-    perMillion: Math.round(p.share * 1_000_000),
+    forecastMid: Math.round(p.share * 1_000_000),
+    forecastRange: [Math.round(p.lower * 1_000_000), Math.round(p.upper * 1_000_000)],
+    isForecast: true,
   }));
 
-  const peakPoint = data.find((d) => d.year === name.peak_year);
+  const data = [...historical, ...projected];
+
+  const peakPoint = historical.find((d) => d.year === name.peak_year);
   const pctChange = name.pct_change_from_peak != null ? Math.round(name.pct_change_from_peak * 100) : null;
+  const horizonYears = forecast.length;
+  const boundaryYear = horizonYears > 0 ? historical[historical.length - 1]?.year : null;
 
   return (
     <div className="rounded-card border border-line bg-panel p-6">
@@ -43,7 +111,7 @@ export default function PopularityChart({
 
       <div className="h-56">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 8, right: 8, bottom: 4, left: 0 }}>
+          <ComposedChart data={data} margin={{ top: 8, right: 8, bottom: 4, left: 0 }}>
             <defs>
               <linearGradient id="popGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="var(--data)" stopOpacity={0.4} />
@@ -66,16 +134,7 @@ export default function PopularityChart({
               width={44}
               tickFormatter={(v) => (v >= 1000 ? `${v / 1000}k` : `${v}`)}
             />
-            <Tooltip
-              contentStyle={{
-                background: "var(--panel-2)",
-                border: "1px solid var(--line)",
-                borderRadius: 8,
-                fontSize: 12,
-              }}
-              labelStyle={{ color: "var(--paper)" }}
-              formatter={(value) => [`${value} per million births`, "rate"]}
-            />
+            <Tooltip content={<ArcTooltip />} />
             <Area
               type="monotone"
               dataKey="perMillion"
@@ -85,6 +144,29 @@ export default function PopularityChart({
               isAnimationActive
               animationDuration={900}
             />
+            {horizonYears > 0 && (
+              <>
+                <Area
+                  type="monotone"
+                  dataKey="forecastRange"
+                  stroke="none"
+                  fill="var(--muted)"
+                  fillOpacity={0.16}
+                  isAnimationActive
+                  animationDuration={900}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="forecastMid"
+                  stroke="var(--data)"
+                  strokeWidth={2}
+                  strokeDasharray="5 4"
+                  dot={false}
+                  isAnimationActive
+                  animationDuration={900}
+                />
+              </>
+            )}
             {peakPoint && (
               <ReferenceDot
                 x={peakPoint.year}
@@ -95,9 +177,31 @@ export default function PopularityChart({
                 strokeWidth={1}
               />
             )}
-          </AreaChart>
+            {boundaryYear != null && (
+              <ReferenceLine
+                x={boundaryYear}
+                stroke="var(--muted)"
+                strokeDasharray="2 3"
+                label={{
+                  value: "Projected →",
+                  position: "insideTopRight",
+                  fill: "var(--data)",
+                  fontSize: 11,
+                  fontWeight: 600,
+                }}
+              />
+            )}
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
+
+      {horizonYears > 0 && (
+        <p className="mt-3 text-xs text-muted">
+          <strong style={{ color: "var(--data)" }}>Projected:</strong> the
+          dashed {horizonYears}-year forecast (Holt damped-trend exponential
+          smoothing, fit to recent years), with a shaded 95% interval.
+        </p>
+      )}
     </div>
   );
 }

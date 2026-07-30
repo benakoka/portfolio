@@ -70,6 +70,13 @@ export default function NamesHome() {
             </Link>
           ))}
         </div>
+
+        <Link
+          href="/names/compare"
+          className="mt-5 text-sm text-data hover:text-paper transition-colors font-mono"
+        >
+          Compare two names →
+        </Link>
       </section>
 
       <section className="border-t border-line py-16">

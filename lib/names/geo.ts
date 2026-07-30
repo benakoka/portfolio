@@ -27,7 +27,7 @@ export const STATE_NAMES: Record<string, string> = {
   WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
 };
 
-/** index (over/under-index vs national baseline) -> diverging cold (under-indexed) / hot (over-indexed) scale. */
+/** index (over/under-index vs national baseline) -> diverging red (under-indexed) / blue (over-indexed) scale. */
 export const GEO_SCALE = {
   min: 0.4,
   center: 1,
@@ -44,9 +44,38 @@ export function indexToColor(index: number | undefined): string {
 
   const [lo, hi, t] =
     index <= center
-      ? [cold, neutral, Math.max(0, Math.min(1, (index - min) / (center - min)))]
-      : [neutral, hot, Math.max(0, Math.min(1, (index - center) / (max - center)))];
+      ? [hot, neutral, Math.max(0, Math.min(1, (index - min) / (center - min)))]
+      : [neutral, cold, Math.max(0, Math.min(1, (index - center) / (max - center)))];
 
   const rgb = lo.map((c, i) => Math.round(c + (hi[i] - c) * t));
+  return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+}
+
+/** Colors for a two-name head-to-head geographic comparison — kept in sync with the accent colors used elsewhere on the compare page. */
+export const COMPARE_SCALE = {
+  a: [61, 122, 158] as [number, number, number], // matches var(--data)
+  neutral: [240, 242, 246] as [number, number, number],
+  b: [186, 62, 28] as [number, number, number], // matches #ba3e1c
+  noData: "#c7cbd2",
+  // clamp range for log(indexA / indexB) before it hits full saturation
+  logClamp: 1.1,
+};
+
+/**
+ * Colors a state by which of two names is comparatively more concentrated
+ * there. Both indices are each name's own over/under-index relative to its
+ * own national average, so comparing them directly is meaningful: it answers
+ * "which name leans harder into this state, relative to how each name
+ * normally behaves" rather than comparing raw, differently-scaled popularity.
+ */
+export function compareStateColor(indexA: number | undefined, indexB: number | undefined): string {
+  if (indexA == null || indexB == null || indexA <= 0 || indexB <= 0) return COMPARE_SCALE.noData;
+  const { a, neutral, b, logClamp } = COMPARE_SCALE;
+
+  const logRatio = Math.max(-logClamp, Math.min(logClamp, Math.log(indexA / indexB)));
+  const t = (logRatio + logClamp) / (2 * logClamp); // 0 => b stronger, 1 => a stronger
+
+  const [lo, hi, localT] = t < 0.5 ? [b, neutral, t / 0.5] : [neutral, a, (t - 0.5) / 0.5];
+  const rgb = lo.map((c, i) => Math.round(c + (hi[i] - c) * localT));
   return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 }

@@ -34,13 +34,6 @@ export default function AgeDistribution({
     inRange: b.age_bucket + 4 >= (name.p15_age ?? 0) && b.age_bucket <= (name.p85_age ?? 999),
   }));
 
-  const showSexSplit =
-    name.median_age_m != null &&
-    name.median_age_f != null &&
-    name.pct_male != null &&
-    name.pct_male > 0.15 &&
-    name.pct_male < 0.85;
-
   return (
     <div className="rounded-card border border-line bg-panel p-6">
       <h3 className="text-lg font-semibold mb-1">Living-age distribution</h3>
@@ -52,7 +45,7 @@ export default function AgeDistribution({
         <strong className="text-paper">{name.p85_age}</strong> years old.
       </p>
 
-      <div className="h-48">
+      <div className="h-56">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 4, right: 4, bottom: 4, left: 0 }}>
             <XAxis
@@ -87,13 +80,6 @@ export default function AgeDistribution({
           </BarChart>
         </ResponsiveContainer>
       </div>
-
-      {showSexSplit && (
-        <p className="mt-3 text-xs text-muted">
-          Among males: median {name.median_age_m} ({name.p15_age_m}–{name.p85_age_m}).
-          Among females: median {name.median_age_f} ({name.p15_age_f}–{name.p85_age_f}).
-        </p>
-      )}
     </div>
   );
 }

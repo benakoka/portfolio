@@ -54,6 +54,19 @@ export interface GeoRegionRow {
   index: number;
 }
 
+export interface ForecastPoint {
+  year: number;
+  share: number;
+  lower: number;
+  upper: number;
+}
+
+export interface RarityInfo {
+  rank: number;
+  totalNames: number;
+  percentile: number; // 0-1, share of names this one is more common than
+}
+
 export interface NameProfile {
   name: NameRow;
   curve: PopularityPoint[];
@@ -61,6 +74,8 @@ export interface NameProfile {
   neighbors: NeighborRow[];
   geoStates: GeoStateRow[];
   geoRegions: GeoRegionRow[];
+  forecast: ForecastPoint[];
+  rarity: RarityInfo;
 }
 
 export const ARCHETYPE_COPY: Record<string, { label: string; blurb: string }> = {

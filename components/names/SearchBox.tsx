@@ -8,8 +8,20 @@ interface Hit {
   total_count: number;
 }
 
-export default function SearchBox({ autoFocus = false }: { autoFocus?: boolean }) {
-  const [query, setQuery] = useState("");
+export default function SearchBox({
+  autoFocus = false,
+  onSelect,
+  placeholder = "Type a first name…",
+  initialValue = "",
+  accentColor,
+}: {
+  autoFocus?: boolean;
+  onSelect?: (name: string) => void;
+  placeholder?: string;
+  initialValue?: string;
+  accentColor?: string;
+}) {
+  const [query, setQuery] = useState(initialValue);
   const [hits, setHits] = useState<Hit[]>([]);
   const [fuzzy, setFuzzy] = useState(false);
   const [open, setOpen] = useState(false);
@@ -18,7 +30,7 @@ export default function SearchBox({ autoFocus = false }: { autoFocus?: boolean }
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!query.trim()) {
+    if (query === initialValue || !query.trim()) {
       setHits([]);
       setOpen(false);
       return;
@@ -42,7 +54,7 @@ export default function SearchBox({ autoFocus = false }: { autoFocus?: boolean }
       clearTimeout(t);
       controller.abort();
     };
-  }, [query]);
+  }, [query, initialValue]);
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
@@ -57,6 +69,10 @@ export default function SearchBox({ autoFocus = false }: { autoFocus?: boolean }
   function go(name: string) {
     setOpen(false);
     setQuery("");
+    if (onSelect) {
+      onSelect(name);
+      return;
+    }
     router.push(`/names/name/${encodeURIComponent(name.toLowerCase())}`);
   }
 
@@ -90,9 +106,13 @@ export default function SearchBox({ autoFocus = false }: { autoFocus?: boolean }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            onFocus={() => hits.length > 0 && setOpen(true)}
-            placeholder="Type a first name…"
+            onFocus={(e) => {
+              if (hits.length > 0) setOpen(true);
+              e.target.select();
+            }}
+            placeholder={placeholder}
             className="flex-1 min-w-0 bg-transparent outline-none text-paper placeholder:text-muted font-mono text-base"
+            style={accentColor ? { color: accentColor } : undefined}
             aria-label="Search for a name"
             autoComplete="off"
             spellCheck={false}

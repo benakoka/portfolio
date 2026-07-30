@@ -6,6 +6,8 @@ import AgeDistribution from "@/components/names/AgeDistribution";
 import PopularityChart from "@/components/names/PopularityChart";
 import NameNeighbors from "@/components/names/NameNeighbors";
 import GeoChoropleth from "@/components/names/GeoChoropleth";
+import GenderBalance from "@/components/names/GenderBalance";
+import RarityMeter from "@/components/names/RarityMeter";
 import ShareButton from "@/components/names/ShareButton";
 import SearchBox from "@/components/names/SearchBox";
 
@@ -82,6 +84,12 @@ export default async function NamePage({ params }: Props) {
           {n.total_count.toLocaleString()} recorded births · active{" "}
           {n.first_year}–{n.last_year}
         </p>
+        <Link
+          href={`/names/compare?a=${encodeURIComponent(n.name)}`}
+          className="mt-2 inline-block text-sm text-data hover:text-paper transition-colors font-mono"
+        >
+          Compare {n.name} →
+        </Link>
         {isLowData && (
           <p className="mt-3 inline-block px-3 py-2 rounded-lg border border-line bg-panel text-xs text-muted">
             Limited US data for this name — stats below may be noisy.
@@ -91,7 +99,9 @@ export default async function NamePage({ params }: Props) {
 
       <div className="grid md:grid-cols-2 gap-6">
         <AgeDistribution name={n} agePmf={profile.agePmf} />
-        <PopularityChart name={n} curve={profile.curve} />
+        <PopularityChart name={n} curve={profile.curve} forecast={profile.forecast} />
+        <GenderBalance name={n} />
+        <RarityMeter name={n} rarity={profile.rarity} />
         <NameNeighbors name={n.name} neighbors={profile.neighbors} />
         <GeoChoropleth name={n.name} geoStates={profile.geoStates} geoRegions={profile.geoRegions} />
       </div>
