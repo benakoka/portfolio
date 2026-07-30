@@ -87,7 +87,7 @@ export default function GeoChoropleth({
         <div
           className="h-2 flex-1 rounded-full"
           style={{
-            background: `linear-gradient(90deg, rgb(${GEO_SCALE.cold.join(",")}), rgb(${GEO_SCALE.neutral.join(",")}), rgb(${GEO_SCALE.hot.join(",")}))`,
+            background: `linear-gradient(90deg, rgb(${GEO_SCALE.hot.join(",")}), rgb(${GEO_SCALE.neutral.join(",")}), rgb(${GEO_SCALE.cold.join(",")}))`,
           }}
         />
         <span>Over-indexed</span>

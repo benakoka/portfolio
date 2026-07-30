@@ -78,25 +78,23 @@ export default async function NamePage({ params }: Props) {
         <SearchBox />
       </div>
 
-      <header className="mb-8 flex items-start justify-between gap-4 flex-wrap">
-        <div>
-          <h1 className="text-5xl font-semibold">{n.name}</h1>
-          <p className="mt-2 text-muted">
-            {n.total_count.toLocaleString()} recorded births · active{" "}
-            {n.first_year}–{n.last_year}
-          </p>
-          {isLowData && (
-            <p className="mt-3 inline-block px-3 py-2 rounded-lg border border-line bg-panel text-xs text-muted">
-              Limited US data for this name — stats below may be noisy.
-            </p>
-          )}
-        </div>
+      <header className="mb-8">
+        <h1 className="text-5xl font-semibold">{n.name}</h1>
+        <p className="mt-2 text-muted">
+          {n.total_count.toLocaleString()} recorded births · active{" "}
+          {n.first_year}–{n.last_year}
+        </p>
         <Link
           href={`/names/compare?a=${encodeURIComponent(n.name)}`}
-          className="px-4 py-2.5 rounded-lg border border-line bg-panel text-sm font-mono text-paper hover:border-data transition-colors whitespace-nowrap"
+          className="mt-2 inline-block text-sm text-data hover:text-paper transition-colors font-mono"
         >
           Compare {n.name} →
         </Link>
+        {isLowData && (
+          <p className="mt-3 inline-block px-3 py-2 rounded-lg border border-line bg-panel text-xs text-muted">
+            Limited US data for this name — stats below may be noisy.
+          </p>
+        )}
       </header>
 
       <div className="grid md:grid-cols-2 gap-6">

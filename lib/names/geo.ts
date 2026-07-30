@@ -27,7 +27,7 @@ export const STATE_NAMES: Record<string, string> = {
   WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming",
 };
 
-/** index (over/under-index vs national baseline) -> diverging cold (under-indexed) / hot (over-indexed) scale. */
+/** index (over/under-index vs national baseline) -> diverging red (under-indexed) / blue (over-indexed) scale. */
 export const GEO_SCALE = {
   min: 0.4,
   center: 1,
@@ -44,8 +44,8 @@ export function indexToColor(index: number | undefined): string {
 
   const [lo, hi, t] =
     index <= center
-      ? [cold, neutral, Math.max(0, Math.min(1, (index - min) / (center - min)))]
-      : [neutral, hot, Math.max(0, Math.min(1, (index - center) / (max - center)))];
+      ? [hot, neutral, Math.max(0, Math.min(1, (index - min) / (center - min)))]
+      : [neutral, cold, Math.max(0, Math.min(1, (index - center) / (max - center)))];
 
   const rgb = lo.map((c, i) => Math.round(c + (hi[i] - c) * t));
   return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
