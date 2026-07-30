@@ -46,6 +46,21 @@ export default function AboutPage() {
 
         <section>
           <h2 className="text-paper text-lg font-semibold mb-2">
+            Gender balance
+          </h2>
+          <p>
+            Gender balance draws on the sex field already present in the
+            SSA national baby names file: each name&apos;s overall share of
+            male and female births, along with the median and 15th/85th
+            percentile living ages calculated separately by sex. For names
+            given overwhelmingly to one sex, the split is reported as a
+            single dominant percentage rather than a full breakdown, since
+            the minority share is usually too small to be meaningful.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-paper text-lg font-semibold mb-2">
             Popularity arc &amp; trend archetype
           </h2>
           <p>
@@ -59,6 +74,40 @@ export default function AboutPage() {
             persists today, and whether the curve shows a decline
             followed by a resurgence. Each resulting cluster is matched to
             the closest of six predefined archetypes.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-paper text-lg font-semibold mb-2">
+            Popularity forecast
+          </h2>
+          <p>
+            The ten-year projection shown on the popularity arc is
+            produced by Holt&apos;s damped-trend exponential smoothing,
+            fit separately to each name&apos;s history. Rather than fixing
+            the smoothing parameters (alpha, beta, phi) by hand, they are
+            chosen by grid search to minimize one-step-ahead error. Fit
+            quality and the resulting confidence interval are scored only
+            against the trailing twenty-five years of data, not a
+            name&apos;s full history: a name like Mildred swung sharply in
+            the 1910s and has been flat and rare for decades, and scoring
+            against a century of irrelevant volatility would produce an
+            uselessly wide interval for its current, quieter era. The
+            damping term keeps the projection from extrapolating an
+            unrealistic runaway trend, and no forecast is shown for names
+            that are no longer actively given.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-paper text-lg font-semibold mb-2">Rarity</h2>
+          <p>
+            Rarity ranks each name by its all-time total births against
+            the roughly 106,000 names that meet the SSA&apos;s
+            five-births-per-year reporting threshold. The rank is the
+            count of names with a strictly higher total, plus one; the
+            reported percentile is the share of all names that a given
+            name is more common than.
           </p>
         </section>
 
@@ -87,7 +136,26 @@ export default function AboutPage() {
             same period, from 1910 to the present, matching the
             availability of state-level data. An index of 2.0 indicates
             that a name appears twice as frequently in that state as would
-            be expected based on the national baseline.
+            be expected based on the national baseline. On the map, red
+            indicates a state where the name is under-indexed and blue
+            indicates a state where it is over-indexed.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-paper text-lg font-semibold mb-2">
+            Head-to-head compare
+          </h2>
+          <p>
+            The compare view reuses the same per-name statistics computed
+            for individual profiles; nothing is recalculated for the
+            comparison itself. Its state map colors each state by the
+            ratio of the two names&apos; own geographic indices there.
+            Because both indices are already normalized to that
+            name&apos;s national average, comparing them directly answers
+            which name leans harder into a given state relative to how
+            each name typically behaves, rather than comparing raw,
+            differently-scaled popularity.
           </p>
         </section>
       </div>
