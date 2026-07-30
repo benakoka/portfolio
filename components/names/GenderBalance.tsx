@@ -1,3 +1,6 @@
+"use client";
+
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import type { NameRow } from "@/lib/names/types";
 
 export default function GenderBalance({ name }: { name: NameRow }) {
@@ -20,6 +23,11 @@ export default function GenderBalance({ name }: { name: NameRow }) {
   const showSexAges =
     !isLopsided && name.median_age_m != null && name.median_age_f != null;
 
+  const data = [
+    { key: "male", label: "Male", value: malePct, color: "var(--data)" },
+    { key: "female", label: "Female", value: femalePct, color: "var(--signal)" },
+  ].filter((d) => d.value > 0);
+
   return (
     <div className="rounded-card border border-line bg-panel p-6">
       <h3 className="text-lg font-semibold mb-1">Gender balance</h3>
@@ -38,17 +46,46 @@ export default function GenderBalance({ name }: { name: NameRow }) {
         )}
       </p>
 
-      <div className="h-3 rounded-full overflow-hidden flex border border-line">
-        {malePct > 0 && (
-          <div className="h-full bg-data" style={{ width: `${malePct}%` }} />
-        )}
-        {femalePct > 0 && (
-          <div className="h-full bg-signal" style={{ width: `${femalePct}%` }} />
-        )}
-      </div>
-      <div className="flex justify-between mt-2 text-xs text-muted font-mono">
-        <span>Male {malePct}%</span>
-        <span>Female {femalePct}%</span>
+      <div className="flex items-center gap-6">
+        <div className="relative w-32 h-32 shrink-0">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={data}
+                dataKey="value"
+                nameKey="label"
+                innerRadius="68%"
+                outerRadius="100%"
+                startAngle={90}
+                endAngle={-270}
+                stroke="none"
+                isAnimationActive
+                animationDuration={700}
+              >
+                {data.map((d) => (
+                  <Cell key={d.key} fill={d.color} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+            <span className="text-xl font-semibold text-paper">{dominantPct}%</span>
+            <span className="text-[11px] text-muted capitalize">{dominant}</span>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2.5 text-sm">
+          {data.map((d) => (
+            <div key={d.key} className="flex items-center gap-2">
+              <span
+                className="w-2.5 h-2.5 rounded-full shrink-0"
+                style={{ background: d.color }}
+              />
+              <span className="text-muted">{d.label}</span>
+              <span className="text-paper font-mono ml-2">{d.value}%</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {showSexAges && (

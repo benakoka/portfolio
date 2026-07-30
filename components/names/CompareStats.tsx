@@ -15,11 +15,6 @@ function genderLabel(pctMale: number | null, pctFemale: number | null): string {
   return `${male}% M / ${female}% F`;
 }
 
-function topRegion(profile: NameProfile): string {
-  const top = profile.geoRegions[0];
-  return top ? `${top.region} (${top.index.toFixed(1)}x)` : "—";
-}
-
 export default function CompareStats({
   profileA,
   profileB,
@@ -45,7 +40,6 @@ export default function CompareStats({
       b: b.median_age != null ? String(b.median_age) : "—",
     },
     { label: "Gender split", a: genderLabel(a.pct_male, a.pct_female), b: genderLabel(b.pct_male, b.pct_female) },
-    { label: "Top region", a: topRegion(profileA), b: topRegion(profileB) },
   ];
 
   return (

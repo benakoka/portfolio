@@ -158,7 +158,7 @@ export default function PopularityChart({
         <p className="mt-3 text-xs text-muted">
           Dashed line: a {horizonYears}-year statistical projection (Holt
           damped-trend exponential smoothing, fit to recent years), with a
-          shaded 95% interval. Not a guarantee — trends can and do change.
+          shaded 95% interval.
         </p>
       )}
     </div>

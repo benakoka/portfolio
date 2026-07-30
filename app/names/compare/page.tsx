@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getProfile } from "@/lib/names/db";
 import CompareSelectors from "@/components/names/CompareSelectors";
 import CompareChart from "@/components/names/CompareChart";
+import CompareGeoMap from "@/components/names/CompareGeoMap";
 import CompareStats from "@/components/names/CompareStats";
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default async function ComparePage({ searchParams }: Props) {
       {profileA && profileB ? (
         <div className="mt-8 flex flex-col gap-6">
           <CompareChart profileA={profileA} profileB={profileB} />
+          <CompareGeoMap profileA={profileA} profileB={profileB} />
           <CompareStats profileA={profileA} profileB={profileB} />
         </div>
       ) : (
