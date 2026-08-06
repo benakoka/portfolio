@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { NeighborRow } from "@/lib/names/types";
+import { Stagger, StaggerLinkItem } from "@/components/motion/Reveal";
 
 export default function NameNeighbors({
   name,
@@ -26,17 +26,18 @@ export default function NameNeighbors({
         People named <strong className="text-paper">{name}</strong> have
         popularity-curve siblings named:
       </p>
-      <div className="flex flex-wrap gap-2">
+      <Stagger mode="load" className="flex flex-wrap gap-2">
         {neighbors.map((n) => (
-          <Link
+          <StaggerLinkItem
             key={n.neighbor}
             href={`/names/name/${n.neighbor.toLowerCase()}`}
             className="px-3 py-1.5 rounded-full border border-line font-mono text-sm hover:border-data hover:text-data transition-colors"
+            lift={2}
           >
             {n.neighbor}
-          </Link>
+          </StaggerLinkItem>
         ))}
-      </div>
+      </Stagger>
     </div>
   );
 }

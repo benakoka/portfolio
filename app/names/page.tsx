@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SearchBox from "@/components/names/SearchBox";
+import { Reveal, Stagger, StaggerItem, StaggerLinkItem } from "@/components/motion/Reveal";
 
 const EXAMPLES = ["Brandon", "Olivia", "Mildred", "Emma", "Kevin"];
 
@@ -38,57 +39,62 @@ export default function NamesHome() {
               "radial-gradient(ellipse at center, rgba(61,122,158,0.10), transparent 65%)",
           }}
         />
-        <h1 className="text-4xl sm:text-5xl font-semibold leading-tight max-w-2xl">
-          What does the internet think of{" "}
-          <span
-            style={{
-              backgroundImage:
-                "linear-gradient(180deg, transparent 62%, rgba(131,179,202,0.45) 62%)",
-            }}
-          >
-            your name?
-          </span>
-        </h1>
-        <p className="mt-5 text-muted text-lg max-w-xl">
-          Type any first name. Get a data-driven profile built from real SSA
-          birth records and actuarial life tables.
-        </p>
+        <Reveal mode="load" className="flex flex-col items-center text-center">
+          <h1 className="text-4xl sm:text-5xl font-semibold leading-tight max-w-2xl">
+            What does the internet think of{" "}
+            <span
+              style={{
+                backgroundImage:
+                  "linear-gradient(180deg, transparent 62%, rgba(131,179,202,0.45) 62%)",
+              }}
+            >
+              your name?
+            </span>
+          </h1>
+          <p className="mt-5 text-muted text-lg max-w-xl">
+            Type any first name. Get a data-driven profile built from real SSA
+            birth records and actuarial life tables.
+          </p>
 
-        <div className="mt-9 w-full flex justify-center">
-          <SearchBox autoFocus />
-        </div>
+          <div className="mt-9 w-full flex justify-center">
+            <SearchBox autoFocus />
+          </div>
+        </Reveal>
 
-        <div className="mt-6 flex flex-wrap gap-2 justify-center text-sm">
+        <Stagger mode="load" className="mt-6 flex flex-wrap gap-2 justify-center text-sm">
           <span className="text-muted mr-1">Try:</span>
           {EXAMPLES.map((name) => (
-            <Link
+            <StaggerLinkItem
               key={name}
               href={`/names/name/${name.toLowerCase()}`}
               className="px-3 py-1 rounded-full border border-line text-paper/90 hover:border-data transition-colors font-mono text-xs"
+              lift={2}
             >
               {name}
-            </Link>
+            </StaggerLinkItem>
           ))}
-        </div>
+        </Stagger>
 
-        <Link
-          href="/names/compare"
-          className="mt-5 text-sm text-data hover:text-paper transition-colors font-mono"
-        >
-          Compare two names →
-        </Link>
+        <Reveal mode="load" delay={0.3}>
+          <Link
+            href="/names/compare"
+            className="mt-5 inline-block text-sm text-data hover:text-paper transition-colors font-mono"
+          >
+            Compare two names →
+          </Link>
+        </Reveal>
       </section>
 
       <section className="border-t border-line py-16">
-        <div className="grid sm:grid-cols-2 gap-6">
+        <Stagger className="grid sm:grid-cols-2 gap-6">
           {FEATURES.map((f) => (
-            <div key={f.tag} className="rounded-card border border-line bg-panel p-6">
+            <StaggerItem key={f.tag} className="rounded-card border border-line bg-panel p-6">
               <span className="font-mono text-xs text-data">{f.tag}</span>
               <h3 className="mt-2 text-lg font-semibold">{f.title}</h3>
               <p className="mt-2 text-sm text-muted">{f.body}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </section>
     </div>
   );

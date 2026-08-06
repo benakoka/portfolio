@@ -1,4 +1,5 @@
 import BackButton from "@/components/names/BackButton";
+import { Reveal } from "@/components/motion/Reveal";
 
 export const metadata = { title: "Methodology" };
 
@@ -9,7 +10,7 @@ export default function AboutPage() {
       <h1 className="text-3xl font-semibold mb-8">Methodology</h1>
 
       <div className="space-y-8 text-sm text-muted leading-relaxed">
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">Data sources</h2>
           <p>
             The statistics on this site are drawn from three Social
@@ -23,9 +24,9 @@ export default function AboutPage() {
             display a &ldquo;limited data&rdquo; notice rather than a full
             profile.
           </p>
-        </section>
+        </Reveal>
 
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">
             Living-age distribution
           </h2>
@@ -42,9 +43,9 @@ export default function AboutPage() {
             survival-weighted distribution, rather than from raw birth
             counts.
           </p>
-        </section>
+        </Reveal>
 
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">
             Gender balance
           </h2>
@@ -57,9 +58,9 @@ export default function AboutPage() {
             single dominant percentage rather than a full breakdown, since
             the minority share is usually too small to be meaningful.
           </p>
-        </section>
+        </Reveal>
 
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">
             Popularity arc &amp; trend archetype
           </h2>
@@ -75,9 +76,9 @@ export default function AboutPage() {
             followed by a resurgence. Each resulting cluster is matched to
             the closest of six predefined archetypes.
           </p>
-        </section>
+        </Reveal>
 
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">
             Popularity forecast
           </h2>
@@ -97,9 +98,9 @@ export default function AboutPage() {
             unrealistic runaway trend, and no forecast is shown for names
             that are no longer actively given.
           </p>
-        </section>
+        </Reveal>
 
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">Rarity</h2>
           <p>
             Rarity ranks each name by its all-time total births against
@@ -109,9 +110,9 @@ export default function AboutPage() {
             reported percentile is the share of all names that a given
             name is more common than.
           </p>
-        </section>
+        </Reveal>
 
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">
             Name neighbors
           </h2>
@@ -124,9 +125,9 @@ export default function AboutPage() {
             of alternate spellings of the same name rather than
             genuinely related names.
           </p>
-        </section>
+        </Reveal>
 
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">
             Geographic fingerprint
           </h2>
@@ -140,9 +141,9 @@ export default function AboutPage() {
             indicates a state where the name is under-indexed and blue
             indicates a state where it is over-indexed.
           </p>
-        </section>
+        </Reveal>
 
-        <section>
+        <Reveal mode="scroll" as="section">
           <h2 className="text-paper text-lg font-semibold mb-2">
             Head-to-head compare
           </h2>
@@ -157,7 +158,7 @@ export default function AboutPage() {
             each name typically behaves, rather than comparing raw,
             differently-scaled popularity.
           </p>
-        </section>
+        </Reveal>
       </div>
     </div>
   );
