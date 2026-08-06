@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
 
 interface Hit {
   name: string;
@@ -120,35 +121,43 @@ export default function SearchBox({
         </div>
       </div>
 
-      {open && hits.length > 0 && (
-        <div className="absolute mt-2 w-full rounded-card border border-line bg-panel shadow-2xl overflow-hidden z-10">
-          {fuzzy && (
-            <div className="px-4 py-2 text-xs text-muted border-b border-line">
-              No exact match — did you mean:
-            </div>
-          )}
-          <ul>
-            {hits.map((hit, i) => (
-              <li key={hit.name}>
-                <button
-                  onClick={() => go(hit.name)}
-                  onMouseEnter={() => setActiveIdx(i)}
-                  className={`w-full text-left px-5 py-3 flex items-center justify-between transition-colors ${
-                    i === activeIdx ? "bg-panel-2 text-paper" : "text-paper/90"
-                  }`}
-                >
-                  <span>{hit.name}</span>
-                  {hit.total_count > 0 && (
-                    <span className="font-mono text-xs text-muted">
-                      {hit.total_count.toLocaleString()} born
-                    </span>
-                  )}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <AnimatePresence>
+        {open && hits.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute mt-2 w-full rounded-card border border-line bg-panel shadow-2xl overflow-hidden z-10"
+          >
+            {fuzzy && (
+              <div className="px-4 py-2 text-xs text-muted border-b border-line">
+                No exact match — did you mean:
+              </div>
+            )}
+            <ul>
+              {hits.map((hit, i) => (
+                <li key={hit.name}>
+                  <button
+                    onClick={() => go(hit.name)}
+                    onMouseEnter={() => setActiveIdx(i)}
+                    className={`w-full text-left px-5 py-3 flex items-center justify-between transition-colors ${
+                      i === activeIdx ? "bg-panel-2 text-paper" : "text-paper/90"
+                    }`}
+                  >
+                    <span>{hit.name}</span>
+                    {hit.total_count > 0 && (
+                      <span className="font-mono text-xs text-muted">
+                        {hit.total_count.toLocaleString()} born
+                      </span>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

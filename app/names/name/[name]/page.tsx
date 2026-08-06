@@ -10,6 +10,7 @@ import GenderBalance from "@/components/names/GenderBalance";
 import RarityMeter from "@/components/names/RarityMeter";
 import ShareButton from "@/components/names/ShareButton";
 import SearchBox from "@/components/names/SearchBox";
+import { Reveal, Stagger, StaggerItem, StaggerLinkItem } from "@/components/motion/Reveal";
 
 type Props = { params: Promise<{ name: string }> };
 
@@ -50,17 +51,18 @@ export default async function NamePage({ params }: Props) {
           single year), or it&apos;s spelled differently.
         </p>
         {suggestions.length > 0 && (
-          <div className="flex flex-wrap gap-2 justify-center mb-10">
+          <Stagger mode="load" className="flex flex-wrap gap-2 justify-center mb-10">
             {suggestions.map((s) => (
-              <Link
+              <StaggerLinkItem
                 key={s}
                 href={`/names/name/${s.toLowerCase()}`}
                 className="px-3 py-1.5 rounded-full border border-line hover:border-data transition-colors font-mono text-sm"
+                lift={2}
               >
                 {s}
-              </Link>
+              </StaggerLinkItem>
             ))}
-          </div>
+          </Stagger>
         )}
         <div className="flex justify-center">
           <SearchBox />
@@ -78,7 +80,7 @@ export default async function NamePage({ params }: Props) {
         <SearchBox />
       </div>
 
-      <header className="mb-8">
+      <Reveal mode="load" as="header" className="mb-8">
         <h1 className="text-5xl font-semibold">{n.name}</h1>
         <p className="mt-2 text-muted">
           {n.total_count.toLocaleString()} recorded births · active{" "}
@@ -95,20 +97,20 @@ export default async function NamePage({ params }: Props) {
             Limited US data for this name — stats below may be noisy.
           </p>
         )}
-      </header>
+      </Reveal>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <AgeDistribution name={n} agePmf={profile.agePmf} />
-        <PopularityChart name={n} curve={profile.curve} forecast={profile.forecast} />
-        <GenderBalance name={n} />
-        <RarityMeter name={n} rarity={profile.rarity} />
-        <NameNeighbors name={n.name} neighbors={profile.neighbors} />
-        <GeoChoropleth name={n.name} geoStates={profile.geoStates} geoRegions={profile.geoRegions} />
-      </div>
+      <Stagger mode="load" className="grid md:grid-cols-2 gap-6">
+        <StaggerItem><AgeDistribution name={n} agePmf={profile.agePmf} /></StaggerItem>
+        <StaggerItem><PopularityChart name={n} curve={profile.curve} forecast={profile.forecast} /></StaggerItem>
+        <StaggerItem><GenderBalance name={n} /></StaggerItem>
+        <StaggerItem><RarityMeter name={n} rarity={profile.rarity} /></StaggerItem>
+        <StaggerItem><NameNeighbors name={n.name} neighbors={profile.neighbors} /></StaggerItem>
+        <StaggerItem><GeoChoropleth name={n.name} geoStates={profile.geoStates} geoRegions={profile.geoRegions} /></StaggerItem>
+      </Stagger>
 
-      <div className="mt-6 flex md:justify-start">
+      <Reveal mode="load" delay={0.5} className="mt-6 flex md:justify-start">
         <ShareButton name={n.name} />
-      </div>
+      </Reveal>
     </div>
   );
 }
