@@ -84,21 +84,6 @@ export default function PortfolioInteractivity() {
       }
     }
 
-    // scroll reveal for project cards
-    const cards = document.querySelectorAll(".project-card");
-    const revealIo = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("reveal");
-            revealIo.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    cards.forEach((c) => revealIo.observe(c));
-
     // mobile nav toggle
     const toggle = document.getElementById("navToggle");
     const links = document.getElementById("navLinks");
@@ -139,7 +124,6 @@ export default function PortfolioInteractivity() {
     return () => {
       timers.forEach(clearTimeout);
       if (interval) clearInterval(interval);
-      revealIo.disconnect();
       activeIo.disconnect();
       toggle?.removeEventListener("click", onToggleClick);
       linkEls.forEach((a) => a.removeEventListener("click", onLinkClick));
