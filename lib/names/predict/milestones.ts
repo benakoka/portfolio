@@ -50,7 +50,12 @@ export function predictPeakPopularity(
   const currentRank = lastPoint?.rank ?? null;
 
   const milestones: MilestoneResult[] = MILESTONES.map((threshold) => {
-    const alreadyReached = bestRankEver != null && bestRankEver <= threshold;
+    // The year a milestone was first reached is not the same thing as
+    // bestRankYear (the single best rank the name ever had) -- a name can
+    // clear Top 100 decades before it hits its all-time best rank. curve is
+    // already in chronological order, so the first match is the earliest one.
+    const firstReached = curve.find((p) => p.rank != null && p.rank <= threshold);
+    const alreadyReached = firstReached != null;
 
     // Forward-looking probability from the forecast alone -- computed
     // regardless of whether the name has *historically* reached this rank,
@@ -77,7 +82,7 @@ export function predictPeakPopularity(
       threshold,
       label: labelFor(threshold),
       alreadyReached,
-      reachedYear: alreadyReached ? bestRankYear : null,
+      reachedYear: alreadyReached ? firstReached.year : null,
       probability: alreadyReached ? 1 : forwardProbability,
       forwardProbability,
       etaYear: alreadyReached ? null : etaYear,
