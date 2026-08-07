@@ -192,11 +192,13 @@
   border-radius: 10px;
   padding: 10px 12px;
   font-family: var(--font-inter), sans-serif;
-  font-size: 14px;
+  /* 16px, not 14px: anything smaller makes iOS Safari zoom the whole page in on focus. */
+  font-size: 16px;
   color: var(--paper);
   background: var(--panel);
   max-height: 140px;
   line-height: 1.4;
+  overflow-y: auto;
 }
 .bengpt-input-row textarea:focus {
   outline: 2px solid var(--signal);
@@ -223,6 +225,11 @@
 }
 
 @media (max-width: 600px) {
-  .bengpt-card { max-height: min(76dvh, 700px); }
+  .bengpt-header { padding: 18px 0 14px; }
+  .bengpt-main { padding-bottom: 14px; }
+  .bengpt-card { min-height: 320px; max-height: none; }
   .bengpt-msg { max-width: 96%; }
+  .bengpt-log { padding: 16px; }
+  .bengpt-input-row { padding: 10px 12px; }
+  .bengpt-suggestions button { padding: 10px 14px; }
 }
