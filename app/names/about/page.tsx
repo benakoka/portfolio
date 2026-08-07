@@ -159,6 +159,91 @@ export default function AboutPage() {
             differently-scaled popularity.
           </p>
         </Reveal>
+
+        <Reveal mode="scroll" as="section">
+          <h2 className="text-paper text-lg font-semibold mb-2">
+            Peak popularity prediction
+          </h2>
+          <p>
+            The forecast above projects a share of births, but milestones
+            like Top 100 are ranks, and translating one into the other
+            means knowing where every other name stood that year. Each
+            projected year&apos;s share is compared against 2025&apos;s
+            actual popularity distribution to find the equivalent rank,
+            which implicitly assumes the overall shape of that
+            distribution doesn&apos;t shift much across the ten-year
+            window. Milestone probabilities come from the forecast&apos;s
+            own uncertainty band: each year&apos;s projected share is
+            treated as normally distributed around its point estimate,
+            and the odds of clearing a threshold are combined across
+            years as if independent, which overstates them slightly for a
+            name sitting right at the line, since a strong year is
+            usually followed by another strong year rather than a fresh
+            coin flip. The reported peak rank isn&apos;t always taken from
+            a name&apos;s highest-share year either. The SSA now counts
+            around 28,600 distinct names in a single year, versus under
+            1,900 in 1880, so a smaller share today can outrank a bigger
+            share from decades ago, and the model scans a name&apos;s
+            full history for its actual best rank rather than assuming it
+            lines up with its best share.
+          </p>
+        </Reveal>
+
+        <Reveal mode="scroll" as="section">
+          <h2 className="text-paper text-lg font-semibold mb-2">
+            Name life-cycle stage
+          </h2>
+          <p>
+            Life-cycle stage asks a different question than the archetype
+            badge above: not what shape has this name&apos;s curve traced
+            across its whole history, but where does it stand right now.
+            A short decision tree assigns one of six stages (Emerging,
+            Growing, Peaking, Declining, Historic, Extinct) based on a
+            handful of engineered features: the compound growth rate of a
+            name&apos;s share over the last five years, whether that
+            growth is accelerating or cooling, how close its current
+            share sits to its all-time peak, and how recently that peak
+            happened. It&apos;s rule-based rather than trained on purpose,
+            since the point of a life-cycle label is being able to say
+            exactly why a name got it, and a short decision tree makes
+            that explanation exact instead of approximated after the
+            fact. Because it runs off recent momentum rather than a whole
+            curve&apos;s shape, the two labels are allowed to disagree: a
+            name with a Faded Classic archetype can still show a rising
+            trend here, if births have ticked up over the last five years
+            without coming near its historic peak.
+          </p>
+        </Reveal>
+
+        <Reveal mode="scroll" as="section">
+          <h2 className="text-paper text-lg font-semibold mb-2">
+            Popularity survival model
+          </h2>
+          <p>
+            The survival model answers something the forecast can&apos;t:
+            once a name reaches a rank tier, Top 100, Top 500, or Top
+            1000, how long does it typically hold on before falling back
+            out? It&apos;s Kaplan-Meier survival analysis, the standard
+            technique for time-to-event data, applied to every historical
+            run any name has had above each tier as its own observation.
+            A name that spent nine years in the Top 100, dropped out,
+            then came back for four more contributes two runs, not one;
+            runs still going in 2025 are right-censored rather than
+            counted as an exit, since the name hasn&apos;t actually left
+            yet. That adds up to 111 runs through the Top 10 and 7,488
+            through the Top 1000 across the whole dataset, thin enough at
+            the top end that a single unusual name can move the curve
+            more than it would further down. For a name already inside a
+            tier, the model reports conditional survival, the odds of
+            lasting another five, ten, or twenty years given it has
+            already lasted this long, rather than starting the clock
+            over. For a name that hasn&apos;t reached a tier yet, the
+            chance of entering it isn&apos;t a separate estimate; it&apos;s
+            the same forward-looking probability computed for the
+            milestones above, reused rather than recalculated by a second
+            method.
+          </p>
+        </Reveal>
       </div>
     </div>
   );
