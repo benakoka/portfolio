@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
@@ -21,7 +21,22 @@ export default function GeoChoropleth({
   geoRegions: GeoRegionRow[];
 }) {
   const [topo, setTopo] = useState<FeatureCollection<Geometry> | null>(null);
-  const [hover, setHover] = useState<{ usps: string; index: number } | null>(null);
+  const [hover, setHover] = useState<{ usps: string; index: number; x: number; y: number } | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  function handleEnter(e: React.MouseEvent<SVGPathElement>, usps: string, index: number) {
+    const pathRect = e.currentTarget.getBoundingClientRect();
+    const containerRect = containerRef.current?.getBoundingClientRect();
+    if (!containerRect) return;
+    const x = pathRect.left + pathRect.width / 2 - containerRect.left;
+    const y = pathRect.top - containerRect.top;
+    setHover({
+      usps,
+      index,
+      x: Math.max(70, Math.min(x, containerRect.width - 70)),
+      y: Math.max(0, y),
+    });
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -93,7 +108,7 @@ export default function GeoChoropleth({
         <span>Over-indexed</span>
       </div>
 
-      <div className="relative">
+      <div className="relative" ref={containerRef}>
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="w-full h-auto">
           {topo && path
             ? topo.features.map((f) => {
@@ -106,7 +121,7 @@ export default function GeoChoropleth({
                     fill={indexToColor(idx)}
                     stroke="var(--ink)"
                     strokeWidth={0.75}
-                    onMouseEnter={() => usps && idx !== undefined && setHover({ usps, index: idx })}
+                    onMouseEnter={(e) => usps && idx !== undefined && handleEnter(e, usps, idx)}
                     onMouseLeave={() => setHover(null)}
                     className="transition-opacity hover:opacity-80"
                   />
@@ -119,7 +134,10 @@ export default function GeoChoropleth({
             )}
         </svg>
         {hover && (
-          <div className="absolute top-2 left-2 rounded-lg border border-line bg-panel-2 px-3 py-2 text-xs pointer-events-none">
+          <div
+            className="absolute rounded-lg border border-line bg-panel-2 px-3 py-2 text-xs pointer-events-none whitespace-nowrap"
+            style={{ left: hover.x, top: hover.y, transform: "translate(-50%, calc(-100% - 10px))" }}
+          >
             <div className="font-semibold">{STATE_NAMES[hover.usps]}</div>
             <div className="text-muted font-mono">{hover.index.toFixed(2)}x national average</div>
           </div>

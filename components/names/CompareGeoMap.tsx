@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
@@ -19,7 +19,23 @@ export default function CompareGeoMap({
   profileB: NameProfile;
 }) {
   const [topo, setTopo] = useState<FeatureCollection<Geometry> | null>(null);
-  const [hover, setHover] = useState<{ usps: string; a?: number; b?: number } | null>(null);
+  const [hover, setHover] = useState<{ usps: string; a?: number; b?: number; x: number; y: number } | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  function handleEnter(e: React.MouseEvent<SVGPathElement>, usps: string, a: number | undefined, b: number | undefined) {
+    const pathRect = e.currentTarget.getBoundingClientRect();
+    const containerRect = containerRef.current?.getBoundingClientRect();
+    if (!containerRect) return;
+    const x = pathRect.left + pathRect.width / 2 - containerRect.left;
+    const y = pathRect.top - containerRect.top;
+    setHover({
+      usps,
+      a,
+      b,
+      x: Math.max(70, Math.min(x, containerRect.width - 70)),
+      y: Math.max(0, y),
+    });
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -89,7 +105,7 @@ export default function CompareGeoMap({
         <span style={{ color: "var(--data)" }}>{nameA}</span>
       </div>
 
-      <div className="relative">
+      <div className="relative" ref={containerRef}>
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="w-full h-auto">
           {topo && path
             ? topo.features.map((f) => {
@@ -103,7 +119,7 @@ export default function CompareGeoMap({
                     fill={compareStateColor(a, b)}
                     stroke="var(--ink)"
                     strokeWidth={0.75}
-                    onMouseEnter={() => usps && setHover({ usps, a, b })}
+                    onMouseEnter={(e) => usps && handleEnter(e, usps, a, b)}
                     onMouseLeave={() => setHover(null)}
                     className="transition-opacity hover:opacity-80"
                   />
@@ -116,7 +132,10 @@ export default function CompareGeoMap({
             )}
         </svg>
         {hover && (
-          <div className="absolute top-2 left-2 rounded-lg border border-line bg-panel-2 px-3 py-2 text-xs pointer-events-none">
+          <div
+            className="absolute rounded-lg border border-line bg-panel-2 px-3 py-2 text-xs pointer-events-none whitespace-nowrap"
+            style={{ left: hover.x, top: hover.y, transform: "translate(-50%, calc(-100% - 10px))" }}
+          >
             <div className="font-semibold">{STATE_NAMES[hover.usps]}</div>
             <div className="font-mono" style={{ color: "var(--data)" }}>
               {nameA}: {hover.a != null ? `${hover.a.toFixed(2)}x` : "no data"}
