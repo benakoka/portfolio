@@ -100,12 +100,12 @@ export default async function NamePage({ params }: Props) {
       </Reveal>
 
       <Stagger mode="load" className="grid md:grid-cols-2 gap-6">
-        <StaggerItem><AgeDistribution name={n} agePmf={profile.agePmf} /></StaggerItem>
-        <StaggerItem><PopularityChart name={n} curve={profile.curve} forecast={profile.forecast} /></StaggerItem>
-        <StaggerItem><GenderBalance name={n} /></StaggerItem>
-        <StaggerItem><RarityMeter name={n} rarity={profile.rarity} /></StaggerItem>
-        <StaggerItem><NameNeighbors name={n.name} neighbors={profile.neighbors} /></StaggerItem>
-        <StaggerItem><GeoChoropleth name={n.name} geoStates={profile.geoStates} geoRegions={profile.geoRegions} /></StaggerItem>
+        <StaggerItem className="grid h-full"><AgeDistribution name={n} agePmf={profile.agePmf} /></StaggerItem>
+        <StaggerItem className="grid h-full"><PopularityChart name={n} curve={profile.curve} forecast={profile.forecast} /></StaggerItem>
+        <StaggerItem className="grid h-full"><GenderBalance name={n} /></StaggerItem>
+        <StaggerItem className="grid h-full"><RarityMeter name={n} rarity={profile.rarity} /></StaggerItem>
+        <StaggerItem className="grid h-full"><NameNeighbors name={n.name} neighbors={profile.neighbors} /></StaggerItem>
+        <StaggerItem className="grid h-full"><GeoChoropleth name={n.name} geoStates={profile.geoStates} geoRegions={profile.geoRegions} /></StaggerItem>
       </Stagger>
 
       <Reveal mode="load" delay={0.5} className="mt-6 flex md:justify-start">
