@@ -12,7 +12,7 @@ export default function InfoTooltip({ text, className = "" }: { text: string; cl
       </button>
       <span
         role="tooltip"
-        className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-64 rounded-lg border border-line bg-panel-2 px-3 py-2 text-xs text-muted opacity-0 pointer-events-none transition-opacity z-20 shadow-lg group-hover:opacity-100 group-focus-within:opacity-100"
+        className="absolute right-0 bottom-full mb-2 w-64 max-w-[calc(100vw-3rem)] rounded-lg border border-line bg-panel-2 px-3 py-2 text-xs text-muted opacity-0 pointer-events-none transition-opacity z-20 shadow-lg group-hover:opacity-100 group-focus-within:opacity-100"
       >
         {text}
       </span>
