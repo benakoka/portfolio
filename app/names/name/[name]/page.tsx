@@ -10,6 +10,10 @@ import GenderBalance from "@/components/names/GenderBalance";
 import RarityMeter from "@/components/names/RarityMeter";
 import ShareButton from "@/components/names/ShareButton";
 import SearchBox from "@/components/names/SearchBox";
+import PeakPopularityPrediction from "@/components/names/predict/PeakPopularityPrediction";
+import LifeCycleModel from "@/components/names/predict/LifeCycleModel";
+import SurvivalCurve from "@/components/names/predict/SurvivalCurve";
+import { getPredictiveInsights } from "@/lib/names/predict";
 import { Reveal, Stagger, StaggerItem, StaggerLinkItem } from "@/components/motion/Reveal";
 
 type Props = { params: Promise<{ name: string }> };
@@ -73,6 +77,8 @@ export default async function NamePage({ params }: Props) {
 
   const n = profile.name;
   const isLowData = n.total_count < 200;
+  const insights = getPredictiveInsights(profile);
+  const survivalTop1000 = insights.survival.find((s) => s.threshold === 1000);
 
   return (
     <div className="max-w-5xl mx-auto px-7 py-12">
@@ -107,6 +113,26 @@ export default async function NamePage({ params }: Props) {
         <StaggerItem className="grid h-full"><NameNeighbors name={n.name} neighbors={profile.neighbors} /></StaggerItem>
         <StaggerItem className="grid h-full"><GeoChoropleth name={n.name} geoStates={profile.geoStates} geoRegions={profile.geoRegions} /></StaggerItem>
       </Stagger>
+
+      <Reveal mode="scroll" className="mt-10 mb-4">
+        <h2 className="text-2xl font-semibold">Predictive modeling</h2>
+        <p className="mt-1 text-sm text-muted">
+          Three statistical models, all fit to {n.name}&apos;s own SSA history plus the historical behavior of every
+          other name in the dataset.
+        </p>
+      </Reveal>
+
+      <div className="flex flex-col gap-6">
+        <Reveal mode="scroll">
+          <PeakPopularityPrediction name={n} prediction={insights.peak} />
+        </Reveal>
+        <Reveal mode="scroll">
+          <LifeCycleModel lifecycle={insights.lifecycle} survivalTop1000={survivalTop1000} />
+        </Reveal>
+        <Reveal mode="scroll">
+          <SurvivalCurve name={n} results={insights.survival} />
+        </Reveal>
+      </div>
 
       <Reveal mode="load" delay={0.5} className="mt-6 flex md:justify-start">
         <ShareButton name={n.name} />

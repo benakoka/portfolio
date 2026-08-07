@@ -43,11 +43,102 @@ function getTotalNames(): number {
 
 let maxYearCache: number | null = null;
 
-function getMaxYear(): number {
+export function getMaxYear(): number {
   if (maxYearCache == null) {
     maxYearCache = (getDb().prepare("SELECT MAX(year) AS y FROM popularity_curve").get() as { y: number }).y;
   }
   return maxYearCache;
+}
+
+/**
+ * Where a given share value would rank among every name recorded in `year`
+ * (1 = most popular). Only fast for the most recent year -- that's the only
+ * year with a share index (a partial index scoped to it; see
+ * scripts/build-predictive-tables.js), since it's the only year the app
+ * ever calls this with (translating a *forecasted* share into a rank, by
+ * comparing it against the latest year's actual distribution). A name's own
+ * *historical* rank in past years is precomputed and read straight off its
+ * curve rows instead -- see the `rank` field on PopularityPoint.
+ */
+export function rankInYear(year: number, sharePerMillion: number): number {
+  const row = getDb()
+    .prepare("SELECT COUNT(*) + 1 AS rank FROM popularity_curve WHERE year = ? AND share_per_million > ?")
+    .get(year, Math.round(sharePerMillion)) as { rank: number };
+  return row.rank;
+}
+
+const shareForRankCache = new Map<string, number | null>();
+
+/** The share_per_million of the Nth-most-popular name in `year`. Cached -- most callers ask about the same handful of (latestYear, milestone) pairs. */
+export function shareForRank(year: number, rank: number): number | null {
+  const key = `${year}:${rank}`;
+  const cached = shareForRankCache.get(key);
+  if (cached !== undefined) return cached;
+  const row = getDb()
+    .prepare(
+      "SELECT share_per_million AS s FROM popularity_curve WHERE year = ? ORDER BY share_per_million DESC LIMIT 1 OFFSET ?"
+    )
+    .get(year, rank - 1) as { s: number } | undefined;
+  const result = row ? row.s : null;
+  shareForRankCache.set(key, result);
+  return result;
+}
+
+/**
+ * Walks a name's own curve backward from its most recent year to find how
+ * far back its *current, unbroken* run above `threshold` (by rank) started.
+ * Returns null if the name isn't above the threshold right now. Uses each
+ * point's precomputed `rank` -- no DB access needed.
+ */
+export function currentSpellStartYear(curve: PopularityPoint[], threshold: number): number | null {
+  let spellStart: number | null = null;
+  for (let i = curve.length - 1; i >= 0; i--) {
+    const p = curve[i];
+    if (p.rank != null && p.rank <= threshold) {
+      spellStart = p.year;
+    } else {
+      break;
+    }
+  }
+  return spellStart;
+}
+
+export interface SurvivalCurvePoint {
+  t: number;
+  survival: number;
+  nAtRisk: number;
+}
+
+const survivalCurveCache = new Map<number, SurvivalCurvePoint[]>();
+
+/** Precomputed Kaplan-Meier survival curve for a rank threshold (see scripts/build-predictive-tables.js). */
+export function getSurvivalCurve(threshold: number): SurvivalCurvePoint[] {
+  let rows = survivalCurveCache.get(threshold);
+  if (!rows) {
+    rows = getDb()
+      .prepare("SELECT t, survival, n_at_risk AS nAtRisk FROM survival_curve WHERE threshold = ? ORDER BY t")
+      .all(threshold) as SurvivalCurvePoint[];
+    survivalCurveCache.set(threshold, rows);
+  }
+  return rows;
+}
+
+export interface SurvivalMeta {
+  totalSpells: number;
+  medianT: number | null;
+}
+
+const survivalMetaCache = new Map<number, SurvivalMeta>();
+
+export function getSurvivalMeta(threshold: number): SurvivalMeta {
+  let meta = survivalMetaCache.get(threshold);
+  if (!meta) {
+    meta = getDb()
+      .prepare("SELECT total_spells AS totalSpells, median_t AS medianT FROM survival_meta WHERE threshold = ?")
+      .get(threshold) as SurvivalMeta;
+    survivalMetaCache.set(threshold, meta);
+  }
+  return meta;
 }
 
 function getRarity(totalCount: number): RarityInfo {
@@ -64,11 +155,12 @@ export function getProfile(name: string): NameProfile | null {
   if (!row) return null;
 
   const curveRaw = getDb()
-    .prepare("SELECT year, share_per_million FROM popularity_curve WHERE name_id = ? ORDER BY year")
-    .all(row.id) as { year: number; share_per_million: number }[];
+    .prepare("SELECT year, share_per_million, rank FROM popularity_curve WHERE name_id = ? ORDER BY year")
+    .all(row.id) as { year: number; share_per_million: number; rank: number | null }[];
   const curve: PopularityPoint[] = curveRaw.map((r) => ({
     year: r.year,
     share: r.share_per_million / 1_000_000,
+    rank: r.rank,
   }));
 
   const agePmfRaw = getDb()

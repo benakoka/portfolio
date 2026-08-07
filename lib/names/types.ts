@@ -31,6 +31,8 @@ export interface NameRow {
 export interface PopularityPoint {
   year: number;
   share: number;
+  /** This name's rank among every name recorded in `year` (1 = most popular). */
+  rank: number | null;
 }
 
 export interface AgePmfBucket {
