@@ -54,7 +54,7 @@ export function classifyLifeCycle(n: NameRow, curve: PopularityPoint[]): LifeCyc
 
   if (yearsSinceActive > EXTINCT_GAP_YEARS) {
     stage = "Extinct";
-    explanation = `${n.name} hasn't shown up in SSA records since ${lastPoint?.year ?? n.last_year} -- fewer than 5 babies have gotten the name in any year since, which is below what the SSA even reports.`;
+    explanation = `${n.name} hasn't shown up in SSA records since ${lastPoint?.year ?? n.last_year} — fewer than 5 babies have gotten the name in any year since, which is below what the SSA even reports.`;
   } else if (
     peakRatio != null &&
     peakRatio < HISTORIC_FADE_RATIO &&
@@ -63,17 +63,17 @@ export function classifyLifeCycle(n: NameRow, curve: PopularityPoint[]): LifeCyc
     n.total_count > HISTORIC_MIN_TOTAL_COUNT
   ) {
     stage = "Historic";
-    explanation = `${n.name} peaked in ${n.peak_year} and now sits at roughly ${Math.round(peakRatio * 100)}% of that peak, ${yearsSincePeak} years later -- a name that was genuinely common once, now mostly heard from an older generation.`;
+    explanation = `${n.name} peaked in ${n.peak_year} and now sits at roughly ${Math.round(peakRatio * 100)}% of that peak, ${yearsSincePeak} years later — a name that was genuinely common once, now mostly heard from an older generation.`;
   } else if (recentGrowth != null && recentGrowth < -GROWTH_THRESHOLD) {
     stage = "Declining";
     const accelNote = acceleration != null && acceleration < -0.01 ? ", and the decline is accelerating" : "";
     explanation = `Births have shrunk about ${Math.round(Math.abs(recentGrowth) * 100)}% a year on average over the last 5 years${accelNote}.`;
   } else if (yearsSincePeak != null && yearsSincePeak <= PEAKING_RECENCY_YEARS) {
     stage = "Peaking";
-    explanation = `${n.name}'s all-time high was just ${yearsSincePeak === 0 ? "this year" : `${yearsSincePeak} year${yearsSincePeak === 1 ? "" : "s"} ago (${n.peak_year})`} -- it's at or very near its historic peak right now.`;
+    explanation = `${n.name}'s all-time high was just ${yearsSincePeak === 0 ? "this year" : `${yearsSincePeak} year${yearsSincePeak === 1 ? "" : "s"} ago (${n.peak_year})`} — it's at or very near its historic peak right now.`;
   } else if (peakRatio != null && peakRatio > PEAKING_RATIO && recentGrowth != null && Math.abs(recentGrowth) < PEAKING_FLAT_GROWTH) {
     stage = "Peaking";
-    explanation = `${n.name} is holding within ${Math.round((1 - peakRatio) * 100)}% of its all-time peak share and growth has flattened out -- it's plateaued near the top rather than still climbing or sliding.`;
+    explanation = `${n.name} is holding within ${Math.round((1 - peakRatio) * 100)}% of its all-time peak share and growth has flattened out — it's plateaued near the top rather than still climbing or sliding.`;
   } else if (
     recentGrowth != null &&
     recentGrowth > GROWTH_THRESHOLD &&
@@ -81,7 +81,7 @@ export function classifyLifeCycle(n: NameRow, curve: PopularityPoint[]): LifeCyc
     latestYear - n.first_year <= EMERGING_MAX_AGE_YEARS
   ) {
     stage = "Emerging";
-    explanation = `${n.name} has only been in common use since around ${n.first_year} and is still climbing fast, roughly ${Math.round(recentGrowth * 100)}% a year -- too young a track record to call its ceiling yet.`;
+    explanation = `${n.name} has only been in common use since around ${n.first_year} and is still climbing fast, roughly ${Math.round(recentGrowth * 100)}% a year — too young a track record to call its ceiling yet.`;
   } else if (recentGrowth != null && recentGrowth > GROWTH_THRESHOLD) {
     stage = "Growing";
     explanation = `Births have grown roughly ${Math.round(recentGrowth * 100)}% a year on average over the last 5 years, and ${n.name} hasn't yet revisited its historic peak.`;

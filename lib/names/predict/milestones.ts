@@ -149,7 +149,7 @@ function buildExplanation(
   bestRankYear: number | null
 ): string {
   if (forecast.length === 0) {
-    return `${n.name} doesn't have enough recent, continuous history for a reliable forecast, so milestone odds aren't shown -- only names still actively given with at least 15 years of data get a projection.`;
+    return `${n.name} doesn't have enough recent, continuous history for a reliable forecast, so milestone odds aren't shown — only names still actively given with at least 15 years of data get a projection.`;
   }
   const horizon = forecast.length;
   const historyYears = curve.length;
@@ -159,10 +159,10 @@ function buildExplanation(
   return (
     `This forecasts ${n.name}'s share of births by fitting a damped-trend model to its last ${historyYears} years ` +
     `of data and projecting ${horizon} years forward with a widening uncertainty band. Each projected share is then ` +
-    `translated into a rank by comparing it against ${latestYear}'s actual name-popularity distribution -- so the ` +
+    `translated into a rank by comparing it against ${latestYear}'s actual name-popularity distribution — so the ` +
     `model implicitly assumes the overall shape of that distribution doesn't shift much over the forecast window. ` +
     `${trajectoryNote} Milestone probabilities come from how much of each year's uncertainty band clears that ` +
-    `milestone's rank, combined across years as if they were independent -- which slightly overstates the odds for ` +
+    `milestone's rank, combined across years as if they were independent — which slightly overstates the odds for ` +
     `names sitting right at a threshold, since a good year is usually followed by another good year rather than an ` +
     `independent coin flip.`
   );

@@ -57,9 +57,9 @@ export default function LifeCycleModel({
         </div>
         <div className="rounded-lg border border-line bg-panel-2 px-2 py-3">
           <div className="text-lg font-mono text-paper">
-            {remaining != null ? `~${remaining}y` : survivalTop1000?.currentlyAbove ? ">30y" : "n/a"}
+            {remaining != null ? `~${remaining} years` : survivalTop1000?.currentlyAbove ? "30+ years" : "n/a"}
           </div>
-          <div className="text-[11px] text-muted mt-1">est. left in Top 1000</div>
+          <div className="text-[11px] text-muted mt-1">estimated time left in top 1000</div>
         </div>
       </div>
     </div>

@@ -84,7 +84,7 @@ export default function PeakPopularityPrediction({ name, prediction }: { name: N
           <>
             <strong className="text-paper">{name.name}</strong>&apos;s modeled peak was{" "}
             <strong className="text-paper">#{predictedPeakRank.toLocaleString()}</strong> in{" "}
-            <strong className="text-paper">{predictedPeakYear}</strong> -- its trend isn&apos;t projected to beat that.
+            <strong className="text-paper">{predictedPeakYear}</strong>{" "}— its trend isn&apos;t projected to beat that.
           </>
         ) : (
           <>

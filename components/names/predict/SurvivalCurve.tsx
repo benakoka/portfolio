@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceDot } from "recharts";
 import { motion } from "motion/react";
 import type { NameRow } from "@/lib/names/types";
 import type { SurvivalResult } from "@/lib/names/predict";
@@ -40,6 +40,16 @@ export default function SurvivalCurve({ name, results }: { name: NameRow; result
   const [activeIdx, setActiveIdx] = useState(0);
   const r = results[activeIdx];
   const chartData = r.curve.map((p) => ({ year: p.year, survival: p.survival }));
+  // The 5/10/20-year tiles above are read straight off these same three
+  // indices (curve[t] holds the t-years-from-now value), so marking them
+  // explicitly on the chart guarantees the point you can see always matches
+  // the number in the tile -- no need to eyeball where "20 years" falls
+  // against evenly-spaced axis ticks.
+  const markers = [
+    { t: 5, value: r.p5 },
+    { t: 10, value: r.p10 },
+    { t: 20, value: r.p20 },
+  ].filter((m): m is { t: number; value: number } => m.value != null && chartData[m.t] != null);
   const tilesHeader = r.currentlyAbove
     ? `Chance ${name.name} is still in ${r.label} after:`
     : `If ${name.name} enters ${r.label}, chance it's still there after:`;
@@ -141,13 +151,31 @@ export default function SurvivalCurve({ name, results }: { name: NameRow; result
               isAnimationActive
               animationDuration={900}
             />
+            {markers.map((m) => (
+              <ReferenceDot
+                key={m.t}
+                x={chartData[m.t].year}
+                y={m.value}
+                r={3.5}
+                fill="var(--signal)"
+                stroke="var(--ink)"
+                strokeWidth={1}
+                label={{
+                  value: `${Math.round(m.value * 100)}%`,
+                  position: "top",
+                  fill: "var(--paper)",
+                  fontSize: 10,
+                  fontWeight: 600,
+                }}
+              />
+            ))}
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
       <p className="mt-3 text-xs text-muted">
         {r.currentlyAbove
-          ? `Median years remaining above ${r.label}: ${r.medianRemaining != null ? `~${r.medianRemaining}` : `>30`}.`
+          ? `Median years remaining above ${r.label}: ${r.medianRemaining != null ? `~${r.medianRemaining}` : `30+`}.`
           : `Names that do enter ${r.label} have historically stayed a median of ${r.medianRemaining != null ? `~${r.medianRemaining} years` : "over 30 years"}.`}{" "}
         Based on {r.sampleSize.toLocaleString()} historical {r.label} runs across every name in the dataset.
       </p>
