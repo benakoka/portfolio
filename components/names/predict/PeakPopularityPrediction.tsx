@@ -8,9 +8,12 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
+  ReferenceArea,
+  ReferenceDot,
 } from "recharts";
 import type { NameRow } from "@/lib/names/types";
 import type { PeakPrediction } from "@/lib/names/predict";
+import InfoTooltip from "./InfoTooltip";
 
 const MILESTONE_LINE_COLOR = "var(--muted)";
 
@@ -48,14 +51,18 @@ function RankTooltip({ active, payload, label }: { active?: boolean; payload?: T
   );
 }
 
-function probabilityTone(probability: number): string {
-  if (probability >= 0.66) return "border-data/40 bg-data/10 text-data";
-  if (probability >= 0.33) return "border-signal/40 bg-signal/10 text-signal";
-  return "border-line bg-panel-2 text-muted";
-}
-
 export default function PeakPopularityPrediction({ name, prediction }: { name: NameRow; prediction: PeakPrediction }) {
-  const { milestones, hasForecast, alreadyPeaked, predictedPeakRank, predictedPeakYear, peakRankLow, peakRankHigh, chartPoints, explanation } = prediction;
+  const {
+    milestones,
+    hasForecast,
+    alreadyPeaked,
+    predictedPeakRank,
+    predictedPeakYear,
+    peakRankLow,
+    peakRankHigh,
+    chartPoints,
+    explanation,
+  } = prediction;
 
   const data: ChartRow[] = chartPoints.map((p, i) => {
     const isBoundary = !p.isForecast && chartPoints[i + 1]?.isForecast;
@@ -65,6 +72,9 @@ export default function PeakPopularityPrediction({ name, prediction }: { name: N
       projected: p.isForecast || isBoundary ? p.rank : undefined,
     };
   });
+
+  const firstForecastYear = chartPoints.find((p) => p.isForecast)?.year;
+  const lastChartYear = chartPoints.length > 0 ? chartPoints[chartPoints.length - 1].year : undefined;
 
   return (
     <div className="rounded-card border border-line bg-panel p-6">
@@ -86,23 +96,35 @@ export default function PeakPopularityPrediction({ name, prediction }: { name: N
         )}
       </p>
 
-      <div className="flex flex-wrap gap-2 mb-5">
-        {milestones.map((m) => (
-          <div
-            key={m.threshold}
-            className={`px-3 py-1.5 rounded-full border font-mono text-xs ${
-              m.alreadyReached ? "border-data/40 bg-data/10 text-data" : hasForecast ? probabilityTone(m.probability) : "border-line bg-panel-2 text-muted"
-            }`}
-            title={m.alreadyReached ? `Reached ${m.reachedYear}` : m.etaYear ? `Most likely by ${m.etaYear}` : undefined}
-          >
-            {m.label}{" "}
-            {m.alreadyReached
-              ? `· reached ${m.reachedYear}`
-              : hasForecast
-                ? `· ${Math.round(m.probability * 100)}%${m.etaYear ? ` by ${m.etaYear}` : ""}`
-                : "· no forecast"}
-          </div>
-        ))}
+      <div className="rounded-lg border border-line divide-y divide-line mb-5 overflow-hidden">
+        {milestones.map((m) => {
+          const pct = Math.round(m.probability * 100);
+          return (
+            <div key={m.threshold} className="flex items-center gap-3 px-3 py-2.5">
+              <span className="w-[4.5rem] shrink-0 font-mono text-sm text-paper">{m.label}</span>
+              {m.alreadyReached ? (
+                <span className="flex items-center gap-1.5 text-sm text-data">
+                  <span aria-hidden>✓</span> Reached in {m.reachedYear}
+                </span>
+              ) : !hasForecast ? (
+                <span className="text-sm text-muted">No forecast available</span>
+              ) : (
+                <>
+                  <div className="flex-1 h-1.5 rounded-full bg-panel-2 overflow-hidden">
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: `${Math.max(2, pct)}%`, background: "var(--data)" }}
+                    />
+                  </div>
+                  <span className="shrink-0 text-sm text-muted text-right whitespace-nowrap">
+                    <strong className="text-paper font-mono">{pct}%</strong> chance
+                    {m.etaYear ? <>, by {m.etaYear}</> : null}
+                  </span>
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {hasForecast && data.length > 0 ? (
@@ -133,6 +155,9 @@ export default function PeakPopularityPrediction({ name, prediction }: { name: N
               {[1000, 500, 100, 50, 10].map((t) => (
                 <ReferenceLine key={t} y={t} stroke={MILESTONE_LINE_COLOR} strokeDasharray="2 3" strokeOpacity={0.5} />
               ))}
+              {firstForecastYear != null && lastChartYear != null && (
+                <ReferenceArea x1={firstForecastYear} x2={lastChartYear} fill="var(--data)" fillOpacity={0.06} />
+              )}
               <Line
                 type="monotone"
                 dataKey="observed"
@@ -152,6 +177,21 @@ export default function PeakPopularityPrediction({ name, prediction }: { name: N
                 isAnimationActive
                 animationDuration={900}
               />
+              <ReferenceDot
+                x={predictedPeakYear}
+                y={predictedPeakRank}
+                r={4}
+                fill="var(--signal)"
+                stroke="var(--ink)"
+                strokeWidth={1}
+                label={{
+                  value: `Peak #${predictedPeakRank.toLocaleString()}`,
+                  position: "top",
+                  fill: "var(--paper)",
+                  fontSize: 11,
+                  fontWeight: 600,
+                }}
+              />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
@@ -161,7 +201,14 @@ export default function PeakPopularityPrediction({ name, prediction }: { name: N
         </p>
       )}
 
-      <p className="mt-3 text-xs text-muted">{explanation}</p>
+      {hasForecast && (
+        <div className="mt-3 flex items-center gap-1.5">
+          <p className="text-xs text-muted">
+            Projects the trend forward, then converts share into rank using this year&apos;s popularity distribution.
+          </p>
+          <InfoTooltip text={explanation} />
+        </div>
+      )}
     </div>
   );
 }

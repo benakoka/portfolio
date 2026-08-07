@@ -127,7 +127,7 @@ export default async function NamePage({ params }: Props) {
           <PeakPopularityPrediction name={n} prediction={insights.peak} />
         </Reveal>
         <Reveal mode="scroll">
-          <LifeCycleModel name={n} lifecycle={insights.lifecycle} survivalTop1000={survivalTop1000} />
+          <LifeCycleModel lifecycle={insights.lifecycle} survivalTop1000={survivalTop1000} />
         </Reveal>
         <Reveal mode="scroll">
           <SurvivalCurve name={n} results={insights.survival} />

@@ -1,4 +1,3 @@
-import type { NameRow } from "@/lib/names/types";
 import type { LifeCycleResult, LifeCycleStage, SurvivalResult } from "@/lib/names/predict";
 
 const STAGE_STYLE: Record<LifeCycleStage, { color: string; dot: string }> = {
@@ -17,11 +16,9 @@ const TREND_ARROW: Record<LifeCycleResult["trend"], string> = {
 };
 
 export default function LifeCycleModel({
-  name,
   lifecycle,
   survivalTop1000,
 }: {
-  name: NameRow;
   lifecycle: LifeCycleResult;
   survivalTop1000: SurvivalResult | undefined;
 }) {
@@ -32,8 +29,7 @@ export default function LifeCycleModel({
     <div className="rounded-card border border-line bg-panel p-6">
       <h3 className="text-lg font-semibold mb-1">Name life-cycle stage</h3>
       <p className="text-sm text-muted mb-4">
-        A rule-based classifier over {name.name}&apos;s recent growth rate, whether that growth is accelerating or
-        cooling, and how it sits relative to its all-time peak.
+        A rule-based classifier over recent growth, momentum, and peak proximity.
       </p>
 
       <div

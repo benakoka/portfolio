@@ -5,6 +5,7 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "rec
 import { motion } from "motion/react";
 import type { NameRow } from "@/lib/names/types";
 import type { SurvivalResult } from "@/lib/names/predict";
+import InfoTooltip from "./InfoTooltip";
 
 interface TooltipEntry {
   value?: number;
@@ -32,18 +33,26 @@ function pct(v: number | null): string {
   return v == null ? "—" : `${Math.round(v * 100)}%`;
 }
 
+const METHOD_NOTE =
+  "Built from a Kaplan-Meier survival curve: every historical run any name has ever had above this tier, with runs still ongoing today counted as still in progress rather than as an exit.";
+
 export default function SurvivalCurve({ name, results }: { name: NameRow; results: SurvivalResult[] }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const r = results[activeIdx];
   const chartData = r.curve.map((p) => ({ year: p.year, survival: p.survival }));
+  const tilesHeader = r.currentlyAbove
+    ? `Chance ${name.name} is still in ${r.label} after:`
+    : `If ${name.name} enters ${r.label}, chance it's still there after:`;
 
   return (
     <div className="rounded-card border border-line bg-panel p-6">
       <h3 className="text-lg font-semibold mb-1">Popularity survival model</h3>
-      <p className="text-sm text-muted mb-4">
-        How long names that reach a rank tier tend to stay there, estimated from every historical name&apos;s run
-        above that tier (Kaplan-Meier survival analysis, right-censored for names still above it today).
-      </p>
+      <div className="flex items-start gap-1.5 mb-4">
+        <p className="text-sm text-muted">
+          Once a name reaches a rank tier, how long does it typically stay there before falling out?
+        </p>
+        <InfoTooltip text={METHOD_NOTE} className="mt-0.5" />
+      </div>
 
       <div className="flex gap-2 mb-4">
         {results.map((res, i) => (
@@ -73,31 +82,26 @@ export default function SurvivalCurve({ name, results }: { name: NameRow; result
           <strong className="text-paper">{name.name}</strong> isn&apos;t currently in the {r.label} tier.{" "}
           {r.entryProbability != null && (
             <>
-              Estimated chance of entering it within the forecast window:{" "}
+              Estimated chance of entering it in the forecast window:{" "}
               <strong className="text-paper">{pct(r.entryProbability)}</strong>.
             </>
           )}
         </p>
       )}
 
+      <p className="text-xs text-muted mb-2">{tilesHeader}</p>
       <div className="grid grid-cols-3 gap-3 text-center mb-4">
         <div className="rounded-lg border border-line bg-panel-2 px-2 py-3">
           <div className="text-lg font-mono text-paper">{pct(r.p5)}</div>
-          <div className="text-[11px] text-muted mt-1">
-            {r.currentlyAbove ? "still there in 5y" : "if entered, in 5y"}
-          </div>
+          <div className="text-[11px] text-muted mt-1">5 years</div>
         </div>
         <div className="rounded-lg border border-line bg-panel-2 px-2 py-3">
           <div className="text-lg font-mono text-paper">{pct(r.p10)}</div>
-          <div className="text-[11px] text-muted mt-1">
-            {r.currentlyAbove ? "still there in 10y" : "if entered, in 10y"}
-          </div>
+          <div className="text-[11px] text-muted mt-1">10 years</div>
         </div>
         <div className="rounded-lg border border-line bg-panel-2 px-2 py-3">
           <div className="text-lg font-mono text-paper">{pct(r.p20)}</div>
-          <div className="text-[11px] text-muted mt-1">
-            {r.currentlyAbove ? "still there in 20y" : "if entered, in 20y"}
-          </div>
+          <div className="text-[11px] text-muted mt-1">20 years</div>
         </div>
       </div>
 
