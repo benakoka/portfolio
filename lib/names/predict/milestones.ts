@@ -30,7 +30,21 @@ export function predictPeakPopularity(
   const latestYear = getMaxYear();
   const hasForecast = forecast.length > 0;
 
-  const bestRankEver = n.peak_year != null ? (curve.find((p) => p.year === n.peak_year)?.rank ?? null) : null;
+  // The name's best-ever *rank* is not necessarily the same year as its
+  // best-ever *share* (n.peak_year/n.peak_share): rank is relative to that
+  // year's whole field of names, and how concentrated that field is has
+  // shifted a lot over the dataset's 146 years (far more distinct names are
+  // given today than a century ago). A smaller share today can easily beat
+  // a bigger share decades ago on rank, so this scans every year the name
+  // has a computed rank for rather than trusting the peak-share year.
+  let bestRankEver: number | null = null;
+  let bestRankYear: number | null = null;
+  for (const p of curve) {
+    if (p.rank != null && (bestRankEver == null || p.rank < bestRankEver)) {
+      bestRankEver = p.rank;
+      bestRankYear = p.year;
+    }
+  }
 
   const lastPoint = curve.length > 0 ? curve[curve.length - 1] : null;
   const currentRank = lastPoint?.rank ?? null;
@@ -63,7 +77,7 @@ export function predictPeakPopularity(
       threshold,
       label: labelFor(threshold),
       alreadyReached,
-      reachedYear: alreadyReached ? n.peak_year : null,
+      reachedYear: alreadyReached ? bestRankYear : null,
       probability: alreadyReached ? 1 : forwardProbability,
       forwardProbability,
       etaYear: alreadyReached ? null : etaYear,
@@ -74,7 +88,7 @@ export function predictPeakPopularity(
   // best forecasted point within the horizon.
   let alreadyPeaked = true;
   let predictedPeakShare = n.peak_share ?? 0;
-  let predictedPeakYear = n.peak_year ?? latestYear;
+  let predictedPeakYear = bestRankYear ?? latestYear;
   let peakRankLow = bestRankEver ?? 1;
   let peakRankHigh = bestRankEver ?? 1;
 
@@ -104,7 +118,7 @@ export function predictPeakPopularity(
     ...forecast.map((f) => ({ year: f.year, rank: rankInYear(latestYear, f.share * 1_000_000), isForecast: true })),
   ];
 
-  const explanation = buildExplanation(n, curve, forecast, latestYear, alreadyPeaked);
+  const explanation = buildExplanation(n, curve, forecast, latestYear, alreadyPeaked, bestRankYear);
 
   return {
     milestones,
@@ -126,7 +140,8 @@ function buildExplanation(
   curve: PopularityPoint[],
   forecast: ForecastPoint[],
   latestYear: number,
-  alreadyPeaked: boolean
+  alreadyPeaked: boolean,
+  bestRankYear: number | null
 ): string {
   if (forecast.length === 0) {
     return `${n.name} doesn't have enough recent, continuous history for a reliable forecast, so milestone odds aren't shown -- only names still actively given with at least 15 years of data get a projection.`;
@@ -134,7 +149,7 @@ function buildExplanation(
   const horizon = forecast.length;
   const historyYears = curve.length;
   const trajectoryNote = alreadyPeaked
-    ? `Its trend is projected to stay below its historic best over the next ${horizon} years, so the model treats ${n.peak_year} as its peak.`
+    ? `Its trend is projected to stay below its historic best over the next ${horizon} years, so the model treats ${bestRankYear} as its peak.`
     : `Its current trend is projected to set a new all-time high within the next ${horizon} years.`;
   return (
     `This forecasts ${n.name}'s share of births by fitting a damped-trend model to its last ${historyYears} years ` +
