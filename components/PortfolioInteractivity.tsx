@@ -4,6 +4,27 @@ import { useEffect } from "react";
 
 export default function PortfolioInteractivity() {
   useEffect(() => {
+    // cursor-follow spotlight (see .portfolio-page::after in portfolio.css)
+    const page = document.querySelector<HTMLElement>(".portfolio-page");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let spotlightRaf = 0;
+    let pendingX = 0;
+    let pendingY = 0;
+    function onSpotlightMove(e: MouseEvent) {
+      pendingX = e.clientX;
+      pendingY = e.clientY;
+      if (spotlightRaf) return;
+      spotlightRaf = requestAnimationFrame(() => {
+        spotlightRaf = 0;
+        if (!page) return;
+        page.style.setProperty("--pf-mx", `${(pendingX / window.innerWidth) * 100}%`);
+        page.style.setProperty("--pf-my", `${(pendingY / window.innerHeight) * 100}%`);
+      });
+    }
+    if (page && !reduceMotion) {
+      window.addEventListener("mousemove", onSpotlightMove, { passive: true });
+    }
+
     // mobile nav toggle
     const toggle = document.getElementById("navToggle");
     const links = document.getElementById("navLinks");
@@ -45,6 +66,8 @@ export default function PortfolioInteractivity() {
       activeIo.disconnect();
       toggle?.removeEventListener("click", onToggleClick);
       linkEls.forEach((a) => a.removeEventListener("click", onLinkClick));
+      window.removeEventListener("mousemove", onSpotlightMove);
+      if (spotlightRaf) cancelAnimationFrame(spotlightRaf);
     };
   }, []);
 

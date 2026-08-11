@@ -4,6 +4,8 @@ import "./portfolio.css";
 import PortfolioInteractivity from "@/components/PortfolioInteractivity";
 import SignalChart from "@/components/portfolio/SignalChart";
 import Marquee from "@/components/portfolio/Marquee";
+import NetworkField from "@/components/portfolio/NetworkField";
+import Magnetic from "@/components/portfolio/Magnetic";
 import { Reveal, Stagger, StaggerItem, StaggerLinkItem, MotionLink } from "@/components/motion/Reveal";
 
 export const viewport: Viewport = {
@@ -38,6 +40,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
+      <NetworkField />
       <nav>
         <div className="wrap">
           <div className="nav-brand">Ben Akoka</div>
@@ -59,8 +62,8 @@ export default function Home() {
           <h1>Hi, I&apos;m&nbsp;<span className="hl">Ben.</span></h1>
           <p className="lede">I&apos;m a Statistics &amp; Data Science student at UC Santa Barbara who likes turning messy datasets into clear answers.</p>
           <div className="hero-actions">
-            <MotionLink href="#projects" className="btn btn-primary">View my work →</MotionLink>
-            <MotionLink href="#contact" className="btn btn-ghost">Get in touch</MotionLink>
+            <Magnetic><MotionLink href="#projects" className="btn btn-primary">View my work →</MotionLink></Magnetic>
+            <Magnetic><MotionLink href="#contact" className="btn btn-ghost">Get in touch</MotionLink></Magnetic>
           </div>
         </Reveal>
 

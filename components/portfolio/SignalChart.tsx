@@ -40,7 +40,34 @@ const LINE_Y2 = PAD + 18;
 
 export default function SignalChart() {
   const cardRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const [enableTilt, setEnableTilt] = useState(false);
+  const [cursor, setCursor] = useState<{ x: number; y: number; nearest: number } | null>(null);
+
+  function onChartMove(e: React.MouseEvent<SVGSVGElement>) {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * W;
+    const y = ((e.clientY - rect.top) / rect.height) * H;
+    if (x < PAD || x > W - PAD || y < PAD || y > H - PAD) {
+      setCursor(null);
+      return;
+    }
+    let nearest = 0;
+    let bestD = Infinity;
+    POINTS.forEach((p, i) => {
+      const d = (p.x - x) ** 2 + (p.y - y) ** 2;
+      if (d < bestD) {
+        bestD = d;
+        nearest = i;
+      }
+    });
+    setCursor({ x, y, nearest });
+  }
+  function onChartLeave() {
+    setCursor(null);
+  }
 
   const rx = useSpring(useMotionValue(0), { stiffness: 220, damping: 22 });
   const ry = useSpring(useMotionValue(0), { stiffness: 220, damping: 22 });
@@ -79,7 +106,14 @@ export default function SignalChart() {
         <span className="signal-meta">n = 17</span>
       </div>
       <div className="signal-body">
-        <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Illustrative scatter plot with a fitted regression line">
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${W} ${H}`}
+          role="img"
+          aria-label="Illustrative scatter plot with a fitted regression line, interactive on hover"
+          onMouseMove={onChartMove}
+          onMouseLeave={onChartLeave}
+        >
           <line className="axis" x1={PAD} y1={PAD} x2={PAD} y2={H - PAD} />
           <line className="axis" x1={PAD} y1={H - PAD} x2={W - PAD} y2={H - PAD} />
           {[0.25, 0.5, 0.75].map((t) => (
@@ -97,19 +131,42 @@ export default function SignalChart() {
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
           />
 
+          {/* ambient "signal" travelling along the fitted line, on a loop */}
+          <motion.circle
+            className="fit-pulse"
+            r={3}
+            initial={{ cx: PAD, cy: LINE_Y1, opacity: 0 }}
+            animate={{ cx: [PAD, W - PAD], cy: [LINE_Y1, LINE_Y2], opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 2.6, delay: 1.8, repeat: Infinity, repeatDelay: 1.1, ease: "linear" }}
+          />
+
           {POINTS.map((p, i) => (
             <motion.circle
               key={i}
               className="pt"
               cx={p.x}
               cy={p.y}
-              r={4.5}
+              r={cursor?.nearest === i ? 6.5 : 4.5}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: 0.15 + i * 0.045, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transition: "r 0.15s ease" }}
             />
           ))}
+
+          {cursor && (
+            <g className="crosshair" aria-hidden="true">
+              <line x1={PAD} y1={cursor.y} x2={W - PAD} y2={cursor.y} />
+              <line x1={cursor.x} y1={PAD} x2={cursor.x} y2={H - PAD} />
+              <circle className="crosshair-dot" cx={POINTS[cursor.nearest].x} cy={POINTS[cursor.nearest].y} r={9} />
+            </g>
+          )}
         </svg>
+        {cursor && (
+          <div className="signal-readout mono" style={{ left: `${(cursor.x / W) * 100}%`, top: `${(cursor.y / H) * 100}%` }}>
+            obs #{String(cursor.nearest + 1).padStart(2, "0")}
+          </div>
+        )}
       </div>
       <div className="signal-caption">
         <span className="mono">Y = Xβ + ε</span>
