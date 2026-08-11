@@ -698,10 +698,9 @@
 @media (max-width: 760px) {
   .portfolio-page .hero { grid-template-columns: 1fr; padding-top: 60px; }
   .portfolio-page .about-body { flex-direction: column; align-items: flex-start; gap: 24px; }
-  .portfolio-page .about-photo-wrap { width: 168px; }
+  .portfolio-page .about-photo-wrap { width: 168px; align-self: center; }
   .portfolio-page .readout { grid-template-columns: 1fr; }
   .portfolio-page .readout li { border-right: none; border-bottom: 1px solid var(--pf-line-soft); padding: 18px 0; }
-  .portfolio-page .readout li:first-child { padding-top: 0; }
   .portfolio-page .readout li:last-child { border-bottom: none; }
   .portfolio-page .projects { grid-template-columns: 1fr; }
   .portfolio-page .skills-grid { grid-template-columns: 1fr; }
