@@ -50,7 +50,7 @@ export default function CompareStats({
         <div className="font-mono font-semibold text-center px-3 pb-3" style={{ color: "var(--data)" }}>
           {a.name}
         </div>
-        <div className="font-mono font-semibold text-center px-3 pb-3" style={{ color: "#ba3e1c" }}>
+        <div className="font-mono font-semibold text-center px-3 pb-3" style={{ color: "var(--compare-b)" }}>
           {b.name}
         </div>
         {rows.map((r) => (

@@ -1,15 +1,25 @@
 @import "tailwindcss";
 
+/* Site-wide dark "instrument panel" theme — same palette as the portfolio
+   home (app/portfolio.css), applied here as the shared tokens so /names
+   inherits it automatically through Tailwind's bg-ink/text-paper/text-data
+   etc. utilities. --data is the primary accent (links, borders, the main
+   chart series); --signal is the secondary/differentiating hue, used
+   where a chart needs a second, clearly distinct series color. */
 :root {
-  --ink: #e6ebf0;
-  --panel: #ffffff;
-  --panel-2: #eef1f5;
-  --paper: #161a23;
-  --muted: #64707d;
-  --signal: #83b3ca;
-  --data: #3d7a9e;
-  --line: #dde2e8;
+  --ink: #05070d;
+  --panel: #0c1120;
+  --panel-2: #10162a;
+  --paper: #edf1fb;
+  --muted: #7c86a8;
+  --signal: #22d3ee;
+  --data: #5b9dff;
+  --line: #202847;
   --radius: 14px;
+  /* "Name B" in the /names compare views — the warm counterpart to --data
+     ("Name A") in every diverging red/blue comparison: chart line, geo map
+     scale, and stat labels. */
+  --compare-b: #ff6b57;
 }
 
 @theme inline {
@@ -21,9 +31,10 @@
   --color-signal: var(--signal);
   --color-data: var(--data);
   --color-line: var(--line);
+  --color-compare-b: var(--compare-b);
   --radius-card: var(--radius);
   --font-sans: var(--font-inter), sans-serif;
-  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-display: var(--font-fraunces), serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
@@ -42,12 +53,12 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-fraunces), serif;
   letter-spacing: -0.01em;
 }
 
 ::selection {
-  background: var(--signal);
+  background: rgba(34, 211, 238, 0.35);
   color: var(--paper);
 }
 

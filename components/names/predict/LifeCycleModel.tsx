@@ -1,12 +1,15 @@
 import type { LifeCycleResult, LifeCycleStage, SurvivalResult } from "@/lib/names/predict";
 
+// Plain hex (not var(--token)) because these get concatenated with an alpha
+// suffix below (`${color}66`), which only works on literal hex strings.
+// Tuned to stay legible against the dark theme's near-black background.
 const STAGE_STYLE: Record<LifeCycleStage, { color: string; dot: string }> = {
-  Emerging: { color: "#3d8a63", dot: "#3d8a63" },
-  Growing: { color: "var(--data)", dot: "#3d7a9e" },
-  Peaking: { color: "#c9932c", dot: "#c9932c" },
-  Declining: { color: "#ba6a3e", dot: "#ba6a3e" },
-  Historic: { color: "#8073a8", dot: "#8073a8" },
-  Extinct: { color: "var(--muted)", dot: "#8a8f98" },
+  Emerging: { color: "#4ade80", dot: "#4ade80" },
+  Growing: { color: "#5b9dff", dot: "#5b9dff" }, // matches --data
+  Peaking: { color: "#fbbf24", dot: "#fbbf24" },
+  Declining: { color: "#fb923c", dot: "#fb923c" },
+  Historic: { color: "#a78bfa", dot: "#a78bfa" },
+  Extinct: { color: "#7c86a8", dot: "#8b93b0" }, // color matches --muted
 };
 
 const TREND_ARROW: Record<LifeCycleResult["trend"], string> = {

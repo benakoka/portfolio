@@ -95,7 +95,7 @@ export default function CompareGeoMap({
       </p>
 
       <div className="flex items-center gap-3 mb-4 text-xs text-muted font-mono">
-        <span style={{ color: "#ba3e1c" }}>{nameB}</span>
+        <span style={{ color: "var(--compare-b)" }}>{nameB}</span>
         <div
           className="h-2 flex-1 rounded-full"
           style={{
@@ -140,7 +140,7 @@ export default function CompareGeoMap({
             <div className="font-mono" style={{ color: "var(--data)" }}>
               {nameA}: {hover.a != null ? `${hover.a.toFixed(2)}x` : "no data"}
             </div>
-            <div className="font-mono" style={{ color: "#ba3e1c" }}>
+            <div className="font-mono" style={{ color: "var(--compare-b)" }}>
               {nameB}: {hover.b != null ? `${hover.b.toFixed(2)}x` : "no data"}
             </div>
           </div>

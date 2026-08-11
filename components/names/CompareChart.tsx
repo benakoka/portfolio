@@ -67,7 +67,7 @@ export default function CompareChart({
               type="monotone"
               dataKey="b"
               name={profileB.name.name}
-              stroke="#ba3e1c"
+              stroke="var(--compare-b)"
               strokeWidth={2}
               dot={false}
               connectNulls

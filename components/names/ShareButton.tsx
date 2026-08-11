@@ -26,7 +26,7 @@ export default function ShareButton({ name }: { name: string }) {
     <div className="flex gap-3">
       <motion.button
         onClick={handleShare}
-        className="px-5 py-2.5 rounded-lg bg-signal text-paper font-semibold text-sm"
+        className="px-5 py-2.5 rounded-lg bg-signal text-ink font-semibold text-sm"
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.96 }}
         transition={{ type: "spring", stiffness: 420, damping: 24 }}

@@ -36,7 +36,7 @@ export default function NamesHome() {
           className="absolute -top-10 left-1/2 -translate-x-1/2 w-[min(900px,100vw)] h-[420px] pointer-events-none -z-10"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(61,122,158,0.10), transparent 65%)",
+              "radial-gradient(ellipse at center, rgba(91,157,255,0.12), transparent 65%)",
           }}
         />
         <Reveal mode="load" className="flex flex-col items-center text-center">
@@ -45,7 +45,7 @@ export default function NamesHome() {
             <span
               style={{
                 backgroundImage:
-                  "linear-gradient(180deg, transparent 62%, rgba(131,179,202,0.45) 62%)",
+                  "linear-gradient(180deg, transparent 62%, rgba(91,157,255,0.35) 62%)",
               }}
             >
               your name?

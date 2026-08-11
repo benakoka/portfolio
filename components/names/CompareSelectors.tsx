@@ -30,7 +30,7 @@ export default function CompareSelectors({ a, b }: { a?: string; b?: string }) {
         <SearchBox
           key={b ?? "b-empty"}
           initialValue={b}
-          accentColor="#ba3e1c"
+          accentColor="var(--compare-b)"
           placeholder="Type a first name…"
           onSelect={(n) => navigate(a, n)}
         />

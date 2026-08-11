@@ -32,10 +32,10 @@ export const GEO_SCALE = {
   min: 0.4,
   center: 1,
   max: 2.2,
-  cold: [30, 90, 140] as [number, number, number],
-  neutral: [240, 242, 246] as [number, number, number],
-  hot: [186, 62, 28] as [number, number, number],
-  noData: "#c7cbd2",
+  cold: [91, 157, 255] as [number, number, number], // matches --data
+  neutral: [16, 22, 42] as [number, number, number], // matches --panel-2
+  hot: [255, 107, 87] as [number, number, number], // matches --compare-b
+  noData: "#1a2038",
 };
 
 export function indexToColor(index: number | undefined): string {
@@ -53,10 +53,10 @@ export function indexToColor(index: number | undefined): string {
 
 /** Colors for a two-name head-to-head geographic comparison — kept in sync with the accent colors used elsewhere on the compare page. */
 export const COMPARE_SCALE = {
-  a: [61, 122, 158] as [number, number, number], // matches var(--data)
-  neutral: [240, 242, 246] as [number, number, number],
-  b: [186, 62, 28] as [number, number, number], // matches #ba3e1c
-  noData: "#c7cbd2",
+  a: [91, 157, 255] as [number, number, number], // matches var(--data)
+  neutral: [16, 22, 42] as [number, number, number], // matches --panel-2
+  b: [255, 107, 87] as [number, number, number], // matches var(--compare-b)
+  noData: "#1a2038",
   // clamp range for log(indexA / indexB) before it hits full saturation
   logClamp: 1.1,
 };
