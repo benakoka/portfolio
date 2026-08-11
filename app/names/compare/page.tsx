@@ -4,6 +4,7 @@ import CompareSelectors from "@/components/names/CompareSelectors";
 import CompareChart from "@/components/names/CompareChart";
 import CompareGeoMap from "@/components/names/CompareGeoMap";
 import CompareStats from "@/components/names/CompareStats";
+import AmbientBackground from "@/components/names/AmbientBackground";
 import { Reveal } from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
@@ -20,7 +21,8 @@ export default async function ComparePage({ searchParams }: Props) {
   const profileB = b ? getProfile(b) : null;
 
   return (
-    <div className="max-w-5xl mx-auto px-7 py-12">
+    <div className="names-shell max-w-5xl mx-auto px-7 py-12">
+      <AmbientBackground />
       <Reveal mode="load" as="header" className="mb-8">
         <h1 className="text-4xl font-semibold">Compare two names</h1>
         <p className="mt-2 text-muted">

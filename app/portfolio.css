@@ -486,7 +486,7 @@
   background: var(--pf-panel);
   border: 1px solid var(--pf-line);
   border-radius: var(--pf-radius);
-  padding: 28px;
+  padding: 20px 28px 28px;
   text-decoration: none;
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -508,14 +508,11 @@
   transform: translateY(-3px);
   box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.55);
 }
-.portfolio-page .case-head {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
 .portfolio-page .case-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   color: var(--pf-muted-2);
-  flex-shrink: 0;
 }
 .portfolio-page .project-card:hover .case-icon { color: var(--pf-accent); }
 .portfolio-page .status {
@@ -527,7 +524,6 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-top: 14px;
 }
 .portfolio-page .status::before {
   content: "";

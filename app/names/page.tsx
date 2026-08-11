@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SearchBox from "@/components/names/SearchBox";
+import AmbientBackground from "@/components/names/AmbientBackground";
 import { Reveal, Stagger, StaggerItem, StaggerLinkItem } from "@/components/motion/Reveal";
 
 const EXAMPLES = ["Brandon", "Olivia", "Mildred", "Emma", "Kevin"];
@@ -29,7 +30,8 @@ const FEATURES = [
 
 export default function NamesHome() {
   return (
-    <div className="max-w-5xl mx-auto px-7">
+    <div className="names-shell max-w-5xl mx-auto px-7">
+      <AmbientBackground />
       <section className="pt-20 pb-14 flex flex-col items-center text-center relative">
         <div
           aria-hidden

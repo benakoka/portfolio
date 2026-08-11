@@ -10,6 +10,7 @@ import GenderBalance from "@/components/names/GenderBalance";
 import RarityMeter from "@/components/names/RarityMeter";
 import ShareButton from "@/components/names/ShareButton";
 import SearchBox from "@/components/names/SearchBox";
+import AmbientBackground from "@/components/names/AmbientBackground";
 import PeakPopularityPrediction from "@/components/names/predict/PeakPopularityPrediction";
 import LifeCycleModel from "@/components/names/predict/LifeCycleModel";
 import SurvivalCurve from "@/components/names/predict/SurvivalCurve";
@@ -46,7 +47,8 @@ export default async function NamePage({ params }: Props) {
     const pool = getAllNamesForFuzzy();
     const suggestions = fuzzySuggest(name, pool, 6);
     return (
-      <div className="max-w-2xl mx-auto px-7 py-20 text-center">
+      <div className="names-shell max-w-2xl mx-auto px-7 py-20 text-center">
+        <AmbientBackground />
         <h1 className="text-3xl font-semibold mb-3">
           No data for &ldquo;{name}&rdquo;
         </h1>
@@ -81,7 +83,8 @@ export default async function NamePage({ params }: Props) {
   const survivalTop1000 = insights.survival.find((s) => s.threshold === 1000);
 
   return (
-    <div className="max-w-5xl mx-auto px-7 py-12">
+    <div className="names-shell max-w-5xl mx-auto px-7 py-12">
+      <AmbientBackground />
       <div className="mb-6">
         <SearchBox />
       </div>

@@ -98,7 +98,7 @@ export default function Home() {
           </div>
           <Stagger as="ul" className="readout">
             <StaggerItem as="li"><span className="k mono">Based in</span><div className="v">Los Angeles, CA<br />Santa Barbara, CA</div></StaggerItem>
-            <StaggerItem as="li"><span className="k mono">Studying</span><div className="v">Statistics &amp; Data Science, UC Santa Barbara</div></StaggerItem>
+            <StaggerItem as="li"><span className="k mono">Studying</span><div className="v">Statistics &amp; Data Science,<br />UC Santa Barbara</div></StaggerItem>
             <StaggerItem as="li"><span className="k mono">Research</span><div className="v">AI Research Assistant, Center for AI &amp; Society (Prof. David Lawson&apos;s Lab)</div></StaggerItem>
           </Stagger>
         </div>
@@ -112,9 +112,7 @@ export default function Home() {
           <Stagger className="projects">
 
             <StaggerLinkItem className="project-card" href="/projects/nba-career-longevity.html">
-              <div className="case-head">
-                <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><path d="M3 3v18h18" /><path d="M7 15c2-5 3-5 5-9s3-1 6-3" /></svg>
-              </div>
+              <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><path d="M3 3v18h18" /><path d="M7 15c2-5 3-5 5-9s3-1 6-3" /></svg>
               <span className="status">Completed — Case Study</span>
               <h3>NBA Career Longevity</h3>
               <p>Analyzed career length across 4,486 NBA players using injury logs, box scores, and season stats. Modeled survival with Kaplan-Meier curves and Cox regression, compared against OLS and logistic regression, and used K-Means to cluster player archetypes. Built and delivered a presentation with a research partner.</p>
@@ -127,9 +125,7 @@ export default function Home() {
             </StaggerLinkItem>
 
             <StaggerLinkItem className="project-card" href="/names">
-              <div className="case-head">
-                <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><path d="M3 18c2 0 3-11 6-11s3 9 6 9 4-9 6-9" /></svg>
-              </div>
+              <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><path d="M3 18c2 0 3-11 6-11s3 9 6 9 4-9 6-9" /></svg>
               <span className="status">Completed — Interactive Web App</span>
               <h3>What Does the Internet Think of Your Name?</h3>
               <p>An interactive tool that turns any first name into a data-driven profile: living-age distribution weighted by SSA actuarial survival tables, a full 1880–present popularity arc with trend-archetype classification, cosine-similarity &quot;name neighbors,&quot; and a US geographic over-index map. Built from real SSA national and state baby-name data.</p>
@@ -142,18 +138,14 @@ export default function Home() {
             </StaggerLinkItem>
 
             <StaggerItem className="project-card empty">
-              <div className="case-head">
-                <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg>
-              </div>
+              <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg>
               <span className="status is-progress">In progress</span>
               <h3>Center for AI &amp; Society Research</h3>
               <p>Currently working as an AI Research Assistant in Professor David Lawson&apos;s lab. Write-up coming once the project reaches a shareable stage.</p>
             </StaggerItem>
 
             <StaggerItem className="project-card empty">
-              <div className="case-head">
-                <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none" /><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" /><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none" /></svg>
-              </div>
+              <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none" /><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" /><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none" /></svg>
               <span className="status is-planned">Planned</span>
               <h3>Future Work</h3>
               <p>More projects coming soon.</p>
