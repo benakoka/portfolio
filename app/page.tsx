@@ -77,7 +77,6 @@ export default function Home() {
       <section id="about">
         <div className="wrap about-grid">
           <div className="sec-head" style={{ marginBottom: 20 }}>
-            <span className="tag">Profile</span>
             <h2>About</h2>
           </div>
           <div className="about-body">
@@ -85,7 +84,6 @@ export default function Home() {
               <div className="about-photo">
                 <img src="/assets/ben-photo.jpg" alt="Photo of Ben Akoka" loading="lazy" />
               </div>
-              <p className="mono about-photo-tag">B. Akoka — Santa Barbara, CA</p>
             </Reveal>
             <div className="about-text">
               <Reveal delay={0.08}>
@@ -109,7 +107,6 @@ export default function Home() {
       <section id="projects">
         <div className="wrap">
           <div className="sec-head">
-            <span className="tag">Case files</span>
             <h2>Projects</h2>
           </div>
           <Stagger className="projects">
@@ -173,7 +170,6 @@ export default function Home() {
       <section id="skills">
         <div className="wrap">
           <div className="sec-head">
-            <span className="tag">Instrumentation</span>
             <h2>Skills</h2>
           </div>
           <Stagger className="skills-grid">
