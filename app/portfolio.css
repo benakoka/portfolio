@@ -414,7 +414,6 @@
 .portfolio-page .about-grid {
   display: flex;
   flex-direction: column;
-  gap: 48px;
 }
 .portfolio-page .about-grid p { color: var(--pf-muted); max-width: 66ch; }
 .portfolio-page .about-grid p strong { color: var(--pf-ink); font-weight: 600; }
@@ -422,6 +421,7 @@
   display: flex;
   gap: 32px;
   align-items: flex-start;
+  margin-bottom: 48px;
 }
 .portfolio-page .about-photo-wrap {
   flex-shrink: 0;

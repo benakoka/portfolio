@@ -76,7 +76,7 @@ export default function Home() {
 
       <section id="about">
         <div className="wrap about-grid">
-          <div className="sec-head" style={{ marginBottom: 14 }}>
+          <div className="sec-head" style={{ marginBottom: 24 }}>
             <h2>About</h2>
           </div>
           <div className="about-body">
