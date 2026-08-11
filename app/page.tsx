@@ -1,7 +1,14 @@
 import { MotionConfig } from "motion/react";
+import type { Viewport } from "next";
 import "./portfolio.css";
 import PortfolioInteractivity from "@/components/PortfolioInteractivity";
+import SignalChart from "@/components/portfolio/SignalChart";
+import Marquee from "@/components/portfolio/Marquee";
 import { Reveal, Stagger, StaggerItem, StaggerLinkItem, MotionLink } from "@/components/motion/Reveal";
+
+export const viewport: Viewport = {
+  themeColor: "#0a0c11",
+};
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -16,6 +23,12 @@ const personJsonLd = {
   },
   sameAs: ["https://www.linkedin.com/in/benakoka"],
 };
+
+const SKILL_WORDS = [
+  "PYTHON", "R", "SQL", "REGRESSION & GLMS", "SURVIVAL ANALYSIS", "CLUSTERING",
+  "HYPOTHESIS TESTING", "DATA VISUALIZATION", "PANDAS", "NUMPY", "STATSMODELS",
+  "SCIKIT-LEARN", "MATPLOTLIB", "AHREFS", "LOOKER STUDIO", "SEARCH CONSOLE",
+];
 
 export default function Home() {
   return (
@@ -42,6 +55,7 @@ export default function Home() {
 
       <header className="hero wrap">
         <Reveal mode="load">
+          <span className="pf-eyebrow">Statistics &amp; Data Science · UCSB</span>
           <h1>Hi, I&apos;m&nbsp;<span className="hl">Ben.</span></h1>
           <p className="lede">I&apos;m a Statistics &amp; Data Science student at UC Santa Barbara who likes turning messy datasets into clear answers.</p>
           <div className="hero-actions">
@@ -51,27 +65,24 @@ export default function Home() {
         </Reveal>
 
         <Reveal mode="load" delay={0.18}>
-          <div className="terminal-card">
-            <div className="terminal-bar">
-              <span className="t-dot t-red"></span>
-              <span className="t-dot t-yellow"></span>
-              <span className="t-dot t-green"></span>
-              <span className="terminal-title">ben@portfolio — zsh</span>
-            </div>
-            <div className="terminal-body" id="terminal"></div>
-          </div>
+          <SignalChart />
         </Reveal>
       </header>
+
+      <Marquee items={SKILL_WORDS} />
 
       <section id="about">
         <div className="wrap about-grid">
           <div className="sec-head" style={{ marginBottom: 20 }}>
-            <span className="tag">01</span>
+            <span className="tag">Profile</span>
             <h2>About</h2>
           </div>
           <div className="about-body">
-            <Reveal className="about-photo">
-              <img src="/assets/ben-photo.jpg" alt="Photo of Ben Akoka" loading="lazy" />
+            <Reveal className="about-photo-wrap">
+              <div className="about-photo">
+                <img src="/assets/ben-photo.jpg" alt="Photo of Ben Akoka" loading="lazy" />
+              </div>
+              <p className="mono about-photo-tag">B. Akoka — Santa Barbara, CA</p>
             </Reveal>
             <div className="about-text">
               <Reveal delay={0.08}>
@@ -84,10 +95,10 @@ export default function Home() {
               </Reveal>
             </div>
           </div>
-          <Stagger as="ul" className="fact-list">
-            <StaggerItem as="li"><span className="k">Based in</span><div className="v">Los Angeles, CA<br />Santa Barbara, CA</div></StaggerItem>
-            <StaggerItem as="li"><span className="k">Studying</span><div className="v">Statistics &amp; Data Science, UC Santa Barbara</div></StaggerItem>
-            <StaggerItem as="li"><span className="k">Research</span><div className="v">AI Research Assistant, Center for AI &amp; Society (Prof. David Lawson&apos;s Lab)</div></StaggerItem>
+          <Stagger as="ul" className="readout">
+            <StaggerItem as="li"><span className="k mono">Based in</span><div className="v">Los Angeles, CA<br />Santa Barbara, CA</div></StaggerItem>
+            <StaggerItem as="li"><span className="k mono">Studying</span><div className="v">Statistics &amp; Data Science, UC Santa Barbara</div></StaggerItem>
+            <StaggerItem as="li"><span className="k mono">Research</span><div className="v">AI Research Assistant, Center for AI &amp; Society (Prof. David Lawson&apos;s Lab)</div></StaggerItem>
           </Stagger>
         </div>
       </section>
@@ -95,13 +106,17 @@ export default function Home() {
       <section id="projects">
         <div className="wrap">
           <div className="sec-head">
-            <span className="tag">02</span>
+            <span className="tag">Case files</span>
             <h2>Projects</h2>
           </div>
           <Stagger className="projects">
 
             <StaggerLinkItem className="project-card" href="/projects/nba-career-longevity.html">
-              <span className="status">● Completed - Case Study</span>
+              <div className="case-head">
+                <span className="case-num mono">CASE 01</span>
+                <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><path d="M3 3v18h18" /><path d="M7 15c2-5 3-5 5-9s3-1 6-3" /></svg>
+              </div>
+              <span className="status">Completed — Case Study</span>
               <h3>NBA Career Longevity</h3>
               <p>Analyzed career length across 4,486 NBA players using injury logs, box scores, and season stats. Modeled survival with Kaplan-Meier curves and Cox regression, compared against OLS and logistic regression, and used K-Means to cluster player archetypes. Built and delivered a presentation with a research partner.</p>
               <div className="chips">
@@ -113,7 +128,11 @@ export default function Home() {
             </StaggerLinkItem>
 
             <StaggerLinkItem className="project-card" href="/names">
-              <span className="status">● Completed - Interactive Web App</span>
+              <div className="case-head">
+                <span className="case-num mono">CASE 02</span>
+                <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><path d="M3 18c2 0 3-11 6-11s3 9 6 9 4-9 6-9" /></svg>
+              </div>
+              <span className="status">Completed — Interactive Web App</span>
               <h3>What Does the Internet Think of Your Name?</h3>
               <p>An interactive tool that turns any first name into a data-driven profile: living-age distribution weighted by SSA actuarial survival tables, a full 1880–present popularity arc with trend-archetype classification, cosine-similarity &quot;name neighbors,&quot; and a US geographic over-index map. Built from real SSA national and state baby-name data.</p>
               <div className="chips">
@@ -125,13 +144,21 @@ export default function Home() {
             </StaggerLinkItem>
 
             <StaggerItem className="project-card empty">
-              <span className="status">○ In progress</span>
+              <div className="case-head">
+                <span className="case-num mono">CASE 03</span>
+                <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg>
+              </div>
+              <span className="status is-progress">In progress</span>
               <h3>Center for AI &amp; Society Research</h3>
               <p>Currently working as an AI Research Assistant in Professor David Lawson&apos;s lab. Write-up coming once the project reaches a shareable stage.</p>
             </StaggerItem>
 
             <StaggerItem className="project-card empty">
-              <span className="status">○ Planned</span>
+              <div className="case-head">
+                <span className="case-num mono">CASE 04</span>
+                <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none" /><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" /><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none" /></svg>
+              </div>
+              <span className="status is-planned">Planned</span>
               <h3>Future Work</h3>
               <p>More projects coming soon.</p>
             </StaggerItem>
@@ -143,12 +170,12 @@ export default function Home() {
       <section id="skills">
         <div className="wrap">
           <div className="sec-head">
-            <span className="tag">03</span>
+            <span className="tag">Instrumentation</span>
             <h2>Skills</h2>
           </div>
           <Stagger className="skills-grid">
             <StaggerItem className="skill-col">
-              <span className="k font-mono">LANGUAGES</span>
+              <span className="k mono">Languages</span>
               <ul>
                 <li>Python</li>
                 <li>R</li>
@@ -156,7 +183,7 @@ export default function Home() {
               </ul>
             </StaggerItem>
             <StaggerItem className="skill-col">
-              <span className="k font-mono">METHODS</span>
+              <span className="k mono">Methods</span>
               <ul>
                 <li>Regression &amp; GLMs</li>
                 <li>Survival analysis</li>
@@ -166,7 +193,7 @@ export default function Home() {
               </ul>
             </StaggerItem>
             <StaggerItem className="skill-col">
-              <span className="k font-mono">TOOLS</span>
+              <span className="k mono">Tools</span>
               <ul>
                 <li>pandas / numpy</li>
                 <li>statsmodels</li>
@@ -176,7 +203,7 @@ export default function Home() {
               </ul>
             </StaggerItem>
             <StaggerItem className="skill-col">
-              <span className="k font-mono">SEO &amp; ANALYTICS</span>
+              <span className="k mono">SEO &amp; Analytics</span>
               <ul>
                 <li>Ahrefs</li>
                 <li>Google Looker Studio</li>
@@ -190,9 +217,12 @@ export default function Home() {
       <section id="contact">
         <div className="wrap">
           <Reveal className="contact-card">
-            <div>
-              <h2>Let&apos;s connect.</h2>
-              <p>Open to internships, research collaborations, and graduate program conversations.</p>
+            <div className="contact-head">
+              <div>
+                <h2>Let&apos;s connect.</h2>
+                <p>Open to internships, research collaborations, and graduate program conversations.</p>
+              </div>
+              <span className="available-badge">Available</span>
             </div>
             <Stagger className="contact-links">
               <StaggerLinkItem className="contact-link" href="mailto:benakoka1@gmail.com" lift={3}>
@@ -234,7 +264,7 @@ export default function Home() {
 
       <footer className="wrap">
         <span>© 2026 Ben Akoka. Built with data.</span>
-        <span className="font-mono">v3.1.1</span>
+        <span>v4.0.0</span>
       </footer>
 
       <PortfolioInteractivity />

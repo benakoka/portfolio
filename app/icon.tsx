@@ -12,9 +12,9 @@ export default function Icon() {
           height: "100%",
           display: "flex",
           position: "relative",
-          background: "#ffffff",
+          background: "#0a0c11",
           borderRadius: 14,
-          border: "2px solid #dde2e8",
+          border: "2px solid #262e3f",
           boxSizing: "border-box",
         }}
       >
@@ -26,7 +26,7 @@ export default function Icon() {
             width: 9,
             height: 16,
             borderRadius: 2,
-            background: "#3d7a9e",
+            background: "#5fd8c4",
             display: "flex",
           }}
         />
@@ -38,7 +38,7 @@ export default function Icon() {
             width: 9,
             height: 26,
             borderRadius: 2,
-            background: "#3d7a9e",
+            background: "#f2a63d",
             display: "flex",
           }}
         />
@@ -50,7 +50,7 @@ export default function Icon() {
             width: 9,
             height: 36,
             borderRadius: 2,
-            background: "#3d7a9e",
+            background: "#f2a63d",
             display: "flex",
           }}
         />
