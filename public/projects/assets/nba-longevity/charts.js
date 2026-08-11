@@ -148,7 +148,7 @@
     if (opts.label) {
       var lbl = el("text", {
         x: -(opts.y0 + opts.y1) / 2,
-        y: 14,
+        y: 2,
         class: "chart-axis-label",
         "text-anchor": "middle",
         transform: "rotate(-90)",
@@ -251,7 +251,7 @@
   function renderHistogram(mount, cfg) {
     var W = 460,
       H = 300,
-      M = { l: 46, r: 16, t: 14, b: 40 };
+      M = { l: 58, r: 16, t: 14, b: 40 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -317,7 +317,7 @@
   function renderBarChart(mount, cfg) {
     var W = 460,
       H = 320,
-      M = { l: 46, r: 12, t: 14, b: cfg.rotateLabels ? 66 : 34 };
+      M = { l: 58, r: 12, t: 14, b: cfg.rotateLabels ? 66 : 34 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -392,7 +392,7 @@
   function renderGroupedBar(mount, cfg) {
     var W = 460,
       H = 320,
-      M = { l: 46, r: 12, t: 14, b: 44 };
+      M = { l: 58, r: 12, t: 14, b: 44 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -461,7 +461,7 @@
   function renderBoxplot(mount, cfg) {
     var W = 460,
       H = 320,
-      M = { l: 46, r: 12, t: 14, b: 40 };
+      M = { l: 58, r: 12, t: 14, b: 40 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -540,7 +540,7 @@
   function renderScatter(mount, cfg) {
     var W = 460,
       H = 300,
-      M = { l: 46, r: 16, t: 14, b: 40 };
+      M = { l: 58, r: 16, t: 14, b: 40 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -587,7 +587,7 @@
   function renderResidual(mount, cfg) {
     var W = 460,
       H = 300,
-      M = { l: 46, r: 16, t: 14, b: 40 };
+      M = { l: 58, r: 16, t: 14, b: 40 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -628,7 +628,7 @@
   function renderDensity(mount, cfg) {
     var W = 460,
       H = 300,
-      M = { l: 46, r: 16, t: 14, b: 40 };
+      M = { l: 58, r: 16, t: 14, b: 40 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -749,7 +749,7 @@
   function renderROC(mount, cfg) {
     var W = 300,
       H = 300,
-      M = { l: 42, r: 12, t: 14, b: 34 };
+      M = { l: 52, r: 12, t: 14, b: 34 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -784,7 +784,7 @@
   function renderKM(mount, cfg) {
     var W = 460,
       H = 300,
-      M = { l: 46, r: 16, t: 14, b: 40 };
+      M = { l: 58, r: 16, t: 14, b: 40 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
@@ -848,7 +848,7 @@
   function renderLine(mount, cfg) {
     var W = 460,
       H = 260,
-      M = { l: 52, r: 16, t: 14, b: 36 };
+      M = { l: 62, r: 16, t: 14, b: 36 };
     var svgEl = makeSvg(mount, W, H);
     var x0 = M.l,
       x1 = W - M.r,
