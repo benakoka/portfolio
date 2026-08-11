@@ -76,7 +76,7 @@ export default function Home() {
 
       <section id="about">
         <div className="wrap about-grid">
-          <div className="sec-head" style={{ marginBottom: 20 }}>
+          <div className="sec-head" style={{ marginBottom: 14 }}>
             <h2>About</h2>
           </div>
           <div className="about-body">
@@ -113,7 +113,6 @@ export default function Home() {
 
             <StaggerLinkItem className="project-card" href="/projects/nba-career-longevity.html">
               <div className="case-head">
-                <span className="case-num mono">CASE 01</span>
                 <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><path d="M3 3v18h18" /><path d="M7 15c2-5 3-5 5-9s3-1 6-3" /></svg>
               </div>
               <span className="status">Completed — Case Study</span>
@@ -129,7 +128,6 @@ export default function Home() {
 
             <StaggerLinkItem className="project-card" href="/names">
               <div className="case-head">
-                <span className="case-num mono">CASE 02</span>
                 <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><path d="M3 18c2 0 3-11 6-11s3 9 6 9 4-9 6-9" /></svg>
               </div>
               <span className="status">Completed — Interactive Web App</span>
@@ -145,7 +143,6 @@ export default function Home() {
 
             <StaggerItem className="project-card empty">
               <div className="case-head">
-                <span className="case-num mono">CASE 03</span>
                 <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg>
               </div>
               <span className="status is-progress">In progress</span>
@@ -155,7 +152,6 @@ export default function Home() {
 
             <StaggerItem className="project-card empty">
               <div className="case-head">
-                <span className="case-num mono">CASE 04</span>
                 <svg className="case-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none" /><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" /><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none" /></svg>
               </div>
               <span className="status is-planned">Planned</span>
@@ -217,11 +213,8 @@ export default function Home() {
         <div className="wrap">
           <Reveal className="contact-card">
             <div className="contact-head">
-              <div>
-                <h2>Let&apos;s connect.</h2>
-                <p>Open to internships, research collaborations, and graduate program conversations.</p>
-              </div>
-              <span className="available-badge">Available</span>
+              <h2>Let&apos;s connect.</h2>
+              <p>Open to internships, research collaborations, and graduate program conversations.</p>
             </div>
             <Stagger className="contact-links">
               <StaggerLinkItem className="contact-link" href="mailto:benakoka1@gmail.com" lift={3}>
