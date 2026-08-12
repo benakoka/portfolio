@@ -58,7 +58,7 @@ export default function Home() {
 
       <header className="hero wrap">
         <Reveal mode="load">
-          <span className="pf-eyebrow">Statistics &amp; Data Science · UCSB</span>
+          <span className="pf-eyebrow">Analysis · Modeling · Visualization</span>
           <h1>Hi, I&apos;m&nbsp;<span className="hl">Ben.</span></h1>
           <p className="lede">I&apos;m a Statistics &amp; Data Science student at UC Santa Barbara who likes turning messy datasets into clear answers.</p>
           <div className="hero-actions">
