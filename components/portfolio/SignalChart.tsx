@@ -6,7 +6,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 /**
  * The hero's signature graphic: a scatter of noisy observations with a
  * fitted regression line drawing itself in, echoing the OLS work
- * (Y = Xβ + ε) from the NBA career-longevity case study below. Point
+ * (Y = β₀ + β₁X + ε) from the NBA career-longevity case study below. Point
  * positions are generated once from a fixed seed so server and client
  * render identically (no Math.random at runtime).
  */
@@ -169,9 +169,9 @@ export default function SignalChart() {
         )}
       </div>
       <div className="signal-caption">
-        <span className="mono">Y = Xβ + ε</span>
+        <span className="mono">Y = β₀ + β₁X + ε</span>
         <span className="mono signal-caption-sep">·</span>
-        <span className="mono">ROC&#8209;AUC 0.84</span>
+        <span className="mono">R² = 0.84</span>
       </div>
     </motion.div>
   );
