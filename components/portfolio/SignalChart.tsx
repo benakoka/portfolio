@@ -103,9 +103,9 @@ export default function SignalChart() {
       <div className="signal-bar">
         <span className="signal-dot" aria-hidden="true"></span>
         <span className="signal-title">fig.00 — signal_fit.svg</span>
-        <span className="signal-meta">n = 17</span>
       </div>
       <div className="signal-body">
+        <span className="signal-r2 mono">R² = 0.84</span>
         <svg
           ref={svgRef}
           viewBox={`0 0 ${W} ${H}`}
@@ -170,8 +170,6 @@ export default function SignalChart() {
       </div>
       <div className="signal-caption">
         <span className="mono">Y = β₀ + β₁X + ε</span>
-        <span className="mono signal-caption-sep">·</span>
-        <span className="mono">R² = 0.84</span>
       </div>
     </motion.div>
   );
