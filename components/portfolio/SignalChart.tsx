@@ -105,7 +105,6 @@ export default function SignalChart() {
         <span className="signal-title">~/models/ols_regression_fit.py</span>
       </div>
       <div className="signal-body">
-        <span className="signal-r2 mono">R² = 0.84</span>
         <svg
           ref={svgRef}
           viewBox={`0 0 ${W} ${H}`}
@@ -170,6 +169,7 @@ export default function SignalChart() {
       </div>
       <div className="signal-caption">
         <span className="mono">Y = β₀ + β₁X + ε</span>
+        <span className="mono signal-r2">R² = 0.84</span>
       </div>
     </motion.div>
   );

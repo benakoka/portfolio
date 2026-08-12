@@ -334,12 +334,8 @@
   opacity: 0.8;
 }
 .portfolio-page .signal-r2 {
-  position: absolute;
-  right: 18px;
-  bottom: 10px;
-  font-size: 11px;
+  margin-left: auto;
   color: var(--pf-muted-2);
-  pointer-events: none;
 }
 .portfolio-page .signal-readout {
   position: absolute;
