@@ -102,7 +102,7 @@ export default function SignalChart() {
     >
       <div className="signal-bar">
         <span className="signal-dot" aria-hidden="true"></span>
-        <span className="signal-title">fig.00 — signal_fit.svg</span>
+        <span className="signal-title">~/models/ols_regression_fit.py</span>
       </div>
       <div className="signal-body">
         <span className="signal-r2 mono">R² = 0.84</span>
