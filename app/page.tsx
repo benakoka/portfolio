@@ -91,7 +91,7 @@ export default function Home() {
                 <p>Whether I&apos;m building models in Python or exploring new research ideas, I&apos;m always looking for opportunities to learn and create.</p>
               </Reveal>
               <Reveal delay={0.16}>
-                <p>Previously, I worked as a Data Analytics &amp; SEO Strategy Intern at <strong>Taboola</strong>, where I analyzed search performance, competitor trends, and large-scale web data to help guide strategic decisions. I&apos;m currently an <strong>AI Research Assistant</strong> at UCSB&apos;s Center for AI &amp; Society, exploring applications of AI through research while continuing to expand my technical skills.</p>
+                <p>I&apos;m currently a Data &amp; AI Analytics Specialist at <strong>Insomniac Events</strong>, where I&apos;m architecting a centralized data platform for their festivals and building the dashboards, AI chatbots, and recommenders that run on top of it. Alongside that, I&apos;m an <strong>AI Research Assistant</strong> at UCSB&apos;s Center for AI &amp; Society, and previously worked as a Data Analytics &amp; SEO Strategy Intern at <strong>Taboola</strong>.</p>
                 <p>Outside of academics, I work as a <strong>campus tour guide</strong>, helping prospective students experience everything UCSB has to offer.</p>
               </Reveal>
             </div>
@@ -99,6 +99,7 @@ export default function Home() {
           <Stagger as="ul" className="readout">
             <StaggerItem as="li"><span className="k mono">Based in</span><div className="v">Los Angeles, CA<br />Santa Barbara, CA</div></StaggerItem>
             <StaggerItem as="li"><span className="k mono">Studying</span><div className="v">Statistics &amp; Data Science,<br />UC Santa Barbara</div></StaggerItem>
+            <StaggerItem as="li"><span className="k mono">Working at</span><div className="v">Data &amp; AI Analytics Specialist, Insomniac Events</div></StaggerItem>
             <StaggerItem as="li"><span className="k mono">Research</span><div className="v">AI Research Assistant, Center for AI &amp; Society (Prof. David Lawson&apos;s Lab)</div></StaggerItem>
           </Stagger>
         </div>
