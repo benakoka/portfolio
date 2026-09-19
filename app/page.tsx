@@ -165,36 +165,18 @@ export default function Home() {
             <StaggerItem className="skill-col">
               <span className="k mono">Languages</span>
               <ul>
-                <li>Python</li>
                 <li>R</li>
                 <li>SQL</li>
-              </ul>
-            </StaggerItem>
-            <StaggerItem className="skill-col">
-              <span className="k mono">Methods</span>
-              <ul>
-                <li>Regression &amp; GLMs</li>
-                <li>Survival analysis</li>
-                <li>Clustering</li>
-                <li>Hypothesis testing</li>
-                <li>Data visualization</li>
+                <li>Python</li>
               </ul>
             </StaggerItem>
             <StaggerItem className="skill-col">
               <span className="k mono">Tools</span>
               <ul>
-                <li>pandas / numpy</li>
-                <li>statsmodels</li>
-                <li>scikit-learn</li>
-                <li>matplotlib</li>
                 <li>Excel / Google Sheets</li>
-              </ul>
-            </StaggerItem>
-            <StaggerItem className="skill-col">
-              <span className="k mono">SEO &amp; Analytics</span>
-              <ul>
-                <li>Ahrefs</li>
-                <li>Google Looker Studio</li>
+                <li>Looker Studio</li>
+                <li>Claude / OpenAI / Gemini APIs</li>
+                <li>BigQuery</li>
                 <li>Google Search Console</li>
               </ul>
             </StaggerItem>
