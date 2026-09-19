@@ -171,12 +171,17 @@ export default function Home() {
               </ul>
             </StaggerItem>
             <StaggerItem className="skill-col">
-              <span className="k mono">Tools</span>
+              <span className="k mono">Analytics Tools</span>
               <ul>
                 <li>Excel / Google Sheets</li>
                 <li>Looker Studio</li>
-                <li>Claude / OpenAI / Gemini APIs</li>
                 <li>BigQuery</li>
+              </ul>
+            </StaggerItem>
+            <StaggerItem className="skill-col">
+              <span className="k mono">AI &amp; Search</span>
+              <ul>
+                <li>Claude / OpenAI / Gemini APIs</li>
                 <li>Google Search Console</li>
               </ul>
             </StaggerItem>
